@@ -1024,7 +1024,8 @@ function mapCrmVacancy(r){
     responsibilities:r.responsibilities||[], requirements:r.requirements||[], offer:r.offer||r.conditions||[] };
 }
 async function loadVacancies(){
-  try{ if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(list&&list.length) return list; } }catch(e){ console.error(e); }
+  try{ for(var i=0;i<60 && !window.HCCRM;i++){ await new Promise(r=>setTimeout(r,100)); }
+    if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(list&&list.length) return list; } }catch(e){ console.error(e); }
   return SAMPLE;
 }
 const SAMPLE = [
