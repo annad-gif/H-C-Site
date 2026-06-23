@@ -93,12 +93,13 @@
     var service = (document.getElementById("service") || {}).value || "";
     if (!name) { toast("Укажите имя", false); return { ok: false }; }
     if (!email && !phone) { toast("Укажите телефон или email", false); return { ok: false }; }
-    var msg = (company ? "Компания: " + company + "\n" : "") + message;
+    var head = (service ? "Услуга: " + service + "\n" : "") + (company ? "Компания: " + company + "\n" : "");
+    var msg = head + message;
     try {
       var c = await sb();
       var r = await c.staffly.rpc("submit_lead", {
         p_name: name, p_email: email || null, p_phone: phone || null,
-        p_message: msg || null, p_service: service || null,
+        p_message: msg || null, p_service: null,
         p_source: "Сайт: " + location.pathname, p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
