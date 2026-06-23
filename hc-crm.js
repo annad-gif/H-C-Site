@@ -15,11 +15,11 @@
   // --- проекты Supabase (anon-ключи публичные, это безопасно) ---
   var ATS = {
     url: "https://byerqfuuprmmykncjqms.supabase.co",
-    key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5ZXJxZnV1cHJtbXlrbmNqcW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjA1MDcsImV4cCI6MjA5MzYzNjUwN30.KWXJ1G_dp6qICJUA-fLX8hI9Na28f1BvxGH9aM0PPJE"
+    key: "sb_publishable_JBo7zlA02IyeaJLuTdZX5A_YEatYU6_"
   };
   var STAFFLY = {
     url: "https://qgwfecctozkchcjabgsx.supabase.co",
-    key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnd2ZlY2N0b3prY2hjamFiZ3N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3Mjc0NjMsImV4cCI6MjA5NDMwMzQ2M30.CQjMzn_zegfGfmwmojepnpC1S15m9qbOgqAFnJiscsY"
+    key: "sb_publishable_BZze9MRJ37YtILL6qWtfHA_N7NF7Ql6"
   };
   var PRIVACY_URL = "privacy.html";
   var POLICY_VERSION = "v1";
