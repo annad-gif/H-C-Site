@@ -134,11 +134,14 @@
       return (r.data || []).map(function (t) {
         var extra = [];
         if (t.field) extra.push("Сфера: " + t.field);
+        if (t.format) extra.push("Формат: " + t.format);
         if (t.age) extra.push("Возраст: " + t.age);
+        var head = txt(t.role) || txt(t.field);
+        if (t.level) head = head ? head + " · " + txt(t.level) : txt(t.level);
         return {
-          id: t.id, field: txt(t.role) || txt(t.field), date: txt(t.created_at).slice(0, 10),
-          city: txt(t.city), experience: txt(t.experience), results: "",
-          salary: "", languages: "", skills: Array.isArray(t.skills) ? t.skills : [],
+          id: t.id, field: head, date: txt(t.created_at).slice(0, 10),
+          city: txt(t.city), experience: txt(t.experience), results: txt(t.results),
+          salary: "", languages: txt(t.languages), skills: Array.isArray(t.skills) ? t.skills : [],
           description: [txt(t.summary), extra.join(" · ")].filter(Boolean).join("\n")
         };
       });
