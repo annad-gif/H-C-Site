@@ -782,7 +782,7 @@
   .adm-side{background:var(--black);padding:22px 16px;display:flex;flex-direction:column;gap:6px;min-height:100vh;}
   .adm-side .logo-img{height:26px;margin:6px 8px 20px;}
   .adm-nav{display:flex;flex-direction:column;gap:3px;}
-  .adm-nav button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:none;color:var(--grey-300);font-family:var(--ff-body);font-size:14px;padding:11px 14px;border-radius:11px;cursor:pointer;transition:all .2s ease;}
+  .adm-nav button{display:flex;align-items:center;gap:12px;width:100%;max-width:100%;text-align:left;background:none;border:none;color:var(--grey-300);font-family:var(--ff-body);font-size:14px;padding:11px 14px;border-radius:11px;cursor:pointer;transition:background-color .15s ease,color .15s ease;}
   .adm-nav button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
   .adm-nav button:hover{background:rgba(255,255,255,.06);color:#fff;}
   .adm-nav button.active{background:var(--mustard);color:var(--black);font-weight:600;}
@@ -1001,12 +1001,13 @@ function enterApp(){
   applyRoleVisibility(); go('overview');
 }
 
-let _checking=false;
+let _checking=false, _entered=false;
 async function checkSession(){
   if(_checking) return; _checking=true;
   try{
     const { data:{ session } } = await sb.auth.getSession();
-    if(!session){ document.body.classList.remove('authed'); return; }
+    if(!session){ _entered=false; document.body.classList.remove('authed'); return; }
+    if(_entered) return;                 /* уже внутри — не перезапускаем и не сбрасываем экран */
     const email=(session.user.email||'').toLowerCase();
     let role=null;
     let name=(session.user.user_metadata && session.user.user_metadata.full_name) || email;
@@ -1014,7 +1015,7 @@ async function checkSession(){
     if(!role){
       const err=document.getElementById('lgErr');
       if(err){ err.textContent='Почта '+email+' не в списке администраторов. Обратитесь к главному администратору.'; err.style.display='block'; }
-      document.body.classList.remove('authed');
+      _entered=false; document.body.classList.remove('authed');
       await sb.auth.signOut();
       return;
     }
@@ -1022,10 +1023,14 @@ async function checkSession(){
          if(me.data && me.data.name) name=me.data.name; }catch(_){}
     current={ email:email, role:role, name:name };
     await loadAllData();
+    _entered=true;
     enterApp();
   } finally { _checking=false; }
 }
-sb.auth.onAuthStateChange(()=>{ checkSession(); });
+sb.auth.onAuthStateChange((event)=>{
+  if(event==='SIGNED_OUT'){ _entered=false; current=null; document.body.classList.remove('authed'); return; }
+  if(!_entered) checkSession();
+});
 checkSession();
 
 /* ---------- загрузка реальных данных ---------- */
@@ -1046,6 +1051,7 @@ async function loadAllData(){
   }catch(e){ console.error('loadAllData',e); toast('Не удалось загрузить часть данных.'); }
 }
 document.getElementById('admLogout').addEventListener('click', async ()=>{
+  _entered=false;
   try{ await sb.auth.signOut(); }catch(_){}
   current=null; document.body.classList.remove('authed');
 });
