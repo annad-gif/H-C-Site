@@ -955,6 +955,9 @@
 const SB_URL = 'https://byerqfuuprmmykncjqms.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5ZXJxZnV1cHJtbXlrbmNqcW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjA1MDcsImV4cCI6MjA5MzYzNjUwN30.KWXJ1G_dp6qICJUA-fLX8hI9Na28f1BvxGH9aM0PPJE';
 const sb = window.supabase.createClient(SB_URL, SB_KEY, { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } });
+const SB_STAFFLY_URL='https://qgwfecctozkchcjabgsx.supabase.co';
+const SB_STAFFLY_KEY='sb_publishable_BZze9MRJ37YtILL6qWtfHA_N7NF7Ql6';
+const sbStaffly = window.supabase.createClient(SB_STAFFLY_URL, SB_STAFFLY_KEY, { auth:{ persistSession:false } });
 const AUTH_CONFIG = { useLiveAuth:true };
 const CAT_RU = {article:'Статья', news:'Новость', video:'Видео', photo:'Фото'};
 const CAT_EN = {'Статья':'article','Новость':'news','Видео':'video','Фото':'photo'};
@@ -975,8 +978,9 @@ let CAND = [{"id": "HC-1042", "field": "IT — Backend-разработка", "d
 let MAT = [{"id": "M-01", "cat": "Статья", "title": "Как составить вакансию, на которую откликаются", "desc": "7 принципов, которые повышают конверсию объявления.", "body": "Хорошее объявление о вакансии — это продукт. Оно отвечает на три вопроса кандидата: что я буду делать, что я получу и почему именно эта компания.", "disabled": false}, {"id": "M-02", "cat": "Новость", "title": "Рынок IT-найма в Узбекистане", "desc": "Спрос на разработчиков вырос, сроки закрытия вакансий сократились.", "body": "За первое полугодие 2026 года спрос на IT-специалистов в Узбекистане заметно вырос, а доля удалённых офферов продолжает расти.", "disabled": false}, {"id": "M-03", "cat": "Видео", "title": "Онбординг в Human and Capital", "desc": "За 4 минуты показываем путь нового сотрудника.", "body": "В этом видео мы показываем, как устроен процесс адаптации новых сотрудников: ключевые этапы, роль наставника и первая неделя.", "disabled": true}];
 let SEO = [{"id": "home", "page": "Главная", "url": "index.html", "title": "Human and Capital — кадровое агентство в Узбекистане", "desc": "Подбор персонала, рекрутмент, консалтинг и аутстаффинг в Ташкенте. Закрываем вакансии быстро и с гарантией.", "keywords": "кадровое агентство ташкент, подбор персонала узбекистан, рекрутмент", "indexed": true}, {"id": "rec", "page": "Рекрутмент", "url": "recruitment.html", "title": "Рекрутмент — Human and Capital", "desc": "Профессиональный подбор персонала под ключ: от заявки до выхода кандидата. Executive search и массовый подбор.", "keywords": "рекрутмент, executive search, поиск сотрудников", "indexed": true}, {"id": "cons", "page": "Консалтинг", "url": "consulting.html", "title": "Консалтинг — Human and Capital", "desc": "HR-консалтинг под ключ: кадровый аудит, обучение, адаптация, анализ рынка труда и прескриннинг.", "keywords": "hr консалтинг, кадровый аудит, анализ рынка труда", "indexed": true}, {"id": "vac", "page": "Наши вакансии", "url": "vacancies.html", "title": "Наши вакансии — Human and Capital", "desc": "Актуальные вакансии в IT, BPO, финансах и маркетинге. Откликнитесь и отправьте резюме онлайн.", "keywords": "вакансии ташкент, работа узбекистан, it вакансии", "indexed": true}, {"id": "tp", "page": "Банк резюме", "url": "talent-pool.html", "title": "Банк резюме — Human and Capital", "desc": "База проверенных кандидатов. Фильтруйте по навыкам, сфере и городу и отправляйте заявку.", "keywords": "банк резюме, база кандидатов, найти сотрудника", "indexed": true}, {"id": "res", "page": "Полезные материалы", "url": "resources.html", "title": "Полезные материалы — Human and Capital", "desc": "Статьи, новости и видео о подборе персонала, HR и рынке труда в Узбекистане.", "keywords": "hr блог, статьи о подборе, рынок труда", "indexed": false}];
 let SEO_CHECKS = [{"k": "Заголовки (title) заданы для всех страниц", "ok": true}, {"k": "Мета-описания заполнены", "ok": true}, {"k": "Карта сайта sitemap.xml отправлена в Google", "ok": true}, {"k": "robots.txt разрешает индексацию", "ok": true}, {"k": "HTTPS-сертификат активен", "ok": true}, {"k": "Сайт адаптирован под мобильные", "ok": true}, {"k": "Микроразметка Schema.org (Organization)", "ok": false}, {"k": "Alt-теги у всех изображений", "ok": false}, {"k": "Подключён Google Search Console", "ok": true}, {"k": "Скорость загрузки (Core Web Vitals) — зелёная зона", "ok": false}];
-let LEADS = [{"id": "L-2041", "date": "18.06.2026", "company": "Texnopro LLC", "name": "Бекзод А.", "contact": "+998 90 111 22 33", "service": "Рекрутмент", "message": "Нужен Senior Python-разработчик, срочно. Бюджет до 3500$.", "status": "new"}, {"id": "L-2040", "date": "17.06.2026", "company": "Silk Finance", "name": "Нигора С.", "contact": "people@silkfin.uz", "service": "HR-консалтинг", "message": "Интересует кадровый аудит и постановка системы адаптации.", "status": "in_progress"}, {"id": "L-2039", "date": "16.06.2026", "company": "BPO United", "name": "Тимур В.", "contact": "+998 93 333 44 55", "service": "Подбор (банк резюме)", "message": "Отметили 4 кандидата в банке резюме, ждём контакты.", "status": "new"}, {"id": "L-2038", "date": "15.06.2026", "company": "Aloqa Group", "name": "Ситора М.", "contact": "hr@aloqa.uz", "service": "Аутстаффинг", "message": "Хотим вывести 10 операторов за штат. Расскажите про условия.", "status": "done"}];
-let APPS = [{"id": "A-5077", "date": "18.06.2026", "name": "Жасур Х.", "vacancy": "Senior Backend-разработчик (Python)", "phone": "+998 90 777 11 22", "email": "jasur@mail.com", "cv": "jasur_cv.pdf", "status": "new"}, {"id": "A-5076", "date": "18.06.2026", "name": "Дильноза Т.", "vacancy": "Оператор контакт-центра", "phone": "+998 91 555 33 44", "email": "dilnoza@mail.com", "cv": "—", "status": "new"}, {"id": "A-5075", "date": "17.06.2026", "name": "Олег П.", "vacancy": "Performance-маркетолог", "phone": "+998 93 222 88 99", "email": "oleg@mail.com", "cv": "oleg_resume.pdf", "status": "in_progress"}, {"id": "A-5074", "date": "16.06.2026", "name": "Камола Р.", "vacancy": "Финансовый менеджер", "phone": "+998 94 121 34 56", "email": "kamola@mail.com", "cv": "kamola_cv.pdf", "status": "done"}, {"id": "A-5073", "date": "15.06.2026", "name": "Бобур Н.", "vacancy": "Senior Backend-разработчик (Python)", "phone": "+998 90 909 10 11", "email": "bobur@mail.com", "cv": "bobur_cv.pdf", "status": "new"}];
+let LEADS = [];
+let APPS = [];
+let SITE_LEADS = {new_count:0,total_count:0};
 const ANALYTICS = {"views": 18420, "visitors": 7240, "leads_month": 36, "apps_month": 128, "conversion": "2.4%", "series": [{"d": "Пн", "v": 2100}, {"d": "Вт", "v": 2450}, {"d": "Ср", "v": 2780}, {"d": "Чт", "v": 2600}, {"d": "Пт", "v": 3120}, {"d": "Сб", "v": 1980}, {"d": "Вс", "v": 1390}], "top_pages": [{"page": "Главная", "views": 6120, "avg": "01:42"}, {"page": "Наши вакансии", "views": 4380, "avg": "02:15"}, {"page": "Банк резюме", "views": 3210, "avg": "02:48"}, {"page": "Рекрутмент", "views": 2140, "avg": "01:20"}, {"page": "Полезные материалы", "views": 1570, "avg": "01:05"}], "sources": [{"s": "Google (органика)", "p": 48}, {"s": "Прямые заходы", "p": 24}, {"s": "Соцсети", "p": 17}, {"s": "Реклама", "p": 11}]};
 let current = null, uid = 500;
 
@@ -1048,6 +1052,10 @@ async function loadAllData(){
     if(adm.data) EMP=adm.data.map(a=>({ id:a.id, name:a.name||a.email, email:a.email, role:a.role, status:a.status, added:fmtDate(a.created_at) }));
     if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'—'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
     if(cand.data) CAND=cand.data.map(c=>({ id:c.id, field:c.public_field||c.position||'—', city:c.public_city||'', date:fmtDate(c.created_at), experience:c.public_experience||'', results:c.public_results||'', salary:c.salary?('от '+Number(c.salary).toLocaleString('ru-RU')+' $'):'', languages:c.public_languages||'', skills:c.public_skills||[], description:c.public_summary||'', disabled:!c.is_public }));
+    try{ const ap=await sb.rpc('site_applications');
+         APPS=(ap.data||[]).map(a=>({ id:a.id, date:fmtDate(a.created_at), name:a.name||'—', vacancy:a.vacancy_title||a.position||'—', phone:a.phone||'', email:a.email||'', cv:a.resume_name||'', cv_url:a.resume_url||'' }));
+    }catch(e2){ console.error('site_applications',e2); }
+    try{ const lc=await sbStaffly.rpc('site_leads_count'); if(lc.data) SITE_LEADS=lc.data; }catch(e3){ console.error('site_leads_count',e3); }
   }catch(e){ console.error('loadAllData',e); toast('Не удалось загрузить часть данных.'); }
 }
 document.getElementById('admLogout').addEventListener('click', async ()=>{
@@ -1319,63 +1327,47 @@ function custModal(c){
 const STATUS = { new:['badge-gold','Новая'], in_progress:['badge-dark','В работе'], done:['badge-green','Обработана'] };
 function statusPill(s){ const x=STATUS[s]||['badge-grey',s]; return '<span class="badge '+x[0]+'">'+x[1]+'</span>'; }
 function nextStatus(s){ return s==='new'?'in_progress':(s==='in_progress'?'done':'new'); }
-let reqTab='leads';
+let reqTab='apps';
 function renderRequests(){
-  const c_=can('requests');
   const seg = '<div class="adm-seg">'
-    +'<button class="'+(reqTab==='leads'?'active':'')+'" data-reqtab="leads">Заявки от заказчиков <span class="adm-pill">'+LEADS.filter(l=>l.status==='new').length+'</span></button>'
-    +'<button class="'+(reqTab==='apps'?'active':'')+'" data-reqtab="apps">Резюме кандидатов <span class="adm-pill">'+APPS.filter(a=>a.status==='new').length+'</span></button>'
+    +'<button class="'+(reqTab==='apps'?'active':'')+'" data-reqtab="apps">Отклики с сайта <span class="adm-pill">'+APPS.length+'</span></button>'
+    +'<button class="'+(reqTab==='leads'?'active':'')+'" data-reqtab="leads">Заявки заказчиков <span class="adm-pill">'+(SITE_LEADS.new_count||0)+'</span></button>'
     +'</div>';
-  let tableHtml;
-  if(reqTab==='leads'){
-    const rows=LEADS.map(l=>'<tr>'
-      +'<td class="adm-sub">'+esc(l.date)+'</td>'
-      +'<td><b>'+esc(l.company)+'</b><div class="adm-sub">'+esc(l.name)+' · '+esc(l.contact)+'</div></td>'
-      +'<td><span class="badge badge-gold">'+esc(l.service)+'</span></td>'
-      +'<td>'+statusPill(l.status)+'</td>'
-      +'<td><div class="row-actions">'
-      +'<button class="ic-btn" data-req-view="leads:'+l.id+'"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>Открыть</button>'
-      +(c_?'<button class="ic-btn" data-req-status="leads:'+l.id+'"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-3-6.7L21 7"/></svg>Статус</button>':'')
-      +'</div></td></tr>').join('');
-    tableHtml='<table class="adm-table"><thead><tr><th>Дата</th><th>Заказчик</th><th>Услуга</th><th>Статус</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  let body;
+  if(reqTab==='apps'){
+    if(!APPS.length){
+      body='<div class="adm-card"><p class="adm-sub" style="margin:6px 2px">Пока нет откликов с сайта. Как только кандидат откликнется на вакансию через форму на сайте, отклик появится здесь с пометкой «Сайт».</p></div>';
+    } else {
+      const rows=APPS.map(a=>'<tr>'
+        +'<td class="adm-sub">'+esc(a.date)+'</td>'
+        +'<td><b>'+esc(a.name)+'</b> <span class="badge badge-gold">Сайт</span><div class="adm-sub">'+esc(a.phone)+((a.phone&&a.email)?' · ':'')+esc(a.email)+'</div></td>'
+        +'<td>'+esc(a.vacancy)+'</td>'
+        +'<td>'+(a.cv_url?'<a class="badge badge-green" href="'+esc(a.cv_url)+'" target="_blank" rel="noopener">'+esc(a.cv||'резюме')+'</a>':'<span class="adm-sub">анкета</span>')+'</td>'
+        +'<td><div class="row-actions"><button class="ic-btn" data-req-view="apps:'+esc(a.id)+'"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>Открыть</button></div></td>'
+        +'</tr>').join('');
+      body='<div class="adm-card"><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Дата</th><th>Кандидат</th><th>Вакансия</th><th>Резюме</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+    }
   } else {
-    const rows=APPS.map(a=>'<tr>'
-      +'<td class="adm-sub">'+esc(a.date)+'</td>'
-      +'<td><b>'+esc(a.name)+'</b><div class="adm-sub">'+esc(a.phone)+' · '+esc(a.email)+'</div></td>'
-      +'<td>'+esc(a.vacancy)+'</td>'
-      +'<td>'+(a.cv&&a.cv!=='—'?'<span class="badge badge-green">'+esc(a.cv)+'</span>':'<span class="adm-sub">анкета</span>')+'</td>'
-      +'<td>'+statusPill(a.status)+'</td>'
-      +'<td><div class="row-actions">'
-      +'<button class="ic-btn" data-req-view="apps:'+a.id+'"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>Открыть</button>'
-      +(c_?'<button class="ic-btn" data-req-status="apps:'+a.id+'"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-3-6.7L21 7"/></svg>Статус</button>':'')
-      +'</div></td></tr>').join('');
-    tableHtml='<table class="adm-table"><thead><tr><th>Дата</th><th>Кандидат</th><th>Вакансия</th><th>Резюме</th><th>Статус</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table>';
+    body='<div class="adm-card">'
+      +'<p class="adm-sub" style="margin:2px 2px 16px">Заявки из формы обратной связи автоматически попадают в CRM продаж (Staffly) на этап «Новый лид» с источником «Сайт». Их ведёт отдел продаж — здесь они не дублируются, чтобы персональные данные клиентов оставались в защищённой CRM.</p>'
+      +'<div class="adm-stats">'
+      +'<div class="adm-stat"><div class="num">'+(SITE_LEADS.new_count||0)+'</div><div class="lbl">Новых заявок с сайта</div></div>'
+      +'<div class="adm-stat"><div class="num">'+(SITE_LEADS.total_count||0)+'</div><div class="lbl">Всего заявок с сайта</div></div>'
+      +'</div></div>';
   }
-  main.innerHTML = head('Заявки','Заявки от заказчиков и резюме-отклики кандидатов с сайта. Меняйте статус по мере обработки.')
-    + seg + '<div class="adm-card"><div class="adm-table-wrap">'+tableHtml+'</div></div>';
+  main.innerHTML = head('Заявки','Отклики кандидатов с сайта и заявки заказчиков. Метка «Сайт» проставляется автоматически.')
+    + seg + body;
 }
 function reqViewModal(kind,id){
-  let html;
-  if(kind==='leads'){ const l=LEADS.find(x=>x.id===id);
-    html='<h3>Заявка '+esc(l.id)+'</h3><p class="msub">От заказчика · '+esc(l.date)+'</p>'
-      +'<div class="adm-kv"><b>Компания</b><span>'+esc(l.company)+'</span></div>'
-      +'<div class="adm-kv"><b>Контакт</b><span>'+esc(l.name)+' · '+esc(l.contact)+'</span></div>'
-      +'<div class="adm-kv"><b>Услуга</b><span>'+esc(l.service)+'</span></div>'
-      +'<div class="adm-kv"><b>Статус</b><span>'+statusPill(l.status)+'</span></div>'
-      +'<div class="adm-kv col"><b>Сообщение</b><p>'+esc(l.message)+'</p></div>';
-  } else { const a=APPS.find(x=>x.id===id);
-    html='<h3>Отклик '+esc(a.id)+'</h3><p class="msub">Резюме кандидата · '+esc(a.date)+'</p>'
-      +'<div class="adm-kv"><b>Кандидат</b><span>'+esc(a.name)+'</span></div>'
-      +'<div class="adm-kv"><b>Телефон</b><span>'+esc(a.phone)+'</span></div>'
-      +'<div class="adm-kv"><b>Email</b><span>'+esc(a.email)+'</span></div>'
-      +'<div class="adm-kv"><b>Вакансия</b><span>'+esc(a.vacancy)+'</span></div>'
-      +'<div class="adm-kv"><b>Резюме</b><span>'+(a.cv&&a.cv!=='—'?esc(a.cv):'заполнена анкета на сайте')+'</span></div>'
-      +'<div class="adm-kv"><b>Статус</b><span>'+statusPill(a.status)+'</span></div>';
-  }
+  const a=APPS.find(x=>x.id===id); if(!a) return;
+  const html='<h3>Отклик с сайта</h3><p class="msub">'+esc(a.date)+' · <span class="badge badge-gold">Сайт</span></p>'
+    +'<div class="adm-kv"><b>Кандидат</b><span>'+esc(a.name)+'</span></div>'
+    +'<div class="adm-kv"><b>Телефон</b><span>'+esc(a.phone||'—')+'</span></div>'
+    +'<div class="adm-kv"><b>Email</b><span>'+esc(a.email||'—')+'</span></div>'
+    +'<div class="adm-kv"><b>Вакансия</b><span>'+esc(a.vacancy)+'</span></div>'
+    +'<div class="adm-kv"><b>Резюме</b><span>'+(a.cv_url?'<a href="'+esc(a.cv_url)+'" target="_blank" rel="noopener" style="color:#8a701f;text-decoration:underline">'+esc(a.cv||'скачать резюме')+'</a>':'заполнена анкета на сайте')+'</span></div>';
   document.getElementById('admModalBody').innerHTML=html; openModal();
 }
-
-/* ---------- analytics ---------- */
 function renderAnalytics(){
   const A=ANALYTICS;
   const stat=(ic,n,l)=>'<div class="adm-stat"><div class="ic">'+ic+'</div><div class="num">'+n+'</div><div class="lbl">'+l+'</div></div>';
