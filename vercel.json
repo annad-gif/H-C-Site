@@ -1,0 +1,39 @@
+{
+  "redirects": [
+    {
+      "source": "/outstaffing",
+      "destination": "/outstaffing.html",
+      "permanent": true
+    },
+    {
+      "source": "/outstaffingeng",
+      "destination": "/outstaffing-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/outstaffinguz",
+      "destination": "/outstaffing-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/staffly/ru",
+      "destination": "/outstaffing.html",
+      "permanent": true
+    },
+    {
+      "source": "/kons",
+      "destination": "/consulting.html",
+      "permanent": true
+    },
+    {
+      "source": "/eng",
+      "destination": "/index-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/poisk",
+      "destination": "/vacancies.html",
+      "permanent": true
+    }
+  ]
+}
