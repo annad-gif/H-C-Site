@@ -118,7 +118,7 @@
         if (v.budget) { try { salary = new Intl.NumberFormat("ru-RU").format(v.budget) + " UZS"; } catch (e) { salary = v.budget + " UZS"; } }
         return {
           id: v.id, field: "", title: txt(v.title), company: "", city: txt(v.location),
-          salary: salary, type: txt(v.type),
+          salary: salary, type: txt(v.type), date: txt(v.created_at).slice(0, 10),
           responsibilities: lines(v.description), requirements: lines(v.requirements), offer: lines(v.offer)
         };
       });
