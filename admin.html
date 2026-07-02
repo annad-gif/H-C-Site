@@ -1369,41 +1369,12 @@ function reqViewModal(kind,id){
   document.getElementById('admModalBody').innerHTML=html; openModal();
 }
 function renderAnalytics(){
-  const A=ANALYTICS;
-  const stat=(ic,n,l)=>'<div class="adm-stat"><div class="ic">'+ic+'</div><div class="num">'+n+'</div><div class="lbl">'+l+'</div></div>';
-  const I={eye:'<svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>',
-    usr:'<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',
-    msg:'<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>',
-    doc:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>',
-    pct:'<svg viewBox="0 0 24 24"><path d="M19 5L5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>'};
-  const tiles = stat(I.eye, A.views.toLocaleString('ru-RU'),'Просмотров за месяц')
-    + stat(I.usr, A.visitors.toLocaleString('ru-RU'),'Уникальных посетителей')
-    + stat(I.msg, A.leads_month,'Заявок от заказчиков')
-    + stat(I.doc, A.apps_month,'Откликов кандидатов')
-    + stat(I.pct, A.conversion,'Конверсия в заявку');
-  // bar chart (inline SVG)
-  const maxV=Math.max(...A.series.map(s=>s.v));
-  const bw=46, gap=22, h=180, pad=8;
-  const bars=A.series.map((s,i)=>{ const bh=Math.round((s.v/maxV)*(h-30)); const x=i*(bw+gap)+pad; const y=h-bh-18;
-    return '<g><rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+bh+'" rx="7" fill="var(--mustard)"></rect>'
-      +'<text x="'+(x+bw/2)+'" y="'+(h-4)+'" text-anchor="middle" font-size="12" fill="var(--grey-500)">'+s.d+'</text>'
-      +'<text x="'+(x+bw/2)+'" y="'+(y-6)+'" text-anchor="middle" font-size="11" fill="var(--grey-700)">'+(s.v/1000).toFixed(1)+'k</text></g>'; }).join('');
-  const chartW=A.series.length*(bw+gap)+pad;
-  const chart='<div class="adm-card" style="padding:22px 24px;margin-bottom:22px"><div class="adm-card-title">Просмотры за неделю</div>'
-    +'<div style="overflow-x:auto"><svg viewBox="0 0 '+chartW+' '+h+'" style="width:100%;max-width:'+chartW+'px;height:200px">'+bars+'</svg></div></div>';
-  // top pages
-  const tp='<div class="adm-card"><div class="adm-card-title" style="padding:18px 20px 0">Топ страниц</div><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Страница</th><th>Просмотры</th><th>Ср. время</th></tr></thead><tbody>'
-    + A.top_pages.map(p=>'<tr><td><b>'+esc(p.page)+'</b></td><td>'+p.views.toLocaleString('ru-RU')+'</td><td class="adm-sub">'+esc(p.avg)+'</td></tr>').join('')
-    + '</tbody></table></div></div>';
-  // sources
-  const src='<div class="adm-card" style="padding:20px 22px"><div class="adm-card-title">Источники трафика</div>'
-    + A.sources.map(s=>'<div class="adm-bar"><div class="adm-bar-top"><span>'+esc(s.s)+'</span><b>'+s.p+'%</b></div><div class="adm-bar-track"><span style="width:'+s.p+'%"></span></div></div>').join('')
-    + '</div>';
-  main.innerHTML = head('Аналитика','Метрики сайта: просмотры, посетители, источники и заявки. Подключается к Google Analytics и Search Console.')
-    + '<div class="adm-note"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Показаны демо-данные. После подключения GA4 / Search Console здесь будут реальные цифры в реальном времени.</div></div>'
-    + '<div class="adm-stats">'+tiles+'</div>'
-    + chart
-    + '<div class="adm-2col">'+tp+src+'</div>';
+  const EMBED='https://datastudio.google.com/embed/reporting/9edb2691-51fa-42f8-9517-09a2a5a2d2c4/page/6zXD';
+  main.innerHTML = head('Аналитика','Данные из Google Search Console: клики, показы, поисковые запросы и страницы в результатах Google.')
+    + '<div class="adm-card" style="padding:0;overflow:hidden;border-radius:16px">'
+    +   '<iframe title="Search Console — Human and Capital" src="'+EMBED+'" style="width:100%;height:1500px;border:0;display:block" allowfullscreen></iframe>'
+    + '</div>'
+    + '<div class="adm-note" style="margin-top:16px"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Данные из Google Search Console обновляются автоматически (задержка ~2–3 дня). Если отчёт не отображается — в Looker Studio должны быть включены доступ «Все, у кого есть ссылка» и встраивание отчёта.</div></div>';
 }
 
 /* ---------- SEO ---------- */
