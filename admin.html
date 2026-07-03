@@ -1317,6 +1317,27 @@ function matUploadImage(file, maxW){
   });
 }
 
+function hcSanitizePaste(html){
+  var d=document.createElement('div'); d.innerHTML=html;
+  var junk=d.querySelectorAll('script,style,meta,link,title'); Array.prototype.forEach.call(junk,function(n){ if(n.parentNode)n.parentNode.removeChild(n); });
+  var allowed={P:1,BR:1,H2:1,H3:1,H4:1,UL:1,OL:1,LI:1,BLOCKQUOTE:1,B:1,STRONG:1,I:1,EM:1,U:1,A:1,IMG:1};
+  Array.prototype.forEach.call(d.querySelectorAll('*'),function(el){
+    Array.prototype.slice.call(el.attributes).forEach(function(a){
+      var keep=(el.tagName==='A'&&a.name==='href')||(el.tagName==='IMG'&&(a.name==='src'||a.name==='alt'));
+      if(!keep) el.removeAttribute(a.name);
+    });
+  });
+  var guard=0, changed=true;
+  while(changed && guard++<8000){ changed=false;
+    var els=d.querySelectorAll('*');
+    for(var i=0;i<els.length;i++){ var el=els[i], t=el.tagName;
+      if(t==='H1'||t==='DIV'){ var r=document.createElement(t==='H1'?'h2':'p'); while(el.firstChild)r.appendChild(el.firstChild); el.parentNode.replaceChild(r,el); changed=true; break; }
+      if(!allowed[t]){ while(el.firstChild)el.parentNode.insertBefore(el.firstChild,el); el.parentNode.removeChild(el); changed=true; break; }
+    }
+  }
+  return d.innerHTML.replace(/&nbsp;/g,' ').replace(/<p>\s*<\/p>/gi,'').replace(/[ \t]{2,}/g,' ').trim();
+}
+
 function matModal(m){
   const isEdit=!!m;
   const cats=['Статья','Новость','Видео','Фото'];
@@ -1356,6 +1377,7 @@ function wireMatEditor(){
   let savedRange=null;
   function saveSel(){ const s=window.getSelection(); if(s.rangeCount && editor.contains(s.anchorNode)) savedRange=s.getRangeAt(0).cloneRange(); }
   editor.addEventListener('keyup',saveSel); editor.addEventListener('mouseup',saveSel); editor.addEventListener('blur',saveSel);
+  editor.addEventListener('paste',function(e){ e.preventDefault(); var cd=e.clipboardData||window.clipboardData; if(!cd)return; var html=cd.getData('text/html'), text=cd.getData('text/plain'), clean; if(html && /<[a-z]/i.test(html)){ clean=hcSanitizePaste(html); } else { clean='<p>'+esc(text).replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>')+'</p>'; } focusRestore(); document.execCommand('insertHTML',false,clean); saveSel(); });
   function focusRestore(){ editor.focus(); if(savedRange){ const s=window.getSelection(); s.removeAllRanges(); s.addRange(savedRange); } }
 
   document.querySelectorAll('.mat-toolbar .mat-tb').forEach(function(b){

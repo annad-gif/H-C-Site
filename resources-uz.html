@@ -921,6 +921,12 @@
     .fab-btn{padding:0;width:54px;justify-content:center;}
   }
 
+.rs-text img{max-width:100%;height:auto;border-radius:12px;margin:14px 0;display:block}
+.rs-text h2{font-size:1.4rem;margin:1.2em 0 .4em}
+.rs-text h3{font-size:1.15rem;margin:1em 0 .4em}
+.rs-text blockquote{border-left:3px solid var(--mustard);margin:1em 0;padding:.3em 1em;opacity:.85}
+.rs-text ul,.rs-text ol{padding-left:1.4em;margin:.6em 0}
+.rs-text a{color:var(--mustard);text-decoration:underline}
 </style>
 </head>
 <body>
@@ -1181,7 +1187,7 @@ function readHTML(m){
   return '<div class="rs-modal-hero">'+hero+'</div>'
    +'<div class="rs-modal-cont"><span class="rs-badge">'+esc(I18N.cat[m.cat]||m.cat)+'</span>'
    +'<h2>'+esc(m.title)+'</h2><p class="rs-date">'+esc(m.date)+'</p>'
-   +'<div class="rs-text">'+esc(m.body)+'</div></div>';
+   +'<div class="rs-text">'+(/</.test(m.body)?m.body:esc(m.body).replace(/\n/g,'<br>'))+'</div></div>';
 }
 
 const TPL = { article:I18N.tpl_article, news:I18N.tpl_news, video:I18N.tpl_video, photo:I18N.tpl_photo };
