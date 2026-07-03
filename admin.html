@@ -887,6 +887,27 @@
   .adm-seo-tools{display:flex;flex-wrap:wrap;gap:11px;margin:18px 0 26px;}
   .adm-seo-tools .adm-btn{font-size:13px;}
 
+/* rich material editor */
+.mat-toolbar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.mat-tb{background:#f3f2ee;border:1px solid #e5e3dd;border-radius:8px;padding:6px 11px;font-size:13px;line-height:1;cursor:pointer;color:#0e0e0d}
+.mat-tb:hover{background:#eceae3;border-color:#c69a2e}
+.mat-editor{min-height:220px;max-height:460px;overflow:auto;border:1px solid #e5e3dd;border-radius:12px;padding:14px 16px;background:#fff;font-size:15px;line-height:1.6;color:#1a1a17}
+.mat-editor:focus{outline:none;border-color:#c69a2e;box-shadow:0 0 0 3px rgba(198,154,46,.15)}
+.mat-editor:empty:before{content:attr(data-ph);color:#9a978f}
+.mat-editor img{max-width:100%;height:auto;border-radius:10px;margin:10px 0;display:block}
+.mat-editor h2{font-size:20px;margin:16px 0 6px;font-weight:700}
+.mat-editor h3{font-size:17px;margin:14px 0 6px;font-weight:700}
+.mat-editor blockquote{border-left:3px solid #c69a2e;margin:12px 0;padding:4px 14px;color:#4a4844}
+.mat-editor ul,.mat-editor ol{padding-left:22px;margin:8px 0}
+.mat-editor a{color:#8a701f;text-decoration:underline}
+.mat-cover{display:flex;flex-direction:column;gap:8px}
+.mat-cover-prev{width:100%;max-width:420px;aspect-ratio:16/9;border:1px dashed #cfccc4;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#faf9f6;color:#9a978f;font-size:14px}
+.mat-cover-prev img{width:100%;height:100%;object-fit:cover}
+.mat-cover-btns{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.adm-mini{background:#0e0e0d;color:#fff;border:0;border-radius:8px;padding:8px 13px;font-size:13px;cursor:pointer}
+.adm-mini.ghost{background:#f3f2ee;color:#0e0e0d;border:1px solid #e5e3dd}
+.adm-mini:hover{opacity:.9}
+.mat-hint{font-size:12px;color:#8a8781}
 </style>
 <body class="adm">
 
@@ -1047,7 +1068,7 @@ async function loadAllData(){
       sb.from('vacancies').select('id,title,description,location,type,budget,requirements,offer,status,show_on_site').order('created_at',{ascending:false}),
       sb.from('candidates').select('id,position,salary,public_field,public_city,public_experience,public_results,public_summary,public_languages,public_skills,is_public,created_at').order('created_at',{ascending:false})
     ]);
-    if(mat.data) MAT=mat.data.map(m=>({ id:m.id, cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', disabled:!m.published }));
+    if(mat.data) MAT=mat.data.map(m=>({ id:m.id, cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', media_url:m.media_url||'', media_type:m.media_type||'', disabled:!m.published }));
     if(seo.data) SEO=seo.data.map(x=>({ id:x.id, page:x.page||'', url:x.url||'', title:x.title||'', desc:x.description||'', keywords:x.keywords||'', indexed:!!x.indexed }));
     if(adm.data) EMP=adm.data.map(a=>({ id:a.id, name:a.name||a.email, email:a.email, role:a.role, status:a.status, added:fmtDate(a.created_at) }));
     if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'—'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
@@ -1264,21 +1285,130 @@ function renderMaterials(){
       c_?'<button class="adm-btn" data-add="materials"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить материал</button>':'')
     + '<div class="adm-card"><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Заголовок</th><th>Тип</th><th>На сайте</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
+let _matCover = { url:'', type:'' };
+
+function matUploadImage(file, maxW){
+  return new Promise(function(resolve,reject){
+    if(!file){ reject(new Error('no file')); return; }
+    if(!/^image\//.test(file.type)){ reject(new Error('not image')); return; }
+    var rd=new FileReader();
+    rd.onload=function(){
+      var img=new Image();
+      img.onload=function(){
+        var w=img.width, h=img.height;
+        if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
+        var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        cv.toBlob(async function(blob){
+          try{
+            if(!blob) throw new Error('blob failed');
+            var uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now());
+            var path='materials/'+uid+'.jpg';
+            var up=await sb.storage.from('site-media').upload(path, blob, { contentType:'image/jpeg', upsert:false });
+            if(up.error) throw up.error;
+            var url=sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;
+            resolve(url);
+          }catch(e){ reject(e); }
+        },'image/jpeg',0.82);
+      };
+      img.onerror=reject; img.src=rd.result;
+    };
+    rd.onerror=reject; rd.readAsDataURL(file);
+  });
+}
+
 function matModal(m){
   const isEdit=!!m;
   const cats=['Статья','Новость','Видео','Фото'];
+  _matCover = { url: isEdit?(m.media_url||''):'', type: isEdit?(m.media_type||''):'' };
+  const TOOL=[['bold','B'],['italic','I'],['h2','H2'],['h3','H3'],['ul','• Список'],['ol','1. Список'],['quote','Цитата'],['link','Ссылка'],['image','Картинка']];
+  const tb=TOOL.map(t=>'<button type="button" class="mat-tb" data-cmd="'+t[0]+'">'+t[1]+'</button>').join('');
   document.getElementById('admModalBody').innerHTML =
-    '<h3>'+(isEdit?'Редактирование материала':'Новый материал')+'</h3><p class="msub">Текст, который вы напишете, появится в карточке и при нажатии «Читать».</p>'
+    '<h3>'+(isEdit?'Редактирование материала':'Новый материал')+'</h3>'
+    +'<p class="msub">Отформатируйте текст, добавьте картинки в статью и обложку. Всё появится на странице «Полезные материалы».</p>'
     +'<form id="matForm" data-id="'+(isEdit?m.id:'')+'">'
     + fg('Тип', '<select id="mCat">'+cats.map(x=>'<option'+(isEdit&&m.cat===x?' selected':'')+'>'+x+'</option>').join('')+'</select>')
     + fg('Заголовок', inp('mTitle', isEdit?m.title:'', 'Заголовок материала'))
     + fg('Краткое описание (для карточки)', ta('mDesc', isEdit?m.desc:'', '1–2 предложения', 60))
-    + fg('Полный текст / содержание', ta('mBody', isEdit?m.body:'', 'Текст статьи, новости или описание видео/фото', 140))
+    + '<div class="adm-fg"><label>Обложка (главная картинка)</label>'
+    +   '<div class="mat-cover">'
+    +     '<div class="mat-cover-prev" id="mCoverPrev">'+(_matCover.url?'<img src="'+esc(_matCover.url)+'">':'<span>Нет обложки</span>')+'</div>'
+    +     '<div class="mat-cover-btns">'
+    +       '<button type="button" class="adm-mini" id="mCoverBtn">Загрузить обложку</button>'
+    +       '<button type="button" class="adm-mini ghost" id="mCoverDel"'+(_matCover.url?'':' hidden')+'>Убрать</button>'
+    +       '<span class="mat-hint" id="mCoverHint"></span>'
+    +     '</div>'
+    +     '<input type="file" id="mCoverFile" accept="image/*" hidden>'
+    +   '</div></div>'
+    + '<div class="adm-fg"><label>Полный текст статьи</label>'
+    +   '<div class="mat-toolbar">'+tb+'</div>'
+    +   '<div class="mat-editor" id="mBody" contenteditable="true" data-ph="Начните писать статью…">'+(isEdit?(m.body||''):'')+'</div>'
+    +   '<span class="mat-hint" id="mInlineHint"></span>'
+    +   '<input type="file" id="mInlineFile" accept="image/*" hidden>'
+    + '</div>'
     + '<button type="submit" class="adm-cta">'+(isEdit?'Сохранить':'Опубликовать')+'</button></form>';
   openModal();
-  document.getElementById('matForm').addEventListener('submit',ev=>{ ev.preventDefault();
+  wireMatEditor();
+}
+
+function wireMatEditor(){
+  const editor=document.getElementById('mBody');
+  let savedRange=null;
+  function saveSel(){ const s=window.getSelection(); if(s.rangeCount && editor.contains(s.anchorNode)) savedRange=s.getRangeAt(0).cloneRange(); }
+  editor.addEventListener('keyup',saveSel); editor.addEventListener('mouseup',saveSel); editor.addEventListener('blur',saveSel);
+  function focusRestore(){ editor.focus(); if(savedRange){ const s=window.getSelection(); s.removeAllRanges(); s.addRange(savedRange); } }
+
+  document.querySelectorAll('.mat-toolbar .mat-tb').forEach(function(b){
+    b.addEventListener('mousedown',e=>e.preventDefault());
+    b.addEventListener('click',function(){
+      const cmd=b.dataset.cmd; focusRestore();
+      if(cmd==='bold') document.execCommand('bold');
+      else if(cmd==='italic') document.execCommand('italic');
+      else if(cmd==='h2') document.execCommand('formatBlock',false,'H2');
+      else if(cmd==='h3') document.execCommand('formatBlock',false,'H3');
+      else if(cmd==='ul') document.execCommand('insertUnorderedList');
+      else if(cmd==='ol') document.execCommand('insertOrderedList');
+      else if(cmd==='quote') document.execCommand('formatBlock',false,'BLOCKQUOTE');
+      else if(cmd==='link'){ const u=prompt('Ссылка (URL):','https://'); if(u) document.execCommand('createLink',false,u); }
+      else if(cmd==='image'){ saveSel(); document.getElementById('mInlineFile').click(); }
+      saveSel();
+    });
+  });
+
+  document.getElementById('mInlineFile').addEventListener('change',async function(e){
+    const f=e.target.files[0]; e.target.value=''; if(!f) return;
+    const hint=document.getElementById('mInlineHint'); hint.textContent='Загрузка картинки…';
+    try{
+      const url=await matUploadImage(f,1200);
+      focusRestore();
+      const img=document.createElement('img'); img.src=url; img.style.maxWidth='100%';
+      if(savedRange){ savedRange.insertNode(img); savedRange.setStartAfter(img); savedRange.collapse(true); saveSel(); }
+      else editor.appendChild(img);
+      hint.textContent='';
+    }catch(err){ console.error('inline',err); hint.textContent='Не удалось загрузить картинку'; }
+  });
+
+  document.getElementById('mCoverBtn').addEventListener('click',()=>document.getElementById('mCoverFile').click());
+  document.getElementById('mCoverFile').addEventListener('change',async function(e){
+    const f=e.target.files[0]; e.target.value=''; if(!f) return;
+    const hint=document.getElementById('mCoverHint'); hint.textContent='Загрузка…';
+    try{
+      const url=await matUploadImage(f,1600);
+      _matCover={ url:url, type:'image' };
+      document.getElementById('mCoverPrev').innerHTML='<img src="'+url+'">';
+      document.getElementById('mCoverDel').hidden=false; hint.textContent='';
+    }catch(err){ console.error('cover',err); hint.textContent='Не удалось загрузить'; }
+  });
+  document.getElementById('mCoverDel').addEventListener('click',function(){
+    _matCover={ url:'', type:'' };
+    document.getElementById('mCoverPrev').innerHTML='<span>Нет обложки</span>';
+    document.getElementById('mCoverDel').hidden=true;
+  });
+
+  document.getElementById('matForm').addEventListener('submit',function(ev){ ev.preventDefault();
     const id=ev.target.dataset.id;
-    const data={ cat:val('mCat'), title:val('mTitle'), desc:val('mDesc'), body:val('mBody') };
+    const body=editor.innerHTML.trim();
+    const data={ cat:val('mCat'), title:val('mTitle'), desc:val('mDesc'), body:body, media_url:_matCover.url||'', media_type:_matCover.url?(_matCover.type||'image'):'' };
     if(id){ const x=MAT.find(o=>o.id===id); Object.assign(x,data); pushCRM('material.update',x); toast('Материал сохранён.'); }
     else { const x=Object.assign({id:'M-'+(++uid),disabled:false},data); MAT.unshift(x); pushCRM('material.create',x); toast('Материал опубликован.'); }
     closeModal(); renderMaterials();
@@ -1470,10 +1600,10 @@ function val(id){ const el=document.getElementById(id); return el?el.value.trim(
 async function pushCRM(action,item){
   try{
     if(action==='material.create'){
-      const r=await sb.from('site_materials').insert({ cat:CAT_EN[item.cat]||'article', title:item.title, description:item.desc, body:item.body, published:!item.disabled, created_by:(current&&current.email)||null }).select('id').single();
+      const r=await sb.from('site_materials').insert({ cat:CAT_EN[item.cat]||'article', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, published:!item.disabled, created_by:(current&&current.email)||null }).select('id').single();
       if(r.error) throw r.error; item.id=r.data.id; renderMaterials();
     } else if(action==='material.update'){
-      const r=await sb.from('site_materials').update({ cat:CAT_EN[item.cat]||'article', title:item.title, description:item.desc, body:item.body, updated_at:new Date().toISOString() }).eq('id',item.id); if(r.error) throw r.error;
+      const r=await sb.from('site_materials').update({ cat:CAT_EN[item.cat]||'article', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, updated_at:new Date().toISOString() }).eq('id',item.id); if(r.error) throw r.error;
     } else if(action==='materials.toggle'){
       const r=await sb.from('site_materials').update({ published:!item.disabled }).eq('id',item.id); if(r.error) throw r.error;
     } else if(action==='materials.delete'){
