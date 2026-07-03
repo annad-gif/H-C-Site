@@ -1265,13 +1265,13 @@ function openDetail(c){
     +tpBlock(I18N.about, c.description)
     +tpBlock(I18N.lang, c.languages)
     +(skills?('<div class="tpm-block"><h4>'+esc(I18N.skills)+'</h4><div class="tpm-skills">'+skills+'</div></div>'):'');
-  const md=document.getElementById('tpModal'); if(md){ md.classList.add('open'); document.body.style.overflow='hidden'; }
+  const md=document.getElementById('tpModal'); if(!md)return;
+  var cl=document.getElementById('tpModalClose'); if(cl) cl.onclick=closeDetail;
+  md.onclick=function(e){ if(e.target===md)closeDetail(); };
+  md.classList.add('open'); document.body.style.overflow='hidden';
 }
 function closeDetail(){ const md=document.getElementById('tpModal'); if(md)md.classList.remove('open'); document.body.style.overflow=''; }
-(function(){ const md=document.getElementById('tpModal'); if(!md)return;
-  const cl=document.getElementById('tpModalClose'); if(cl)cl.addEventListener('click',closeDetail);
-  md.addEventListener('click',e=>{ if(e.target===md)closeDetail(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeDetail(); }); })();
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var md=document.getElementById('tpModal'); if(md&&md.classList.contains('open'))closeDetail(); } });
 (async function init(){ grid.innerHTML=Array(6).fill('<div class="tp-skel"></div>').join('');
   ALL=await loadCandidates(); totalEl.textContent=I18N.total.replace('{n}',ALL.length); buildChips(); render(); })();
 const nav=document.getElementById('nav'); nav.classList.add('scrolled');
