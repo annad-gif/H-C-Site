@@ -857,6 +857,26 @@
     .fab-btn{padding:0;width:54px;justify-content:center;}
   }
 
+.tp-card{cursor:pointer}
+.tp-card-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
+.tp-more{background:none;border:0;color:var(--mustard,#c69a2e);font-weight:600;font-size:14px;cursor:pointer;padding:0}
+.tp-more:hover{text-decoration:underline}
+.tp-modal{position:fixed;inset:0;background:rgba(14,14,13,.62);display:none;align-items:flex-start;justify-content:center;z-index:9999;padding:40px 18px;overflow:auto}
+.tp-modal.open{display:flex}
+.tp-modal-inner{position:relative;background:#fff;color:#1a1a17;max-width:680px;width:100%;border-radius:20px;padding:34px 32px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.tp-modal-close{position:absolute;top:16px;right:18px;width:38px;height:38px;border:0;border-radius:50%;background:#f3f2ee;font-size:22px;line-height:1;cursor:pointer;color:#0e0e0d}
+.tp-modal-close:hover{background:#e9e7e0}
+.tpm-head{margin-bottom:6px;padding-right:40px}
+.tpm-head h2{font-size:24px;margin:0 0 8px;line-height:1.25}
+.tpm-meta{display:flex;flex-wrap:wrap;gap:8px;color:#6b6862;font-size:14px}
+.tpm-meta span{background:#f3f2ee;padding:3px 10px;border-radius:20px}
+.tpm-salary{margin-top:10px;color:#0e0e0d;font-size:15px}
+.tpm-salary b{color:#8a701f}
+.tpm-block{margin-top:18px}
+.tpm-block h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#9a978f;margin:0 0 6px}
+.tpm-block p{margin:0;font-size:15px;line-height:1.6;white-space:pre-line}
+.tpm-skills{display:flex;flex-wrap:wrap;gap:8px}
+.tpm-skills span{background:#f7f2e3;border:1px solid #ecdcae;color:#6b551a;padding:5px 12px;border-radius:20px;font-size:13px}
 </style>
 <body>
 
@@ -949,7 +969,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const I18N = {"all": "Hammasi", "city": "Shahar", "exp": "Tajriba", "res": "Natijalar", "salary": "Maosh kutilmasi", "lang": "Tillar", "skills": "Ko‘nikmalar", "fit": "Mos keladi", "picked": "Tanlandi", "total": "Bazada jami: {n} ta rezyume", "shown": "Ko‘rsatildi: <b>{n}</b> / {m}", "toast": "{n} ta nomzod bo‘yicha so‘rov yuborildi! Tez orada bog‘lanamiz."};
+const I18N = {"date":"Sana","role":"Lavozim","more":"Batafsil","expFull":"Ish tajribasi","about":"Nomzod tavsifi","all": "Hammasi", "city": "Shahar", "exp": "Tajriba", "res": "Natijalar", "salary": "Maosh kutilmasi", "lang": "Tillar", "skills": "Ko‘nikmalar", "fit": "Mos keladi", "picked": "Tanlandi", "total": "Bazada jami: {n} ta rezyume", "shown": "Ko‘rsatildi: <b>{n}</b> / {m}", "toast": "{n} ta nomzod bo‘yicha so‘rov yuborildi! Tez orada bog‘lanamiz."};
 const CRM_CONFIG = { useLiveCRM:false, endpoint:'https://your-crm.example/api/candidates', apiKey:'' };
 function mapCrmRecord(r){
   return { id:r.id, field:r.specialization||r.field||'', date:r.published_at||r.date||'',
@@ -1190,21 +1210,21 @@ const grid=document.getElementById('tpGrid'), empty=document.getElementById('tpE
 let ALL=[], activeField=I18N.all, query=''; const selected=new Set();
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function cardHTML(c){
-  const skills=(c.skills||[]).map(s=>'<span>'+esc(s)+'</span>').join('');
+  const sk=(c.skills||[]).slice(0,3).map(s=>'<span>'+esc(s)+'</span>').join('');
   const sel=selected.has(c.id)?' selected':'';
   return '<article class="tp-card'+sel+'" data-id="'+esc(c.id)+'">'
    +'<div class="tp-card-top"><span class="tp-field"><span class="tp-ic">'+IC.field+'</span>'+esc(c.field)+'</span><span class="tp-date">'+esc(c.date)+'</span></div>'
    +'<div class="tp-rows">'
    +'<div class="tp-row"><span class="k">'+IC.city+I18N.city+'</span><span class="v">'+esc(c.city)+'</span></div>'
    +'<div class="tp-row"><span class="k">'+IC.exp+I18N.exp+'</span><span class="v">'+esc(c.experience)+'</span></div>'
-   +'<div class="tp-row"><span class="k">'+IC.res+I18N.res+'</span><span class="v">'+esc(c.results)+'</span></div>'
    +'<div class="tp-row tp-salary"><span class="k">'+IC.salary+I18N.salary+'</span><span class="v">'+esc(c.salary)+'</span></div>'
    +'<div class="tp-row"><span class="k">'+IC.lang+I18N.lang+'</span><span class="v">'+esc(c.languages)+'</span></div>'
-   +'<div class="tp-row"><span class="k">'+IC.skills+I18N.skills+'</span><span class="v"></span></div>'
-   +'</div><div class="tp-skills">'+skills+'</div><p class="tp-desc">'+esc(c.description)+'</p>'
-   +'<button class="tp-fit" data-id="'+esc(c.id)+'"><svg class="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'
-   +'<svg class="ic-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>'
-   +'<span class="tp-fit-label">'+(selected.has(c.id)?I18N.picked:I18N.fit)+'</span></button></article>';
+   +'</div>'
+   +'<div class="tp-skills">'+sk+'</div>'
+   +'<div class="tp-card-actions">'
+   +'<button class="tp-more" data-more="'+esc(c.id)+'">'+I18N.more+' →</button>'
+   +'<button class="tp-fit" data-id="'+esc(c.id)+'"><svg class="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="ic-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span class="tp-fit-label">'+(selected.has(c.id)?I18N.picked:I18N.fit)+'</span></button>'
+   +'</div></article>';
 }
 function applyFilters(){ const q=query.trim().toLowerCase();
   return ALL.filter(c=>{ if(activeField!==I18N.all && c.field!==activeField) return false; if(!q) return true;
@@ -1213,7 +1233,9 @@ function applyFilters(){ const q=query.trim().toLowerCase();
 function render(){ const list=applyFilters(); grid.innerHTML=list.map(cardHTML).join('');
   empty.style.display=list.length?'none':'block';
   shownEl.innerHTML=I18N.shown.replace('{n}',list.length).replace('{m}',ALL.length);
-  grid.querySelectorAll('.tp-fit').forEach(b=>b.addEventListener('click',()=>toggleSelect(b.dataset.id))); }
+  grid.querySelectorAll('.tp-card').forEach(card=>{ const id=card.dataset.id; const c=ALL.find(x=>String(x.id)===String(id));
+    const fit=card.querySelector('.tp-fit'); if(fit) fit.addEventListener('click',e=>{ e.stopPropagation(); toggleSelect(id); });
+    card.addEventListener('click',e=>{ if(e.target.closest('.tp-fit'))return; if(c)openDetail(c); }); }); }
 function toggleSelect(id){ if(selected.has(id))selected.delete(id); else selected.add(id);
   const card=grid.querySelector('.tp-card[data-id="'+CSS.escape(id)+'"]');
   if(card){ const on=selected.has(id); card.classList.toggle('selected',on);
@@ -1231,6 +1253,25 @@ document.getElementById('tpBulkSend').addEventListener('click',()=>{ if(!selecte
   console.log('Selected candidate IDs:',ids);
   const toast=document.getElementById('toast'); toast.textContent=I18N.toast.replace('{n}',ids.length);
   toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),4200); clearSel(); });
+function tpBlock(label,val){ return val?('<div class="tpm-block"><h4>'+esc(label)+'</h4><p>'+esc(val)+'</p></div>'):''; }
+function openDetail(c){
+  const skills=(c.skills||[]).map(s=>'<span>'+esc(s)+'</span>').join('');
+  const meta=[c.date,c.city].filter(Boolean).map(x=>'<span>'+esc(x)+'</span>').join('');
+  document.getElementById('tpModalBody').innerHTML=
+    '<div class="tpm-head"><h2>'+esc(c.field)+'</h2>'+(meta?'<div class="tpm-meta">'+meta+'</div>':'')
+    +(c.salary?'<div class="tpm-salary">'+esc(I18N.salary)+': <b>'+esc(c.salary)+'</b></div>':'')+'</div>'
+    +tpBlock(I18N.expFull, c.experience)
+    +tpBlock(I18N.res, c.results)
+    +tpBlock(I18N.about, c.description)
+    +tpBlock(I18N.lang, c.languages)
+    +(skills?('<div class="tpm-block"><h4>'+esc(I18N.skills)+'</h4><div class="tpm-skills">'+skills+'</div></div>'):'');
+  const md=document.getElementById('tpModal'); if(md){ md.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+function closeDetail(){ const md=document.getElementById('tpModal'); if(md)md.classList.remove('open'); document.body.style.overflow=''; }
+(function(){ const md=document.getElementById('tpModal'); if(!md)return;
+  const cl=document.getElementById('tpModalClose'); if(cl)cl.addEventListener('click',closeDetail);
+  md.addEventListener('click',e=>{ if(e.target===md)closeDetail(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeDetail(); }); })();
 (async function init(){ grid.innerHTML=Array(6).fill('<div class="tp-skel"></div>').join('');
   ALL=await loadCandidates(); totalEl.textContent=I18N.total.replace('{n}',ALL.length); buildChips(); render(); })();
 const nav=document.getElementById('nav'); nav.classList.add('scrolled');
@@ -1248,5 +1289,6 @@ langMenu.querySelectorAll('a').forEach(a=>{ a.addEventListener('mouseenter',()=>
 document.addEventListener('click',e=>{ if(!langToggle.contains(e.target)&&!langMenu.contains(e.target)){langMenu.classList.remove('open');langCurrent.textContent=langOriginal;} });
 </script>
 <script src="hc-crm.js" defer></script>
+<div class="tp-modal" id="tpModal"><div class="tp-modal-inner"><button class="tp-modal-close" id="tpModalClose" aria-label="Close">×</button><div id="tpModalBody"></div></div></div>
 </body>
 </html>

@@ -138,11 +138,14 @@
         if (t.age) extra.push("Возраст: " + t.age);
         var head = txt(t.role) || txt(t.field);
         if (t.level) head = head ? head + " · " + txt(t.level) : txt(t.level);
+        var salaryTxt = "";
+        if (t.salary) { try { salaryTxt = new Intl.NumberFormat("ru-RU").format(t.salary) + " UZS"; } catch (e) { salaryTxt = String(t.salary) + " UZS"; } }
         return {
           id: t.id, field: head, date: txt(t.created_at).slice(0, 10),
           city: txt(t.city), experience: txt(t.experience), results: txt(t.results),
-          salary: "", languages: txt(t.languages), skills: Array.isArray(t.skills) ? t.skills : [],
-          description: [txt(t.summary), extra.join(" · ")].filter(Boolean).join("\n")
+          salary: salaryTxt, languages: txt(t.languages), skills: Array.isArray(t.skills) ? t.skills : [],
+          description: txt(t.summary),
+          sphere: txt(t.field), level: txt(t.level), age: t.age || ""
         };
       });
     } catch (e) { console.error("loadTalent", e); return []; }
