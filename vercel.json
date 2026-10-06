@@ -34,6 +34,26 @@
       "source": "/poisk",
       "destination": "/vacancies.html",
       "permanent": true
+    },
+    {
+      "source": "/articles",
+      "destination": "/resources.html",
+      "permanent": false
     }
-  ]
+  ],
+  "rewrites": [
+    {
+      "source": "/articles/:slug",
+      "destination": "/api/article?slug=:slug"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    }
+  ],
+  "functions": {
+    "api/article.js": {
+      "includeFiles": "api/_shell.html"
+    }
+  }
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+{{HEAD}}
+<link rel="icon" href="/favicon.ico"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/article.css"/>
+</head>
+<body class="ar-page">
+
+<nav id="nav">
+  <a href="/index.html#about" class="logo">
+    <img src="/logo-white.png" alt="Human and Capital" class="logo-img logo-white-v"/>
+    <img src="/logo.png" alt="Human and Capital" class="logo-img logo-dark-v"/>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/index.html#about">О нас</a></li><li class="has-dropdown">
+      <a href="/index.html#services" class="dropdown-trigger">Услуги
+        <svg class="dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/recruitment.html">Рекрутмент</a></li>
+        <li><a href="/consulting.html">Консалтинг</a></li>
+        <li><a href="https://humancapital.uz/staffly/ru">Аутстаффинг</a></li>
+      </ul>
+    </li><li><a href="/vacancies.html">Наши вакансии</a></li><li><a href="/talent-pool.html">Банк кандидатов</a></li><li><a href="/resources.html" class="active">Полезные материалы</a></li><li><a href="/index.html#contact">Контакты</a></li>
+    <li class="lang-item">
+      <button class="lang-toggle" id="langToggle" aria-label="Выбор языка">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+        <span id="langCurrent">RU</span>
+      </button>
+      <ul class="lang-menu" id="langMenu">
+        <li><a href="/resources.html" data-lang="RU">RU</a></li>
+        <li><a href="/resources-en.html" data-lang="ENG">ENG</a></li>
+        <li><a href="/resources-uz.html" data-lang="UZB">UZB</a></li>
+      </ul>
+    </li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+</nav>
+
+{{MAIN}}
+
+<footer>
+  <a href="/vacancies.html" class="footer-logo"><img src="/logo-white.png" alt="Human and Capital" style="height:24px;width:auto;"/></a>
+  <p>© 2026 H&C. Все права защищены.</p>
+  <div class="footer-links">
+    <a href="/index.html#contact">Контакты</a>
+  </div>
+</footer>
+
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-menu" id="fabMenu">
+    <a href="https://www.instagram.com/human_and_capital_uz?igsh=MWlyb3ZvMHhqa2Y5Mw%3D%3D" target="_blank" rel="noopener" class="fab-item" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://t.me/Djuanna555" target="_blank" rel="noopener" class="fab-item" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 5L2 12.5l7 1M21 5l-2.5 15L9 13.5M21 5L9 13.5m0 0v5l3.5-3"/></svg></a>
+    <a href="https://wa.me/998958631199" target="_blank" rel="noopener" class="fab-item" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+    <a href="mailto:akmal.s@human-capital.org" target="_blank" rel="noopener" class="fab-item" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+    <a href="https://www.linkedin.com/company/human-and-capital/?viewAsMember=true" target="_blank" rel="noopener" class="fab-item" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/></svg></a>
+  </div>
+  <button class="fab-btn" id="fabBtn" aria-label="Связаться" aria-expanded="false">
+    <svg class="fab-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+    <svg class="fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <span>Связаться</span>
+  </button>
+</div>
+<script>(function(){var w=document.getElementById("fabWrap"),b=document.getElementById("fabBtn");if(w&&b){b.addEventListener("click",function(e){e.stopPropagation();var o=w.classList.toggle("open");b.setAttribute("aria-expanded",o);});document.addEventListener("click",function(e){if(!w.contains(e.target)){w.classList.remove("open");b.setAttribute("aria-expanded","false");}});}})();</script>
+<script>
+const nav=document.getElementById('nav');
+const onScroll=()=>nav.classList.toggle('scrolled', window.scrollY>40); onScroll(); window.addEventListener('scroll',onScroll);
+const burger=document.getElementById('burger'), navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+const dp=document.querySelector('.has-dropdown'), dt=dp?dp.querySelector('.dropdown-trigger'):null;
+if(dt){dt.addEventListener('click',e=>{ if(window.matchMedia('(max-width:1080px)').matches){e.preventDefault();e.stopPropagation();dp.classList.toggle('open-sub');}});}
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ if(a.classList.contains('dropdown-trigger')&&window.matchMedia('(max-width:1080px)').matches)return;
+  navLinks.classList.remove('open'); if(dp)dp.classList.remove('open-sub'); }));
+const langToggle=document.getElementById('langToggle'), langMenu=document.getElementById('langMenu'),
+  langCurrent=document.getElementById('langCurrent'), langOriginal=langCurrent.textContent;
+langToggle.addEventListener('click',e=>{e.stopPropagation();langMenu.classList.toggle('open');});
+langMenu.querySelectorAll('a').forEach(a=>{ a.addEventListener('mouseenter',()=>langCurrent.textContent=a.dataset.lang);
+  a.addEventListener('mouseleave',()=>langCurrent.textContent=langOriginal); a.addEventListener('click',()=>langCurrent.textContent=a.dataset.lang); });
+</script>
+</body>
+</html>
