@@ -13,7 +13,7 @@
   "use strict";
 
   var GA4_ID = "G-2RE32L3X9T";
-  var YM_ID = null; // номер счётчика Яндекс Метрики
+  var YM_ID = 113714067; // Яндекс Метрика
 
   // --- Google Analytics 4 ---
   window.dataLayer = window.dataLayer || [];
