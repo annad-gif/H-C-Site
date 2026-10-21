@@ -37,6 +37,8 @@
   }
 
   // --- helpers ---
+  // цели веб-аналитики (hc-analytics.js); без него — тихо ничего не делаем
+  function goal(name, params) { try { if (window.hcGoal) window.hcGoal(name, params); } catch (e) {} }
   function txt(v) { return (v == null ? "" : String(v)).trim(); }
   function lines(s) {
     return txt(s).split(/\r?\n|•|·|;/).map(function (x) { return x.trim(); }).filter(Boolean);
@@ -103,7 +105,7 @@
         p_source: "Сайт: " + location.pathname, p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
-      form.reset(); toast("Заявка отправлена! Мы свяжемся с вами."); return { ok: true };
+      form.reset(); goal("generate_lead", { form: "contact" }); toast("Заявка отправлена! Мы свяжемся с вами."); return { ok: true };
     } catch (e) { console.error("submitLead", e); toast("Не удалось отправить. Попробуйте позже.", false); return { ok: false }; }
   }
 
@@ -274,7 +276,7 @@
         p_resume_size: resume_size, p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
-      toast(amsg("ok")); return { ok: true };
+      goal("vacancy_apply", { form: vacancyId ? "vacancy" : "general" }); toast(amsg("ok")); return { ok: true };
     } catch (e) {
       console.error("submitApplication", e);
       var reason = applyError(e);
