@@ -1042,10 +1042,11 @@ const SB_URL='https://byerqfuuprmmykncjqms.supabase.co';
 const SB_KEY='sb_publishable_JBo7zlA02IyeaJLuTdZX5A_YEatYU6_';
 const sbMat = (window.supabase && window.supabase.createClient)
   ? window.supabase.createClient(SB_URL, SB_KEY, { auth:{ persistSession:false } }) : null;
+const PAGE_LANG = 'uz'; // язык этой страницы (site_materials.lang)
 function mapDbMaterial(r){
   const img = (r.media_type==='image'||r.media_type==='photo') ? (r.media_url||null) : null;
   const vid = (r.media_type==='video') ? (r.media_url||null) : null;
-  return { id:r.id, cat:r.cat||'article', date:(r.created_at||'').slice(0,10),
+  return { id:r.id, lang:r.lang||'ru', cat:r.cat||'article', date:(r.created_at||'').slice(0,10),
     title:r.title||'', desc:r.description||'', body:r.body||'',
     image:img, video:vid, disabled:!r.published };
 }
@@ -1055,7 +1056,8 @@ async function loadMaterials(){
     const { data, error } = await sbMat.from('site_materials')
       .select('*').order('sort',{ascending:true}).order('created_at',{ascending:false});
     if(error) throw error;
-    return (data||[]).map(mapDbMaterial);
+    // сначала материалы на языке страницы, затем остальные (порядок внутри групп сохраняется)
+    return (data||[]).map(mapDbMaterial).sort((a,b)=>(a.lang===PAGE_LANG?0:1)-(b.lang===PAGE_LANG?0:1));
   }catch(e){ console.error('Не удалось загрузить материалы из админки:', e); return []; }
 }
 const SAMPLE = [
@@ -1180,7 +1182,7 @@ function cardHTML(m){
    +'<div class="rs-thumb-overlay"><button class="rs-read" data-read="'+esc(m.id)+'">'+I18N.read
    +'<svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>'
    +'</div>'
-   +'<div class="rs-body"><span class="rs-date">'+esc(m.date)+'</span>'
+   +'<div class="rs-body"><span class="rs-date">'+esc(m.date)+(m.lang&&m.lang!==PAGE_LANG?' · '+esc(m.lang.toUpperCase()):'')+'</span>'
    +'<h3 class="rs-title"><a href="'+esc(articleUrl(m))+'" style="color:inherit;text-decoration:none">'+esc(m.title)+'</a></h3>'
    +'<p class="rs-desc">'+esc(m.desc)+'</p></div>'
    +'<div class="rs-admin-bar">'

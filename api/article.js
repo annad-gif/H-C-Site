@@ -6,8 +6,32 @@ const fs = require("fs");
 const path = require("path");
 const { SITE, articleSlug, articlePath, loadMaterials, esc } = require("./_lib");
 
-const SHELL = fs.readFileSync(path.join(__dirname, "_shell.html"), "utf8");
-const CAT = { article: "Статья", news: "Новость", video: "Видео", photo: "Фото" };
+// Оболочка и подписи на языке статьи (site_materials.lang); оболочки собирает tools/build_article_shell.py
+const SHELLS = {
+  ru: fs.readFileSync(path.join(__dirname, "_shell.html"), "utf8"),
+  en: fs.readFileSync(path.join(__dirname, "_shell-en.html"), "utf8"),
+  uz: fs.readFileSync(path.join(__dirname, "_shell-uz.html"), "utf8"),
+};
+const SHELL = SHELLS.ru;
+const L10N = {
+  ru: { locale: "ru-RU", og: "ru_RU", home: "Главная", homeUrl: "/", res: "Полезные материалы", resUrl: "/resources.html",
+        cat: { article: "Статья", news: "Новость", video: "Видео", photo: "Фото" },
+        ctaH: "Нужна помощь с подбором персонала?",
+        ctaP: "Human and Capital — рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.",
+        ctaA: "Оставить заявку →", ctaUrl: "/index.html#contact", related: "Читайте также", all: "Все материалы →" },
+  en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
+        cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
+        ctaH: "Need help hiring in Uzbekistan?",
+        ctaP: "Human and Capital is an HR company in Tashkent: recruitment, executive search, outstaffing and HR consulting for local and international companies.",
+        ctaA: "Send a request →", ctaUrl: "/hr-services-uzbekistan.html#contact", related: "Read also", all: "All resources →" },
+  uz: { locale: "uz-Latn-UZ", og: "uz_UZ", home: "Bosh sahifa", homeUrl: "/index-uz.html", res: "Foydali materiallar", resUrl: "/resources-uz.html",
+        cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
+        ctaH: "Xodim tanlashda yordam kerakmi?",
+        ctaP: "Human and Capital — O‘zbekistondagi rekruting agentligi. Ommaviy tanlovdan executive searchgacha — vazifangizga mos xodimlarni topamiz.",
+        ctaA: "Ariza qoldirish →", ctaUrl: "/index-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →" },
+};
+function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
+const CAT = L10N.ru.cat;
 
 // --- очистка HTML тела статьи (его пишут в админке) ---
 const ALLOWED = new Set(["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "b", "strong", "i", "em", "u", "a", "img", "figure", "figcaption"]);
@@ -65,8 +89,8 @@ function headline(m) {
   const joined = t.replace(/[.:!?]+$/, "") + ": " + (/^[А-ЯЁA-Z][а-яёa-z]/.test(d) ? d[0].toLowerCase() + d.slice(1) : d);
   return joined.length <= 110 ? joined : t;
 }
-function ruDate(iso) {
-  try { return new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Tashkent" }).format(new Date(iso)).replace(/\s*г\.$/, ""); }
+function ruDate(iso, locale) {
+  try { return new Intl.DateTimeFormat(locale || "ru-RU", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Tashkent" }).format(new Date(iso)).replace(/\s*г\.$/, ""); }
   catch (e) { return String(iso || "").slice(0, 10); }
 }
 function mediaHTML(m) {
@@ -85,23 +109,25 @@ function mediaHTML(m) {
 function imageOf(m) { return m.media_type !== "video" && safeUrl(m.media_url) ? m.media_url : null; }
 
 function relatedHTML(all, m) {
+  const L = L10N[langOf(m)];
   const i = all.findIndex(x => x.id === m.id);
   const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => x.id !== m.id);
-  const same = others.filter(x => x.cat === m.cat);
-  const pick = same.concat(others.filter(x => x.cat !== m.cat)).slice(0, 3);
+  // сначала материалы на том же языке, внутри — того же типа
+  const rank = x => (langOf(x) === langOf(m) ? 0 : 2) + (x.cat === m.cat ? 0 : 1);
+  const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
   if (!pick.length) return "";
-  return '<section class="ar-related"><div class="container"><h2>Читайте также</h2><div class="ar-rel-grid">'
+  return '<section class="ar-related"><div class="container"><h2>' + esc(L.related) + '</h2><div class="ar-rel-grid">'
     + pick.map(r => {
       const img = imageOf(r);
       return '<a class="ar-rel" href="' + esc(articlePath(r)) + '"><div class="ar-rel-img">'
         + (img ? '<img src="' + esc(img) + '" alt="' + esc(r.title) + '" loading="lazy"/>' : "")
         + '</div><div class="ar-rel-body"><h3>' + esc(r.title) + "</h3><p>" + esc(r.description || "") + "</p></div></a>";
     }).join("")
-    + '</div><a class="ar-all" href="/resources.html">Все материалы →</a></div></section>';
+    + '</div><a class="ar-all" href="' + L.resUrl + '">' + esc(L.all) + '</a></div></section>';
 }
 
-function render(head, main) {
-  return SHELL.replace("{{HEAD}}", () => head).replace("{{MAIN}}", () => main);
+function render(head, main, lang) {
+  return (SHELLS[lang] || SHELL).replace("{{HEAD}}", () => head).replace("{{MAIN}}", () => main);
 }
 
 function articlePage(all, m) {
@@ -111,7 +137,8 @@ function articlePage(all, m) {
   const text = plainText(bodyHtml);
   const desc = clip(m.description && h === m.title ? m.description + ". " + text : text, 158);
   const img = imageOf(m);
-  const cat = CAT[m.cat] || "Статья";
+  const lang = langOf(m), L = L10N[lang];
+  const cat = L.cat[m.cat] || L.cat.article;
   const ld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -122,7 +149,7 @@ function articlePage(all, m) {
         description: desc,
         mainEntityOfPage: url,
         url,
-        inLanguage: "ru",
+        inLanguage: lang,
         datePublished: m.created_at,
         dateModified: m.updated_at || m.created_at,
         image: img || SITE + "/og-cover.png",
@@ -134,8 +161,8 @@ function articlePage(all, m) {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Главная", item: SITE + "/" },
-          { "@type": "ListItem", position: 2, name: "Полезные материалы", item: SITE + "/resources.html" },
+          { "@type": "ListItem", position: 1, name: L.home, item: SITE + L.homeUrl },
+          { "@type": "ListItem", position: 2, name: L.res, item: SITE + L.resUrl },
           { "@type": "ListItem", position: 3, name: m.title, item: url },
         ],
       },
@@ -149,7 +176,7 @@ function articlePage(all, m) {
     '<link rel="canonical" href="' + esc(url) + '"/>',
     '<meta property="og:type" content="article"/>',
     '<meta property="og:site_name" content="Human and Capital"/>',
-    '<meta property="og:locale" content="ru_RU"/>',
+    '<meta property="og:locale" content="' + L.og + '"/>',
     '<meta property="og:url" content="' + esc(url) + '"/>',
     '<meta property="og:title" content="' + esc(h) + '"/>',
     '<meta property="og:description" content="' + esc(desc) + '"/>',
@@ -163,22 +190,22 @@ function articlePage(all, m) {
     '<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "</script>",
   ].join("\n");
   const main = '<header class="ar-hero"><div class="container">'
-    + '<div class="ar-crumbs"><a href="/">Главная</a><span aria-hidden="true">/</span>'
-    + '<a href="/resources.html">Полезные материалы</a></div>'
+    + '<div class="ar-crumbs"><a href="' + L.homeUrl + '">' + esc(L.home) + '</a><span aria-hidden="true">/</span>'
+    + '<a href="' + L.resUrl + '">' + esc(L.res) + '</a></div>'
     + '<span class="ar-badge">' + esc(cat) + "</span>"
     + "<h1>" + esc(m.title) + "</h1>"
     + (m.description ? '<p class="ar-lead">' + esc(m.description) + "</p>" : "")
-    + '<time class="ar-date" datetime="' + esc(String(m.created_at || "").slice(0, 10)) + '">' + esc(ruDate(m.created_at)) + "</time>"
+    + '<time class="ar-date" datetime="' + esc(String(m.created_at || "").slice(0, 10)) + '">' + esc(ruDate(m.created_at, L.locale)) + "</time>"
     + "</div></header>"
     + '<main class="ar-main"><div class="container"><article>'
     + mediaHTML(m)
     + '<div class="ar-text">' + bodyHtml + "</div></article>"
-    + '<aside class="ar-cta"><div><h2>Нужна помощь с подбором персонала?</h2>'
-    + "<p>Human and Capital — рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.</p></div>"
-    + '<a href="/index.html#contact">Оставить заявку →</a></aside>'
+    + '<aside class="ar-cta"><div><h2>' + esc(L.ctaH) + "</h2>"
+    + "<p>" + esc(L.ctaP) + "</p></div>"
+    + '<a href="' + L.ctaUrl + '">' + esc(L.ctaA) + "</a></aside>"
     + "</div></main>"
     + relatedHTML(all, m);
-  return render(head, main);
+  return render(head, main, lang);
 }
 
 function notFoundPage() {
