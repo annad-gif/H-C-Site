@@ -1,7 +1,7 @@
 /* /sitemap.xml (rewrite в vercel.json): страницы сайта на трёх языках + статьи из админки. */
 "use strict";
 
-const { SITE, articlePath, loadMaterials, PAGES, pageUrl, esc } = require("./_lib");
+const { SITE, articlePath, loadMaterials, vacancyPath, loadVacancies, PAGES, pageUrl, esc } = require("./_lib");
 
 const LASTMOD_PAGES = "2026-10-22"; // обновлять при заметных правках страниц
 
@@ -28,6 +28,16 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     console.error(e);
     ok = false; // без статей, но карта сайта всё равно отдаётся
+  }
+  try {
+    for (const v of await loadVacancies()) {
+      out.push("  <url>", "    <loc>" + esc(SITE + vacancyPath(v)) + "</loc>",
+        "    <lastmod>" + String(v.created_at || "").slice(0, 10) + "</lastmod>",
+        "    <priority>0.7</priority>", "  </url>");
+    }
+  } catch (e) {
+    console.error(e);
+    ok = false; // без вакансий, но карта сайта всё равно отдаётся
   }
   // отдельные страницы без языковых версий
   out.push("  <url>", "    <loc>" + SITE + "/hr-services-uzbekistan.html</loc>", "    <lastmod>2026-10-22</lastmod>",

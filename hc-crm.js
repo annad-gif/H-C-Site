@@ -109,6 +109,16 @@
     } catch (e) { console.error("submitLead", e); toast("Не удалось отправить. Попробуйте позже.", false); return { ok: false }; }
   }
 
+  // --- адрес страницы вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
+  // Та же схема в api/_lib.js (vacancySlug/articleSlug) — менять синхронно.
+  var TR = { "а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"zh","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya","ў":"o","қ":"q","ғ":"g","ҳ":"h" };
+  function vacancyPath(v) {
+    var base = String(v.title || "").toLowerCase().split("").map(function (c) { return c in TR ? TR[c] : c; }).join("")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 70).replace(/-+$/, "");
+    var id = String(v.id).slice(0, 8);
+    return "/vacancies/" + (base ? base + "-" + id : id);
+  }
+
   // === ВАКАНСИИ ← ATS (витрина public_vacancies) ===
   async function loadVacancies() {
     try {
@@ -119,7 +129,7 @@
         var salary = "";
         if (v.budget) { try { salary = new Intl.NumberFormat("ru-RU").format(v.budget) + " UZS"; } catch (e) { salary = v.budget + " UZS"; } }
         return {
-          id: v.id, field: "", title: txt(v.title), company: "", city: txt(v.location),
+          id: v.id, url: vacancyPath(v), field: "", title: txt(v.title), company: "", city: txt(v.location),
           salary: salary, type: txt(v.type), date: txt(v.created_at).slice(0, 10),
           responsibilities: lines(v.description), requirements: lines(v.requirements), offer: lines(v.offer)
         };

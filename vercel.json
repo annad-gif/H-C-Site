@@ -137,12 +137,19 @@
       "destination": "/api/article?slug=:slug"
     },
     {
+      "source": "/vacancies/:slug",
+      "destination": "/api/vacancy?slug=:slug"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/api/sitemap"
     }
   ],
   "functions": {
     "api/article.js": {
+      "includeFiles": "api/_shell.html"
+    },
+    "api/vacancy.js": {
       "includeFiles": "api/_shell.html"
     }
   }

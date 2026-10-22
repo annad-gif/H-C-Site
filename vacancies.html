@@ -1041,7 +1041,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const I18N = {"all": "Все", "city": "Город", "total": "Открыто вакансий: {n}", "shown": "Показано <b>{n}</b> из {m}", "more": "Узнать подробнее", "apply": "Отправить резюме", "m_about": "О компании", "m_resp": "Обязанности", "m_req": "Требования", "m_offer": "Условия", "a_title": "Отправить резюме", "a_sub": "Заполните форму или загрузите готовое резюме — заявка уйдёт прямо в нашу систему.", "f_name": "Имя и фамилия", "f_phone": "Телефон", "f_email": "Email", "f_city": "Город", "f_exp": "Опыт работы", "f_skills": "Ключевые навыки", "f_msg": "Сопроводительное сообщение", "ph_name": "Ваше имя", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Ваш город", "ph_exp": "Напр.: 4 года, backend-разработка", "ph_skills": "Напр.: Python, SQL, Docker", "ph_msg": "Коротко о себе и почему вам интересна эта позиция…", "file_b": "Загрузить резюме", "file_h": "PDF, DOC, DOCX до 10 МБ", "orr": "или заполните вручную", "back": "Назад к вакансии", "submit": "Отправить заявку", "sending": "Отправка…", "toast": "Резюме отправлено! Мы свяжемся с вами в ближайшее время."};
+const I18N = {"page": "Страница вакансии", "all": "Все", "city": "Город", "total": "Открыто вакансий: {n}", "shown": "Показано <b>{n}</b> из {m}", "more": "Узнать подробнее", "apply": "Отправить резюме", "m_about": "О компании", "m_resp": "Обязанности", "m_req": "Требования", "m_offer": "Условия", "a_title": "Отправить резюме", "a_sub": "Заполните форму или загрузите готовое резюме — заявка уйдёт прямо в нашу систему.", "f_name": "Имя и фамилия", "f_phone": "Телефон", "f_email": "Email", "f_city": "Город", "f_exp": "Опыт работы", "f_skills": "Ключевые навыки", "f_msg": "Сопроводительное сообщение", "ph_name": "Ваше имя", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Ваш город", "ph_exp": "Напр.: 4 года, backend-разработка", "ph_skills": "Напр.: Python, SQL, Docker", "ph_msg": "Коротко о себе и почему вам интересна эта позиция…", "file_b": "Загрузить резюме", "file_h": "PDF, DOC, DOCX до 10 МБ", "orr": "или заполните вручную", "back": "Назад к вакансии", "submit": "Отправить заявку", "sending": "Отправка…", "toast": "Резюме отправлено! Мы свяжемся с вами в ближайшее время."};
 const CRM_CONFIG = { useLiveCRM:false, endpoint:'https://your-crm.example/api/vacancies', applyEndpoint:'https://your-crm.example/api/applications', apiKey:'' };
 function mapCrmVacancy(r){
   return { id:r.id, field:r.category||r.field||'', title:r.title||r.position||'',
@@ -1214,7 +1214,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','
 function cardHTML(v){
   return '<article class="vc-card" data-id="'+esc(v.id)+'">'
    +'<span class="vc-field">'+esc(v.field)+'</span>'
-   +'<h3 class="vc-title">'+esc(v.title)+'</h3>'
+   +'<h3 class="vc-title">'+(v.url?'<a class="vc-title-link" href="'+esc(v.url)+'" style="color:inherit;text-decoration:none">'+esc(v.title)+'</a>':esc(v.title))+'</h3>'
    +'<p class="vc-company">'+esc(v.company)+'</p>'
    +'<div class="vc-info"><span class="vc-salary">'+IcCash+esc(v.salary)+'</span><span>'+IcPin+esc(v.city)+'</span></div>'
    +'<div class="vc-actions">'
@@ -1230,6 +1230,7 @@ function detailHTML(v){
    +'<h2>'+esc(v.title)+'</h2>'
    +'<p class="m-company">'+esc(v.company)+'</p>'
    +'<div class="vc-info"><span class="vc-salary">'+IcCash+esc(v.salary)+'</span><span>'+IcPin+esc(v.city)+'</span>'+(v.type?'<span>'+IcClock+esc(v.type)+'</span>':'')+'</div>'
+   +(v.url?'<p style="margin:-6px 0 18px"><a class="vc-page-link" href="'+esc(v.url)+'" style="color:var(--mustard-dim);font-weight:600;font-size:14px">'+I18N.page+' →</a></p>':'')
    +listSec(I18N.m_resp,v.responsibilities)
    +listSec(I18N.m_req,v.requirements)
    +listSec(I18N.m_offer,v.offer)
@@ -1262,6 +1263,7 @@ function byId(id){ return ALL.find(x=>String(x.id)===String(id)); }
 
 document.addEventListener('click',e=>{
   const more=e.target.closest('[data-more]'); const apply=e.target.closest('[data-apply]');
+  if(e.target.closest('.vc-title-link,.vc-page-link')) return;
   const card=e.target.closest('.vc-card'); const close=e.target.closest('[data-close]');
   if(close){ closeModal(); return; }
   if(apply){ const v=byId(apply.dataset.apply); if(v){ openModal(applyHTML(v)); bindApply(v); } return; }
@@ -1295,42 +1297,11 @@ function buildChips(){ const fields=[I18N.all,...Array.from(new Set(ALL.map(v=>v
 searchEl.addEventListener('input',e=>{ query=e.target.value; render(); });
 
 
-function injectJobPostingSchema(list){
-  var old=document.querySelectorAll('script.jobposting-ld'); for(var i=0;i<old.length;i++) old[i].remove();
-  if(!Array.isArray(list)) return;
-  var ORG={"@type":"Organization","name":"Human and Capital","sameAs":"https://humancapital.uz/","logo":"https://humancapital.uz/logo.png"};
-  var today=new Date().toISOString().slice(0,10);
-  function e(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  function ul(a){ if(!a||!a.length) return ''; return '<ul>'+a.map(function(x){return '<li>'+e(x)+'</li>';}).join('')+'</ul>'; }
-  function et(t){ t=(t||'').toLowerCase();
-    if(/part|част/.test(t))return 'PART_TIME';
-    if(/contract|контракт|подряд/.test(t))return 'CONTRACTOR';
-    if(/intern|стаж/.test(t))return 'INTERN';
-    if(/temp|времен/.test(t))return 'TEMPORARY';
-    return 'FULL_TIME'; }
-  function plus(d,n){ var x=new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); }
-  list.forEach(function(v){
-    if(!v||!v.title) return;
-    var posted=(v.date||today), html='';
-    if(v.company) html+='<p>'+e(v.company)+'</p>';
-    if(v.responsibilities&&v.responsibilities.length) html+='<p><strong>Обязанности</strong></p>'+ul(v.responsibilities);
-    if(v.requirements&&v.requirements.length) html+='<p><strong>Требования</strong></p>'+ul(v.requirements);
-    if(v.offer&&v.offer.length) html+='<p><strong>Условия</strong></p>'+ul(v.offer);
-    if(!html) html='<p>'+e(v.title)+'</p>';
-    var jp={"@context":"https://schema.org/","@type":"JobPosting","title":v.title,"description":html,
-      "datePosted":posted,"validThrough":plus(posted,90),"employmentType":et(v.type),
-      "hiringOrganization":ORG,
-      "jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":(v.city||'Tashkent'),"addressCountry":"UZ"}},
-      "identifier":{"@type":"PropertyValue","name":"Human and Capital","value":String(v.id||'')},
-      "directApply":true};
-    if(v.field) jp.industry=v.field;
-    var el=document.createElement('script'); el.type='application/ld+json'; el.className='jobposting-ld';
-    el.textContent=JSON.stringify(jp); document.head.appendChild(el);
-  });
-}
+// Разметка JobPosting — на страницах /vacancies/<slug> (api/vacancy.js), не на списке.
 
 (async function init(){ grid.innerHTML=Array(6).fill('<div class="tp-skel" style="height:280px"></div>').join('');
-  ALL=await loadVacancies(); if(ALL!==SAMPLE){try{injectJobPostingSchema(ALL);}catch(_e){console.error(_e);}} totalEl.textContent=I18N.total.replace('{n}',ALL.length); buildChips(); render(); })();
+  ALL=await loadVacancies(); totalEl.textContent=I18N.total.replace('{n}',ALL.length); buildChips(); render();
+  const ap=new URLSearchParams(location.search).get('apply'); if(ap){ const v=byId(ap); if(v){ openModal(applyHTML(v)); bindApply(v); } } })();
 
 const nav=document.getElementById('nav'); nav.classList.add('scrolled');
 const burger=document.getElementById('burger'), navLinks=document.getElementById('navLinks');

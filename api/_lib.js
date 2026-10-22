@@ -18,6 +18,11 @@ function articleSlug(m) {
 }
 function articlePath(m) { return "/articles/" + articleSlug(m); }
 
+// --- адрес вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
+// Та же схема, что у статей; продублирована в hc-crm.js (vacancyPath) — менять синхронно.
+function vacancySlug(v) { return articleSlug(v); }
+function vacancyPath(v) { return "/vacancies/" + vacancySlug(v); }
+
 // --- загрузка материалов (кэш на время жизни инстанса функции) ---
 let cache = { at: 0, data: null };
 async function loadMaterials() {
@@ -27,6 +32,18 @@ async function loadMaterials() {
   if (!r.ok) throw new Error("site_materials " + r.status + ": " + (await r.text()).slice(0, 200));
   const data = await r.json();
   cache = { at: Date.now(), data };
+  return data;
+}
+
+// --- открытые вакансии из ATS (витрина public_vacancies, тот же публичный ключ, что в hc-crm.js) ---
+let vcache = { at: 0, data: null };
+async function loadVacancies() {
+  if (vcache.data && Date.now() - vcache.at < 60 * 1000) return vcache.data;
+  const url = SB_URL + "/rest/v1/public_vacancies?select=*&order=created_at.desc";
+  const r = await fetch(url, { headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } });
+  if (!r.ok) throw new Error("public_vacancies " + r.status + ": " + (await r.text()).slice(0, 200));
+  const data = await r.json();
+  vcache = { at: Date.now(), data };
   return data;
 }
 
@@ -41,4 +58,4 @@ function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-module.exports = { SITE, articleSlug, articlePath, loadMaterials, PAGES, pageUrl, esc };
+module.exports = { SITE, articleSlug, articlePath, loadMaterials, vacancySlug, vacancyPath, loadVacancies, PAGES, pageUrl, esc };
