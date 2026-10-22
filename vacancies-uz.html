@@ -1041,7 +1041,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const I18N = {"page": "Vakansiya sahifasi", "all": "Hammasi", "city": "Shahar", "total": "Ochiq vakansiyalar: {n}", "shown": "Ko‘rsatildi: <b>{n}</b> / {m}", "more": "Batafsil", "apply": "Rezyume yuborish", "m_about": "Kompaniya haqida", "m_resp": "Vazifalar", "m_req": "Talablar", "m_offer": "Shartlar", "a_title": "Rezyume yuborish", "a_sub": "Shaklni to‘ldiring yoki tayyor rezyumeni yuklang — ariza to‘g‘ridan-to‘g‘ri tizimimizga tushadi.", "f_name": "Ism va familiya", "f_phone": "Telefon", "f_email": "Email", "f_city": "Shahar", "f_exp": "Ish tajribasi", "f_skills": "Asosiy ko‘nikmalar", "f_msg": "Yo‘riqnoma xabari", "ph_name": "Ismingiz", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Shahringiz", "ph_exp": "Mas.: 4 yil, backend dasturlash", "ph_skills": "Mas.: Python, SQL, Docker", "ph_msg": "O‘zingiz haqingizda va nega bu lavozim qiziq ekanligi haqida qisqacha…", "file_b": "Rezyumeni yuklash", "file_h": "PDF, DOC, DOCX, 10 MB gacha", "orr": "yoki qo‘lda to‘ldiring", "back": "Vakansiyaga qaytish", "submit": "Arizani yuborish", "sending": "Yuborilmoqda…", "toast": "Rezyume yuborildi! Tez orada siz bilan bog‘lanamiz."};
+const I18N = {"none": "Hozircha ochiq vakansiyalar yo‘q. Keyinroq qayta kiring yoki <a href=\"talent-pool-uz.html\">nomzodlar bazasiga</a> rezyume qoldiring.", "page": "Vakansiya sahifasi", "all": "Hammasi", "city": "Shahar", "total": "Ochiq vakansiyalar: {n}", "shown": "Ko‘rsatildi: <b>{n}</b> / {m}", "more": "Batafsil", "apply": "Rezyume yuborish", "m_about": "Kompaniya haqida", "m_resp": "Vazifalar", "m_req": "Talablar", "m_offer": "Shartlar", "a_title": "Rezyume yuborish", "a_sub": "Shaklni to‘ldiring yoki tayyor rezyumeni yuklang — ariza to‘g‘ridan-to‘g‘ri tizimimizga tushadi.", "f_name": "Ism va familiya", "f_phone": "Telefon", "f_email": "Email", "f_city": "Shahar", "f_exp": "Ish tajribasi", "f_skills": "Asosiy ko‘nikmalar", "f_msg": "Yo‘riqnoma xabari", "ph_name": "Ismingiz", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Shahringiz", "ph_exp": "Mas.: 4 yil, backend dasturlash", "ph_skills": "Mas.: Python, SQL, Docker", "ph_msg": "O‘zingiz haqingizda va nega bu lavozim qiziq ekanligi haqida qisqacha…", "file_b": "Rezyumeni yuklash", "file_h": "PDF, DOC, DOCX, 10 MB gacha", "orr": "yoki qo‘lda to‘ldiring", "back": "Vakansiyaga qaytish", "submit": "Arizani yuborish", "sending": "Yuborilmoqda…", "toast": "Rezyume yuborildi! Tez orada siz bilan bog‘lanamiz."};
 const CRM_CONFIG = { useLiveCRM:false, endpoint:'https://your-crm.example/api/vacancies', applyEndpoint:'https://your-crm.example/api/applications', apiKey:'' };
 function mapCrmVacancy(r){
   return { id:r.id, field:r.category||r.field||'', title:r.title||r.position||'',
@@ -1051,8 +1051,8 @@ function mapCrmVacancy(r){
 }
 async function loadVacancies(){
   try{ for(var i=0;i<60 && !window.HCCRM;i++){ await new Promise(r=>setTimeout(r,100)); }
-    if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(list&&list.length) return list; } }catch(e){ console.error(e); }
-  return SAMPLE;
+    if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(Array.isArray(list)) return list; } }catch(e){ console.error(e); }
+  return []; // демо-вакансии (SAMPLE) на живом сайте не показываем: пустой список → блок «нет вакансий»
 }
 const SAMPLE = [
 {
@@ -1288,6 +1288,7 @@ function applyFilters(){ const q=query.trim().toLowerCase();
     const hay=[v.field,v.title,v.company,v.city,v.salary,(v.requirements||[]).join(' '),(v.responsibilities||[]).join(' ')].join(' ').toLowerCase();
     return hay.includes(q); }); }
 function render(){ const list=applyFilters(); grid.innerHTML=list.map(cardHTML).join('');
+  if(!ALL.length){ if(!empty.dataset.def) empty.dataset.def=empty.innerHTML; empty.innerHTML=I18N.none; } else if(empty.dataset.def){ empty.innerHTML=empty.dataset.def; }
   empty.style.display=list.length?'none':'block';
   shownEl.innerHTML=I18N.shown.replace('{n}',list.length).replace('{m}',ALL.length); }
 function buildChips(){ const fields=[I18N.all,...Array.from(new Set(ALL.map(v=>v.field))).sort()];

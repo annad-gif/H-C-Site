@@ -1041,7 +1041,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const I18N = {"page": "Страница вакансии", "all": "Все", "city": "Город", "total": "Открыто вакансий: {n}", "shown": "Показано <b>{n}</b> из {m}", "more": "Узнать подробнее", "apply": "Отправить резюме", "m_about": "О компании", "m_resp": "Обязанности", "m_req": "Требования", "m_offer": "Условия", "a_title": "Отправить резюме", "a_sub": "Заполните форму или загрузите готовое резюме — заявка уйдёт прямо в нашу систему.", "f_name": "Имя и фамилия", "f_phone": "Телефон", "f_email": "Email", "f_city": "Город", "f_exp": "Опыт работы", "f_skills": "Ключевые навыки", "f_msg": "Сопроводительное сообщение", "ph_name": "Ваше имя", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Ваш город", "ph_exp": "Напр.: 4 года, backend-разработка", "ph_skills": "Напр.: Python, SQL, Docker", "ph_msg": "Коротко о себе и почему вам интересна эта позиция…", "file_b": "Загрузить резюме", "file_h": "PDF, DOC, DOCX до 10 МБ", "orr": "или заполните вручную", "back": "Назад к вакансии", "submit": "Отправить заявку", "sending": "Отправка…", "toast": "Резюме отправлено! Мы свяжемся с вами в ближайшее время."};
+const I18N = {"none": "Сейчас открытых вакансий нет. Загляните позже или оставьте резюме в <a href=\"talent-pool.html\">кадровом резерве</a>.", "page": "Страница вакансии", "all": "Все", "city": "Город", "total": "Открыто вакансий: {n}", "shown": "Показано <b>{n}</b> из {m}", "more": "Узнать подробнее", "apply": "Отправить резюме", "m_about": "О компании", "m_resp": "Обязанности", "m_req": "Требования", "m_offer": "Условия", "a_title": "Отправить резюме", "a_sub": "Заполните форму или загрузите готовое резюме — заявка уйдёт прямо в нашу систему.", "f_name": "Имя и фамилия", "f_phone": "Телефон", "f_email": "Email", "f_city": "Город", "f_exp": "Опыт работы", "f_skills": "Ключевые навыки", "f_msg": "Сопроводительное сообщение", "ph_name": "Ваше имя", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Ваш город", "ph_exp": "Напр.: 4 года, backend-разработка", "ph_skills": "Напр.: Python, SQL, Docker", "ph_msg": "Коротко о себе и почему вам интересна эта позиция…", "file_b": "Загрузить резюме", "file_h": "PDF, DOC, DOCX до 10 МБ", "orr": "или заполните вручную", "back": "Назад к вакансии", "submit": "Отправить заявку", "sending": "Отправка…", "toast": "Резюме отправлено! Мы свяжемся с вами в ближайшее время."};
 const CRM_CONFIG = { useLiveCRM:false, endpoint:'https://your-crm.example/api/vacancies', applyEndpoint:'https://your-crm.example/api/applications', apiKey:'' };
 function mapCrmVacancy(r){
   return { id:r.id, field:r.category||r.field||'', title:r.title||r.position||'',
@@ -1051,8 +1051,8 @@ function mapCrmVacancy(r){
 }
 async function loadVacancies(){
   try{ for(var i=0;i<60 && !window.HCCRM;i++){ await new Promise(r=>setTimeout(r,100)); }
-    if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(list&&list.length) return list; } }catch(e){ console.error(e); }
-  return SAMPLE;
+    if(window.HCCRM){ const list=await window.HCCRM.loadVacancies(); if(Array.isArray(list)) return list; } }catch(e){ console.error(e); }
+  return []; // демо-вакансии (SAMPLE) на живом сайте не показываем: пустой список → блок «нет вакансий»
 }
 const SAMPLE = [
 {
@@ -1288,6 +1288,7 @@ function applyFilters(){ const q=query.trim().toLowerCase();
     const hay=[v.field,v.title,v.company,v.city,v.salary,(v.requirements||[]).join(' '),(v.responsibilities||[]).join(' ')].join(' ').toLowerCase();
     return hay.includes(q); }); }
 function render(){ const list=applyFilters(); grid.innerHTML=list.map(cardHTML).join('');
+  if(!ALL.length){ if(!empty.dataset.def) empty.dataset.def=empty.innerHTML; empty.innerHTML=I18N.none; } else if(empty.dataset.def){ empty.innerHTML=empty.dataset.def; }
   empty.style.display=list.length?'none':'block';
   shownEl.innerHTML=I18N.shown.replace('{n}',list.length).replace('{m}',ALL.length); }
 function buildChips(){ const fields=[I18N.all,...Array.from(new Set(ALL.map(v=>v.field))).sort()];
