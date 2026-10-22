@@ -39,6 +39,96 @@
       "source": "/articles",
       "destination": "/resources.html",
       "permanent": false
+    },
+    {
+      "source": "/ru",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "destination": "/index-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/uz",
+      "destination": "/index-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/recruitment",
+      "destination": "/recruitment.html",
+      "permanent": true
+    },
+    {
+      "source": "/recruitmenteng",
+      "destination": "/recruitment-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/recruitment/en",
+      "destination": "/recruitment-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/recruitmentuz",
+      "destination": "/recruitment-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/recruitment/uz",
+      "destination": "/recruitment-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/staffly",
+      "destination": "/outstaffing.html",
+      "permanent": true
+    },
+    {
+      "source": "/staffly/en",
+      "destination": "/outstaffing-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/staffly/uz",
+      "destination": "/outstaffing-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/consulting",
+      "destination": "/consulting.html",
+      "permanent": true
+    },
+    {
+      "source": "/consultingeng",
+      "destination": "/consulting-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/consultinguz",
+      "destination": "/consulting-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/vacancies",
+      "destination": "/vacancies.html",
+      "permanent": true
+    },
+    {
+      "source": "/talent-pool",
+      "destination": "/talent-pool.html",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/resources.html",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html",
+      "permanent": true
     }
   ],
   "rewrites": [
