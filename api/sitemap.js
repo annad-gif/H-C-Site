@@ -3,7 +3,7 @@
 
 const { SITE, articlePath, loadMaterials, PAGES, pageUrl, esc } = require("./_lib");
 
-const LASTMOD_PAGES = "2026-10-06"; // обновлять при заметных правках страниц
+const LASTMOD_PAGES = "2026-10-22"; // обновлять при заметных правках страниц
 
 module.exports = async function handler(req, res) {
   const out = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -29,6 +29,9 @@ module.exports = async function handler(req, res) {
     console.error(e);
     ok = false; // без статей, но карта сайта всё равно отдаётся
   }
+  // отдельные страницы без языковых версий
+  out.push("  <url>", "    <loc>" + SITE + "/hr-services-uzbekistan.html</loc>", "    <lastmod>2026-10-22</lastmod>",
+    "    <priority>0.9</priority>", "  </url>");
   out.push("  <url>", "    <loc>" + SITE + "/privacy.html</loc>", "    <priority>0.2</priority>", "  </url>", "</urlset>", "");
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/xml; charset=utf-8");
