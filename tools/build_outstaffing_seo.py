@@ -347,25 +347,32 @@ def strip_between(s, a, b):
     return s[:i] + s[j:].lstrip("\n")
 
 
-for lang, d in L.items():
-    p = d["file"]
-    s = open(p, encoding="utf-8").read()
-    s = strip_between(s, MARK_B, MARK_E)
-    s = strip_between(s, LD_B, LD_E)
-    i = s.find(CSS_B)
-    if i >= 0:
-        s = s[:i] + s[s.index(CSS_E) + len(CSS_E):]
 
-    s, n = re.subn(r"<title>[^<]*</title>", f"<title>{d['title']}</title>", s, count=1); assert n
-    for attr in ('name="description"', 'property="og:description"', 'name="twitter:description"'):
-        s, n = re.subn(r'(<meta ' + attr + r' content=")[^"]*(")', lambda m: m.group(1) + esc(d["desc"]) + m.group(2), s, count=1); assert n, attr
-    for attr in ('property="og:title"', 'name="twitter:title"'):
-        s, n = re.subn(r'(<meta ' + attr + r' content=")[^"]*(")', lambda m: m.group(1) + esc(d["title"]) + m.group(2), s, count=1); assert n, attr
-    s, n = re.subn(r'(<section class="rec-hero" id="home">.*?<h1>)[^<]*(</h1>)', lambda m: m.group(1) + d["h1"] + m.group(2), s, count=1, flags=re.S); assert n
+def main():
+    for lang, d in L.items():
+        p = d["file"]
+        s = open(p, encoding="utf-8").read()
+        s = strip_between(s, MARK_B, MARK_E)
+        s = strip_between(s, LD_B, LD_E)
+        i = s.find(CSS_B)
+        if i >= 0:
+            j = s.index(CSS_E) + len(CSS_E)
+            s = s[:i] + s[j + 1 if s[j:j + 1] == "\n" else j:]  # блок вставлялся вместе с переводом строки
 
-    s = s.replace("</style>", CSS + "\n</style>", 1)
-    s = s.replace("</head>", jsonld(d) + "</head>", 1)
-    assert s.count('<section id="contact">') == 1
-    s = s.replace('<section id="contact">', sections(d) + '<section id="contact">', 1)
-    open(p, "w", encoding="utf-8").write(s)
-    print("ok", p)
+        s, n = re.subn(r"<title>[^<]*</title>", f"<title>{d['title']}</title>", s, count=1); assert n
+        for attr in ('name="description"', 'property="og:description"', 'name="twitter:description"'):
+            s, n = re.subn(r'(<meta ' + attr + r' content=")[^"]*(")', lambda m: m.group(1) + esc(d["desc"]) + m.group(2), s, count=1); assert n, attr
+        for attr in ('property="og:title"', 'name="twitter:title"'):
+            s, n = re.subn(r'(<meta ' + attr + r' content=")[^"]*(")', lambda m: m.group(1) + esc(d["title"]) + m.group(2), s, count=1); assert n, attr
+        s, n = re.subn(r'(<section class="rec-hero" id="home">.*?<h1>)[^<]*(</h1>)', lambda m: m.group(1) + d["h1"] + m.group(2), s, count=1, flags=re.S); assert n
+
+        s = s.replace("</style>", CSS + "\n</style>", 1)
+        s = s.replace("</head>", jsonld(d) + "</head>", 1)
+        assert s.count('<section id="contact">') == 1
+        s = s.replace('<section id="contact">', sections(d) + '<section id="contact">', 1)
+        open(p, "w", encoding="utf-8").write(s)
+        print("ok", p)
+
+
+if __name__ == "__main__":
+    main()
