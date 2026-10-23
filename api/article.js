@@ -18,7 +18,7 @@ const L10N = {
         cat: { article: "Статья", news: "Новость", video: "Видео", photo: "Фото" },
         ctaH: "Нужна помощь с подбором персонала?",
         ctaP: "Human and Capital – рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.",
-        ctaA: "Оставить заявку →", ctaUrl: "/index.html#contact", related: "Читайте также", all: "Все материалы →" },
+        ctaA: "Оставить заявку →", ctaUrl: "/recruitment.html#contact", related: "Читайте также", all: "Все материалы →" },
   en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
         cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
         ctaH: "Need help hiring in Uzbekistan?",
@@ -28,7 +28,7 @@ const L10N = {
         cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
         ctaH: "Xodim tanlashda yordam kerakmi?",
         ctaP: "Human and Capital – O‘zbekistondagi rekruting agentligi. Ommaviy tanlovdan executive searchgacha – vazifangizga mos xodimlarni topamiz.",
-        ctaA: "Ariza qoldirish →", ctaUrl: "/index-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →" },
+        ctaA: "Ariza qoldirish →", ctaUrl: "/recruitment-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →" },
 };
 function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
 const CAT = L10N.ru.cat;

@@ -99,6 +99,7 @@ extra_css = """
   .hrs-prose{max-width:760px;}
   .hrs-prose p{font-size:17px;color:var(--grey-700);line-height:1.8;margin-top:18px;}
   .hrs-prose p strong{color:var(--black);font-weight:600;}
+  .hrs-prose p a{color:var(--mustard-dim);font-weight:600;}
   #hrs-services{background:var(--grey-50);}
   .hrs-svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;}
   .hrs-svc{display:flex;flex-direction:column;gap:18px;}
@@ -285,6 +286,7 @@ main = f"""
       <p><strong>Human and Capital</strong> is an HR company based in Tashkent that provides <strong>HR services in Uzbekistan</strong> to local businesses and international companies entering the Uzbek market. We find the right people, employ and support them on your behalf when needed, and help you build HR processes that keep them in the company.</p>
       <p>Instead of working with separate recruitment, outstaffing and consulting providers, you get one team that knows the local labour market, labour law and hiring practices – and that covers the whole cycle from the first request to the employee's adaptation.</p>
       <p>Our motto is simple: <strong>people and time are the most valuable resources</strong>. We help you find the first while saving the second.</p>
+      <p>Planning to build a team here from abroad? Start with our guide <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan</a>: the three employment models, the local talent market and the hiring process step by step.</p>
     </div>
   </div>
 </section>

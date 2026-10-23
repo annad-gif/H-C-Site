@@ -109,7 +109,7 @@ L["ru"] = dict(
         ("Оформление", "Трудоустраиваем сотрудников в нашей компании по законодательству РУз."),
         ("Работа и сопровождение", "Сотрудники работают на ваших задачах, мы ведём кадры, зарплату и отчётность."),
     ],
-    links='Нужен только подбор? – <a href="recruitment.html">Рекрутмент</a>. Хотите выстроить HR-процессы? – <a href="consulting.html">HR-консалтинг</a>.',
+    links='Нужен только подбор? – <a href="recruitment.html">Рекрутмент</a>. Хотите выстроить HR-процессы? – <a href="consulting.html">HR-консалтинг</a>. Набираете большую команду? – статья <a href="/articles/massovyy-podbor-personala-v-uzbekistane-37157357">«Массовый подбор персонала в Узбекистане»</a>.',
     faq_eyebrow="Вопросы и ответы", faq_title="Частые вопросы об аутстаффинге",
     faq=[
         ("Что такое аутстаффинг простыми словами?", "Сотрудники официально оформлены в аутстаффинговой компании, а работают на задачах и под руководством клиента. Провайдер отвечает за трудоустройство, расчёт зарплаты, кадровый учёт и отчётность, а клиент – за постановку задач и результат работы."),
@@ -166,7 +166,7 @@ L["en"] = dict(
         ("Employment", "Employees are hired by our company under Uzbek law."),
         ("Work & support", "Staff work on your tasks while we handle HR, payroll and reporting."),
     ],
-    links='Need recruitment only? – <a href="recruitment-en.html">Recruitment</a>. All our services – <a href="hr-services-uzbekistan.html">HR services in Uzbekistan</a>.',
+    links='Need recruitment only? – <a href="recruitment-en.html">Recruitment</a>. All our services – <a href="hr-services-uzbekistan.html">HR services in Uzbekistan</a>. Building a team from abroad? – read <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan: a guide for foreign companies</a>.',
     faq_eyebrow="FAQ", faq_title="Outstaffing in Uzbekistan: frequently asked questions",
     faq=[
         ("What is outstaffing?", "Employees are formally employed by an outstaffing company but work on the client's tasks under the client's management. The provider is responsible for employment, payroll, HR records and reporting, while the client sets the tasks and owns the results."),
