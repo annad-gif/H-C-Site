@@ -74,6 +74,18 @@ COVERS = {
 </div></div>
 <div class="foot">humancapital.uz · Полезные материалы</div>""",
 
+"agency_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Toshkentda <span class="acc">kadrlar agentligini</span> qanday tanlash kerak</h1>
+<p class="sub">Shartnomadan oldin beriladigan 10 ta savol</p></div>
+<div class="right">
+ <div class="item"><div class="num">01</div><div><b>Vakansiyani kim olib boradi?</b><span>rekruter tajribasi va bandligi</span></div></div>
+ <div class="item"><div class="num">04</div><div><b>Nomzodlar qanday baholanadi?</b><span>prescreening, suhbat, til</span></div></div>
+ <div class="item"><div class="num">06</div><div><b>Almashtirish kafolati bormi?</b><span>muddat va shartlar</span></div></div>
+ <div class="item"><div class="num">10</div><div><b>Qanday hisobot beriladi?</b><span>voronka va bozor haqida fikr</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
 "hiring_en": f"""
 <div><img class="logo" src="{LOGO}">
 <h1>Hiring in <span class="acc">Uzbekistan</span></h1>
