@@ -152,5 +152,16 @@
     "api/vacancy.js": {
       "includeFiles": "api/_shell.html"
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/anim/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }
