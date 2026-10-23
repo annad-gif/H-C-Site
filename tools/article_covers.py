@@ -96,6 +96,155 @@ COVERS = {
  <div class="item"><div class="ico">{ic('doc')}</div><div><b>Contractors</b><span>for short, defined projects</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Resources</div>""",
+
+# ---- переводы статей (EN/UZ/RU), 23.10.2026 ----
+"agency_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>How to choose a <span class="acc">recruitment agency</span> in Tashkent</h1>
+<p class="sub">10 questions to ask before you sign a contract</p></div>
+<div class="right">
+ <div class="item"><div class="num">01</div><div><b>Who handles the vacancy?</b><span>recruiter experience and workload</span></div></div>
+ <div class="item"><div class="num">04</div><div><b>How are candidates assessed?</b><span>pre-screening, interviews, language</span></div></div>
+ <div class="item"><div class="num">06</div><div><b>Is there a replacement guarantee?</b><span>period and conditions</span></div></div>
+ <div class="item"><div class="num">10</div><div><b>What reporting do you get?</b><span>funnel and market feedback</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"mass_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Mass recruitment <span class="acc">in Uzbekistan</span></h1>
+<p class="sub">How to fill dozens of identical vacancies quickly</p></div>
+<div class="right"><div class="funnel">
+ <div class="fb" style="width:100%;background:#13294a">{ic('people')}Applications</div>
+ <div class="fb" style="width:86%;background:#1d5f7a">{ic('search')}Pre-screening</div>
+ <div class="fb" style="width:72%;background:#1d8a83">{ic('user')}Interviews</div>
+ <div class="fb" style="width:58%;background:#c69a2e">{ic('shield')}First day at work</div>
+</div></div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"mass_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda <span class="acc">ommaviy</span> xodim tanlash</h1>
+<p class="sub">O‘nlab bir xil vakansiyalarni qisqa muddatda qanday yopish mumkin</p></div>
+<div class="right"><div class="funnel">
+ <div class="fb" style="width:100%;background:#13294a">{ic('people')}Javoblar</div>
+ <div class="fb" style="width:86%;background:#1d5f7a">{ic('search')}Preskrining</div>
+ <div class="fb" style="width:72%;background:#1d8a83">{ic('user')}Suhbatlar</div>
+ <div class="fb" style="width:58%;background:#c69a2e">{ic('shield')}Ishga chiqish</div>
+</div></div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"inhouse_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Recruitment agency or <span class="acc">in-house HR</span></h1>
+<p class="sub">Which one should a company choose?</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('building')}</div><div><b>In-house recruiter</b><span>regular, standard roles</span></div></div>
+ <div class="item"><div class="ico">{ic('search')}</div><div><b>Agency</b><span>rare, urgent and senior roles</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Together</b><span>one team with shared standards</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"inhouse_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Rekruting agentligi yoki <span class="acc">ichki HR</span></h1>
+<p class="sub">Kompaniya uchun qaysi biri yaxshiroq?</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('building')}</div><div><b>Ichki rekruter</b><span>muntazam, odatiy lavozimlar</span></div></div>
+ <div class="item"><div class="ico">{ic('search')}</div><div><b>Agentlik</b><span>noyob, shoshilinch va rahbarlik lavozimlari</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Birgalikda</b><span>yagona standartlarga ega bitta jamoa</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"cbi_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Competency-based</span> interview</h1>
+<p class="sub">Assess real behaviour, not self-descriptions</p></div>
+<div class="right">
+ <div class="item"><div class="num">S</div><div><b>Situation</b><span>what was happening</span></div></div>
+ <div class="item"><div class="num">T</div><div><b>Task</b><span>what had to be done</span></div></div>
+ <div class="item"><div class="num">A</div><div><b>Action</b><span>what the candidate did</span></div></div>
+ <div class="item"><div class="num">R</div><div><b>Result</b><span>what came of it</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"cbi_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Kompetensiyalar</span> bo‘yicha suhbat</h1>
+<p class="sub">O‘zi haqidagi gaplarni emas, haqiqiy xatti-harakatni baholang</p></div>
+<div class="right">
+ <div class="item"><div class="num">S</div><div><b>Vaziyat</b><span>nima sodir bo‘layotgan edi</span></div></div>
+ <div class="item"><div class="num">T</div><div><b>Vazifa</b><span>nima qilish kerak edi</span></div></div>
+ <div class="item"><div class="num">A</div><div><b>Harakat</b><span>nomzod nima qildi</span></div></div>
+ <div class="item"><div class="num">R</div><div><b>Natija</b><span>nima natija bo‘ldi</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"prescreen_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Pre-screening</span> in recruitment</h1>
+<p class="sub">How we save hiring time and improve quality</p></div>
+<div class="right"><div class="funnel">
+ <div class="fb" style="width:100%;background:#13294a">{ic('people')}150 applications</div>
+ <div class="fb" style="width:80%;background:#1d5f7a">{ic('search')}10–20 min call</div>
+ <div class="fb" style="width:60%;background:#c69a2e">{ic('user')}Only those who fit</div>
+</div></div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"prescreen_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Rekrutmentda <span class="acc">preskrining</span></h1>
+<p class="sub">Ishga olish vaqtini qanday tejaymiz va sifatni oshiramiz</p></div>
+<div class="right"><div class="funnel">
+ <div class="fb" style="width:100%;background:#13294a">{ic('people')}150 ta javob</div>
+ <div class="fb" style="width:80%;background:#1d5f7a">{ic('search')}10–20 daqiqalik qo‘ng‘iroq</div>
+ <div class="fb" style="width:60%;background:#c69a2e">{ic('user')}Faqat mos keladiganlar</div>
+</div></div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"kpi_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Recruiter</span> KPIs</h1>
+<p class="sub">How to tell whether recruitment is working effectively</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>Time to hire</b><span>speed from first contact to offer</span></div></div>
+ <div class="item"><div class="ico">{ic('shield')}</div><div><b>Quality of hire</b><span>results after probation</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Source of hire</b><span>which channels bring the best people</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Resources</div>""",
+
+"kpi_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Rekruter</span> KPI ko‘rsatkichlari</h1>
+<p class="sub">Rekruting samarali ishlayotganini qanday tushunish mumkin</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>Time to Hire</b><span>birinchi aloqadan taklifgacha tezlik</span></div></div>
+ <div class="item"><div class="ico">{ic('shield')}</div><div><b>Quality of Hire</b><span>sinov muddatidan keyingi natija</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Source of Hire</b><span>eng yaxshi odamlar qaysi kanaldan keladi</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"hiring_ru": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Найм сотрудников <span class="acc">в Узбекистане</span></h1>
+<p class="sub">Руководство для иностранных компаний, которые создают команду в Ташкенте</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('building')}</div><div><b>Своё юрлицо</b><span>найм напрямую в штат</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Аутстаффинг</b><span>работодатель – местный провайдер</span></div></div>
+ <div class="item"><div class="ico">{ic('doc')}</div><div><b>Подрядчики</b><span>для коротких проектов</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Полезные материалы</div>""",
+
+"hiring_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda <span class="acc">xodim yollash</span></h1>
+<p class="sub">Toshkentda jamoa tuzayotgan xorijiy kompaniyalar uchun qo‘llanma</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('building')}</div><div><b>O‘z yuridik shaxsingiz</b><span>shtatga to‘g‘ridan-to‘g‘ri olish</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>Autstaffing</b><span>ish beruvchi – mahalliy provayder</span></div></div>
+ <div class="item"><div class="ico">{ic('doc')}</div><div><b>Pudratchilar</b><span>qisqa loyihalar uchun</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Foydali materiallar</div>""",
 }
 
 for name, body in COVERS.items():

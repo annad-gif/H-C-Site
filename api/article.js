@@ -111,7 +111,8 @@ function imageOf(m) { return m.media_type !== "video" && safeUrl(m.media_url) ? 
 function relatedHTML(all, m) {
   const L = L10N[langOf(m)];
   const i = all.findIndex(x => x.id === m.id);
-  const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => x.id !== m.id);
+  const root = m.translation_of || m.id;
+  const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => (x.translation_of || x.id) !== root);
   // сначала материалы на том же языке, внутри – того же типа
   const rank = x => (langOf(x) === langOf(m) ? 0 : 2) + (x.cat === m.cat ? 0 : 1);
   const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
@@ -126,8 +127,23 @@ function relatedHTML(all, m) {
     + '</div><a class="ar-all" href="' + L.resUrl + '">' + esc(L.all) + '</a></div></section>';
 }
 
-function render(head, main, lang) {
-  return (SHELLS[lang] || SHELL).replace("{{HEAD}}", () => head).replace("{{MAIN}}", () => main);
+// Языковые версии одной статьи: исходник + все материалы с translation_of = его id
+function versionsOf(all, m) {
+  const root = m.translation_of || m.id;
+  const out = {};
+  for (const x of all) if ((x.translation_of || x.id) === root && !out[langOf(x)]) out[langOf(x)] = x;
+  return out;
+}
+const LANG_CODE = { ru: "RU", en: "ENG", uz: "UZB" };
+
+function render(head, main, lang, versions) {
+  let shell = SHELLS[lang] || SHELL;
+  // переключатель языка ведёт на перевод этой статьи, если он есть
+  for (const [hl, v] of Object.entries(versions || {})) {
+    shell = shell.replace(new RegExp('<a href="[^"]*" data-lang="' + LANG_CODE[hl] + '">'),
+      '<a href="' + esc(articlePath(v)) + '" data-lang="' + LANG_CODE[hl] + '">');
+  }
+  return shell.replace("{{HEAD}}", () => head).replace("{{MAIN}}", () => main);
 }
 
 function articlePage(all, m) {
@@ -168,12 +184,18 @@ function articlePage(all, m) {
       },
     ],
   };
+  const versions = versionsOf(all, m);
+  const alt = Object.keys(versions).length > 1
+    ? Object.entries(versions).map(([hl, v]) => '<link rel="alternate" hreflang="' + hl + '" href="' + esc(SITE + articlePath(v)) + '"/>')
+      .concat('<link rel="alternate" hreflang="x-default" href="' + esc(SITE + articlePath(versions.ru || versions[langOf(m)])) + '"/>')
+    : [];
   const title = h + " – Human and Capital";
   const head = [
     "<title>" + esc(title) + "</title>",
     '<meta name="description" content="' + esc(desc) + '"/>',
     '<meta name="robots" content="index, follow, max-image-preview:large"/>',
     '<link rel="canonical" href="' + esc(url) + '"/>',
+    ...alt,
     '<meta property="og:type" content="article"/>',
     '<meta property="og:site_name" content="Human and Capital"/>',
     '<meta property="og:locale" content="' + L.og + '"/>',
@@ -205,7 +227,7 @@ function articlePage(all, m) {
     + '<a href="' + L.ctaUrl + '">' + esc(L.ctaA) + "</a></aside>"
     + "</div></main>"
     + relatedHTML(all, m);
-  return render(head, main, lang);
+  return render(head, main, lang, versions);
 }
 
 function notFoundPage() {
