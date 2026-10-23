@@ -60,7 +60,7 @@ L["ru"] = dict(
     faq_eyebrow="Вопросы и ответы", faq_title="Частые вопросы о подборе персонала",
     faq=[
         ("Сколько времени занимает подбор?", "Срок зависит от позиции, ситуации на рынке труда и условий, которые предлагает работодатель. Мы согласуем сроки до старта поиска и регулярно держим вас в курсе."),
-        ("Сколько стоит подбор персонала?", "Стоимость зависит от уровня позиции и формата работы. Базовые условия указаны выше на этой странице, точный расчёт подготовим после брифа по вакансии."),
+        ("Сколько стоит подбор персонала?", "Стоимость рассчитывается индивидуально и зависит от уровня позиции, сроков и сложности поиска. Точный расчёт подготовим после брифа по вакансии."),
         ("Какие гарантии вы даёте?", "Одна бесплатная замена специалиста в оговорённый срок, бесплатный пробный день кандидата и возврат предоплаты, если в согласованный срок мы не представим как минимум трёх подходящих кандидатов. Также мы сопровождаем сотрудника и работодателя на испытательном сроке."),
         ("Ищете ли вы топ-менеджеров?", "Да. Для руководителей и редких специалистов мы используем прямой поиск – executive search, потому что такие кандидаты обычно не откликаются на вакансии."),
         ("Беретесь ли вы за массовый подбор?", "Да, закрываем десятки однотипных позиций в сжатые сроки для ритейла, BPO и контакт-центров, производства."),
@@ -108,7 +108,7 @@ L["en"] = dict(
     faq_eyebrow="FAQ", faq_title="Recruitment in Uzbekistan: frequently asked questions",
     faq=[
         ("How long does recruitment take?", "It depends on the role, the labour market and the conditions the employer offers. We agree on the timeline before the search starts and keep you updated."),
-        ("How much does recruitment cost?", "The cost depends on the level of the role and the format. The basic terms are listed above on this page; we prepare an exact quote after a brief on the vacancy."),
+        ("How much does recruitment cost?", "The cost is calculated individually and depends on the level of the role, the timeline and the complexity of the search. We prepare an exact quote after a brief on the vacancy."),
         ("What guarantees do you give?", "One free replacement within the agreed terms, a free trial day for the candidate, and a refund of the prepayment if we do not present at least three suitable candidates within the agreed timeframe. We also support the employee and the employer during probation."),
         ("Do you search for top managers?", "Yes. For executives and rare specialists we use direct search, because such candidates rarely respond to job ads."),
         ("Do you handle mass recruitment?", "Yes, we fill dozens of similar roles in tight timelines for retail, BPO and contact centres, and manufacturing."),
@@ -156,7 +156,7 @@ L["uz"] = dict(
     faq_eyebrow="Savol-javoblar", faq_title="Xodimlarni tanlash haqida ko‘p beriladigan savollar",
     faq=[
         ("Tanlash qancha vaqt oladi?", "Muddat lavozimga, mehnat bozoridagi vaziyatga va ish beruvchi taklif qilayotgan shartlarga bog‘liq. Qidiruv boshlanishidan oldin muddatlarni kelishamiz va sizni muntazam xabardor qilib turamiz."),
-        ("Xodimlarni tanlash qancha turadi?", "Narx lavozim darajasi va ish formatiga bog‘liq. Asosiy shartlar ushbu sahifada yuqorida ko‘rsatilgan, aniq hisobni vakansiya bo‘yicha brifdan keyin tayyorlaymiz."),
+        ("Xodimlarni tanlash qancha turadi?", "Narx individual hisoblanadi va lavozim darajasi, muddatlar hamda qidiruv murakkabligiga bog‘liq. Aniq hisobni vakansiya bo‘yicha brifdan keyin tayyorlaymiz."),
         ("Qanday kafolatlar berasiz?", "Kelishilgan muddatda mutaxassisni bir marta bepul almashtirish, nomzodning bepul sinov kuni va kelishilgan muddatda kamida uchta mos nomzod taqdim etilmasa, oldindan to‘lovni qaytarish. Shuningdek, sinov muddatida xodim va ish beruvchini kuzatib boramiz."),
         ("Top-menejerlarni qidirasizmi?", "Ha. Rahbarlar va noyob mutaxassislar uchun to‘g‘ridan-to‘g‘ri qidiruv – executive search usulini qo‘llaymiz, chunki bunday nomzodlar odatda vakansiyalarga javob bermaydi."),
         ("Ommaviy tanlov bilan shug‘ullanasizmi?", "Ha, chakana savdo, BPO va kontakt-markazlar, ishlab chiqarish uchun qisqa muddatda o‘nlab bir xil lavozimlarni yopamiz."),
