@@ -110,7 +110,7 @@ L["ru"] = dict(
         ("Оформление", "Трудоустраиваем сотрудников в нашей компании по законодательству РУз."),
         ("Работа и сопровождение", "Сотрудники работают на ваших задачах, мы ведём кадры, зарплату и отчётность."),
     ],
-    links='Нужен только подбор? – <a href="recruitment.html">Рекрутмент</a>. Хотите выстроить HR-процессы? – <a href="consulting.html">HR-консалтинг</a>. Набираете большую команду? – статья <a href="/articles/massovyy-podbor-personala-v-uzbekistane-37157357">«Массовый подбор персонала в Узбекистане»</a>.',
+    links='Нужен только подбор? – <a href="recruitment.html">Рекрутмент</a>. Хотите выстроить HR-процессы? – <a href="consulting.html">HR-консалтинг</a>. Все услуги – <a href="hr-services.html">HR-услуги в Узбекистане</a>. Нанимаете из-за рубежа без юрлица? – <a href="employer-of-record.html">Employer of Record в Узбекистане</a>. Набираете большую команду? – статья <a href="/articles/massovyy-podbor-personala-v-uzbekistane-37157357">«Массовый подбор персонала в Узбекистане»</a>.',
     faq_eyebrow="Вопросы и ответы", faq_title="Частые вопросы об аутстаффинге",
     faq=[
         ("Что такое аутстаффинг простыми словами?", "Сотрудники официально оформлены в аутстаффинговой компании, а работают на задачах и под руководством клиента. Провайдер отвечает за трудоустройство, расчёт зарплаты, кадровый учёт и отчётность, а клиент – за постановку задач и результат работы."),
@@ -224,7 +224,7 @@ L["uz"] = dict(
         ("Rasmiylashtirish", "Xodimlarni O‘zbekiston qonunchiligiga muvofiq kompaniyamizga ishga olamiz."),
         ("Ish va kuzatib borish", "Xodimlar vazifalaringiz ustida ishlaydi, biz kadrlar, ish haqi va hisobotlarni yuritamiz."),
     ],
-    links='Faqat xodim tanlash kerakmi? – <a href="recruitment-uz.html">Rekruting</a>. HR jarayonlarini yo‘lga qo‘ymoqchimisiz? – <a href="consulting-uz.html">HR-konsalting</a>.',
+    links='Faqat xodim tanlash kerakmi? – <a href="recruitment-uz.html">Rekruting</a>. HR jarayonlarini yo‘lga qo‘ymoqchimisiz? – <a href="consulting-uz.html">HR-konsalting</a>. Barcha xizmatlar – <a href="hr-services-uz.html">O‘zbekistonda HR xizmatlari</a>. Xorijdan yuridik shaxssiz xodim yollayapsizmi? – <a href="employer-of-record-uz.html">O‘zbekistonda Employer of Record</a>.',
     faq_eyebrow="Savol-javoblar", faq_title="Autstaffing haqida ko‘p beriladigan savollar",
     faq=[
         ("Autstaffing nima?", "Xodimlar autstaffing kompaniyasida rasman ishga rasmiylashtiriladi, lekin mijozning vazifalari ustida va uning rahbarligi ostida ishlaydi. Provayder ishga rasmiylashtirish, ish haqi, kadrlar hisobi va hisobotlar uchun javob beradi, mijoz esa vazifalarni qo‘yadi va natijaga ega bo‘ladi."),

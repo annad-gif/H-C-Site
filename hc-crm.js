@@ -21,7 +21,8 @@
     url: "https://qgwfecctozkchcjabgsx.supabase.co",
     key: "sb_publishable_BZze9MRJ37YtILL6qWtfHA_N7NF7Ql6"
   };
-  var PRIVACY_URL = "privacy.html";
+  // ссылка от корня: формы есть и на /articles/… и /vacancies/…
+  var PRIVACY_URL = { ru: "/privacy.html", en: "/privacy-en.html", uz: "/privacy-uz.html" };
   var POLICY_VERSION = "v1";
 
   // --- клиент supabase-js (грузим динамически с CDN) ---
@@ -62,12 +63,40 @@
     clearTimeout(t._h); t._h = setTimeout(function () { t.style.opacity = "0"; }, 4400);
   }
 
+  // --- тексты формы заявки и согласия на языке страницы ---
+  var LEAD_MSG = {
+    ru: {
+      agree: "Я даю согласие на обработку моих персональных данных в соответствии с ",
+      policy: "Политикой обработки персональных данных",
+      consent: "Отметьте согласие на обработку данных", name: "Укажите имя",
+      contact: "Укажите телефон или email", ok: "Заявка отправлена! Мы свяжемся с вами.",
+      fail: "Не удалось отправить. Попробуйте позже."
+    },
+    en: {
+      agree: "I consent to the processing of my personal data in accordance with the ",
+      policy: "Personal Data Processing Policy",
+      consent: "Please tick the consent to personal data processing", name: "Please enter your name",
+      contact: "Please enter a phone number or email", ok: "Request sent! We will get back to you.",
+      fail: "Could not send. Please try again later."
+    },
+    uz: {
+      agree: "Men ",
+      policy: "Shaxsiy ma’lumotlarni qayta ishlash siyosati",
+      after: "ga muvofiq ma’lumotlarimni qayta ishlashga roziman",
+      consent: "Shaxsiy ma’lumotlarni qayta ishlashga roziligingizni belgilang", name: "Ismingizni kiriting",
+      contact: "Telefon yoki email kiriting", ok: "So‘rov yuborildi! Siz bilan bog‘lanamiz.",
+      fail: "Yuborib bo‘lmadi. Keyinroq urinib ko‘ring."
+    }
+  };
+  function leadMsg() { return LEAD_MSG[locale()] || LEAD_MSG.ru; }
+
   // --- consent checkbox injection ---
   function consentMarkup(id) {
+    var L = leadMsg(), url = PRIVACY_URL[locale()] || PRIVACY_URL.ru;
     return '<label class="hc-consent" style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;margin:4px 0 14px;color:#4a4844;cursor:pointer">' +
       '<input type="checkbox" id="' + id + '" style="margin-top:3px;width:16px;height:16px;flex:0 0 auto;accent-color:#c69a2e">' +
-      '<span>Я даю согласие на обработку моих персональных данных в соответствии с ' +
-      '<a href="' + PRIVACY_URL + '" target="_blank" rel="noopener" style="color:#8a701f;text-decoration:underline">Политикой обработки персональных данных</a>.</span>' +
+      '<span>' + L.agree +
+      '<a href="' + url + '" target="_blank" rel="noopener" style="color:#8a701f;text-decoration:underline">' + L.policy + '</a>' + (L.after || "") + '.</span>' +
       '</label>';
   }
   function injectConsent(form, id) {
@@ -89,12 +118,13 @@
   // === ЗАЯВКИ → Staffly (deals, этап «Новый лид») ===
   async function submitLead(form) {
     if (isBot(form)) return { ok: true };
-    if (!consentOk("hcLeadConsent")) { toast("Отметьте согласие на обработку данных", false); return { ok: false }; }
+    var L = leadMsg();
+    if (!consentOk("hcLeadConsent")) { toast(L.consent, false); return { ok: false }; }
     var name = val("name"), email = val("email"), phone = val("phone"),
         company = val("company"), message = val("message");
     var service = (document.getElementById("service") || {}).value || "";
-    if (!name) { toast("Укажите имя", false); return { ok: false }; }
-    if (!email && !phone) { toast("Укажите телефон или email", false); return { ok: false }; }
+    if (!name) { toast(L.name, false); return { ok: false }; }
+    if (!email && !phone) { toast(L.contact, false); return { ok: false }; }
     var head = (service ? "Услуга: " + service + "\n" : "") + (company ? "Компания: " + company + "\n" : "");
     var msg = head + message;
     try {
@@ -105,8 +135,8 @@
         p_source: "Сайт: " + location.pathname, p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
-      form.reset(); goal("generate_lead", { form: "contact" }); toast("Заявка отправлена! Мы свяжемся с вами."); return { ok: true };
-    } catch (e) { console.error("submitLead", e); toast("Не удалось отправить. Попробуйте позже.", false); return { ok: false }; }
+      form.reset(); goal("generate_lead", { form: "contact" }); toast(L.ok); return { ok: true };
+    } catch (e) { console.error("submitLead", e); toast(L.fail, false); return { ok: false }; }
   }
 
   // --- адрес страницы вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---

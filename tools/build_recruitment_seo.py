@@ -74,6 +74,8 @@ L["ru"] = dict(
         (A + "massovyy-podbor-personala-v-uzbekistane-37157357", "Массовый подбор персонала в Узбекистане", "Как закрыть десятки вакансий в сжатые сроки"),
         (A + "rekrutingovoe-agentstvo-ili-vnutrenniy-hr-e9bef7f5", "Рекрутинговое агентство или внутренний HR", "Что выбрать компании"),
         (A + "intervyu-po-kompetentsiyam-119bd224", "Интервью по компетенциям", "Как оценивать кандидатов на собеседовании"),
+        ("/hr-services.html", "HR-услуги в Узбекистане", "Подбор, аутстаффинг и HR-консалтинг в одном месте"),
+        ("/executive-search.html", "Executive search в Ташкенте", "Прямой поиск топ-менеджеров и руководителей"),
     ],
 )
 
@@ -122,6 +124,8 @@ L["en"] = dict(
         ("/hr-services-uzbekistan.html", "HR services in Uzbekistan", "Recruitment, outstaffing and HR consulting in one place"),
         ("/outstaffing-en.html", "Outstaffing in Uzbekistan", "Legal employment, payroll and reporting for your team"),
         ("/consulting-en.html", "HR consulting", "HR audit, assessment and onboarding systems"),
+        ("/executive-search-en.html", "Executive search in Uzbekistan", "Direct search for C-level and senior managers"),
+        ("/employer-of-record-uzbekistan.html", "Employer of Record in Uzbekistan", "Hire without opening a local entity"),
     ],
 )
 
@@ -170,6 +174,8 @@ L["uz"] = dict(
         (A + "massovyy-podbor-personala-v-uzbekistane-37157357", "Массовый подбор персонала в Узбекистане", "rus tilida"),
         ("/outstaffing-uz.html", "O‘zbekistonda xodimlar autstaffingi", "Rasmiylashtirish, ish haqi va hisobotlar"),
         ("/consulting-uz.html", "HR-konsalting", "HR-audit, baholash va moslashuv tizimlari"),
+        ("/hr-services-uz.html", "O‘zbekistonda HR xizmatlari", "Tanlash, autstaffing va HR-konsalting bir joyda"),
+        ("/executive-search-uz.html", "Toshkentda executive search", "Top-menejerlar va rahbarlarni to‘g‘ridan-to‘g‘ri qidirish"),
     ],
 )
 

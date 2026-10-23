@@ -11,6 +11,8 @@ A = "/articles/"
 ARROW = '<svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
 
 ES_ALT = {"ru": "executive-search.html", "en": "executive-search-en.html", "uz": "executive-search-uz.html"}
+EOR_ALT = {"ru": "employer-of-record.html", "en": "employer-of-record-uzbekistan.html", "uz": "employer-of-record-uz.html"}
+HRS_ALT = {"ru": "hr-services.html", "en": "hr-services-uzbekistan.html", "uz": "hr-services-uz.html"}
 
 PAGES = []
 
@@ -229,7 +231,7 @@ PAGES.append(dict(
 
 # ---------------------------------------------------------------- Employer of Record EN
 PAGES.append(dict(
-    file="employer-of-record-uzbekistan.html", shell="consulting-en.html", lang="en", locale="en_US", alt=None,
+    file="employer-of-record-uzbekistan.html", shell="consulting-en.html", lang="en", locale="en_US", alt=EOR_ALT,
     home=("Home", SITE + "/index-en.html"), parent=("HR services in Uzbekistan", SITE + "/hr-services-uzbekistan.html"),
     title="Employer of Record in Uzbekistan – EOR, Payroll & Recruitment | Human and Capital",
     short="Employer of Record in Uzbekistan – Human and Capital",
@@ -307,6 +309,12 @@ PAGES.append(dict(
     options=["Employer of Record", "Outstaffing", "Recruitment", "Executive search", "Mass recruitment", "HR consulting"],
 ))
 
+# RU/UZ-версии Employer of Record и HR-услуг (EN-версия HR-услуг – tools/build_hr_services.py)
+import os, sys  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from landings_ru_uz import pages as _ru_uz_pages  # noqa: E402
+PAGES += _ru_uz_pages(SITE, A, EOR_ALT, HRS_ALT)
+
 CSS = """
 <style>
   /* ===== LANDING PAGES ===== */
@@ -328,6 +336,10 @@ CSS = """
   .hrs-svc p{font-size:15px;color:var(--grey-300);line-height:1.7;position:relative;}
   .hrs-svc ul{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;position:relative;}
   .hrs-svc li{display:flex;gap:11px;align-items:flex-start;font-size:14px;line-height:1.55;color:var(--grey-300);}
+  .hrs-svc li a{color:var(--mustard-light);font-weight:600;}
+  .hrs-svc .hrs-more{margin-top:auto;display:inline-flex;align-items:center;gap:8px;color:var(--mustard-light);font-weight:600;font-size:14px;text-decoration:none;position:relative;}
+  .hrs-svc .hrs-more svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .2s;}
+  .hrs-svc .hrs-more:hover svg{transform:translateX(4px);}
   .hrs-svc li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--mustard);flex-shrink:0;margin-top:7px;box-shadow:0 0 9px rgba(198,154,46,0.7);}
   .hrs-who-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
   .hrs-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
@@ -494,14 +506,18 @@ def build(d):
         nav = nav.replace(old, f'<a href="{targets[hl]}" data-lang="{code}">')
 
     s_ = d
-    svc_cards = "\n".join(f"""      <article class="cons-card hrs-svc reveal">
+    def card(num, t, p, items, more=None):
+        link = f'\n        <a href="{more[0]}" class="hrs-more">{more[1]} {ARROW}</a>' if more else ""
+        lis = chr(10).join(f'          <li><span>{x}</span></li>' for x in items)
+        return f"""      <article class="cons-card hrs-svc reveal">
         <span class="hrs-num">{num}</span>
         <h3>{t}</h3>
         <p>{p}</p>
         <ul>
-{chr(10).join(f'          <li>{x}</li>' for x in items)}
-        </ul>
-      </article>""" for num, t, p, items in s_["svc"][3])
+{lis}
+        </ul>{link}
+      </article>"""
+    svc_cards = "\n".join(card(*c) for c in s_["svc"][3])
 
     compare = ""
     if d.get("compare"):

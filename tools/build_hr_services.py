@@ -175,6 +175,10 @@ head = f"""<!DOCTYPE html>
 <!-- SEO -->
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="{URL}"/>
+<link rel="alternate" hreflang="ru" href="https://humancapital.uz/hr-services.html"/>
+<link rel="alternate" hreflang="en" href="{URL}"/>
+<link rel="alternate" hreflang="uz" href="https://humancapital.uz/hr-services-uz.html"/>
+<link rel="alternate" hreflang="x-default" href="https://humancapital.uz/hr-services.html"/>
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Human and Capital"/>
@@ -205,9 +209,9 @@ head = f"""<!DOCTYPE html>
 nav = src[src.index('<nav id="nav">'):src.index("</nav>") + len("</nav>")]
 nav = nav.replace('<li><a href="https://humancapital.uz/staffly/ru">Outstaffing</a></li>',
                   '<li><a href="outstaffing-en.html">Outstaffing</a></li>\n        <li><a href="hr-services-uzbekistan.html">All HR services</a></li>')
-nav = nav.replace('<a href="consulting.html" data-lang="RU">', '<a href="index.html" data-lang="RU">')
+nav = nav.replace('<a href="consulting.html" data-lang="RU">', '<a href="hr-services.html" data-lang="RU">')
 nav = nav.replace('<a href="consulting-en.html" data-lang="ENG">', '<a href="hr-services-uzbekistan.html" data-lang="ENG">')
-nav = nav.replace('<a href="consulting-uz.html" data-lang="UZB">', '<a href="index-uz.html" data-lang="UZB">')
+nav = nav.replace('<a href="consulting-uz.html" data-lang="UZB">', '<a href="hr-services-uz.html" data-lang="UZB">')
 assert "hr-services-uzbekistan.html" in nav and "staffly/ru" not in nav
 
 ARROW = '<svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'

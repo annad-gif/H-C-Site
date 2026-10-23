@@ -5,6 +5,13 @@ const { SITE, articlePath, loadMaterials, vacancyPath, loadVacancies, PAGES, pag
 
 const LASTMOD_PAGES = "2026-10-23"; // обновлять при заметных правках страниц
 
+// [RU, EN, UZ] – английские адреса исторические, их не меняем
+const TRIOS = [
+  [["hr-services.html", "hr-services-uzbekistan.html", "hr-services-uz.html"], "0.9"],
+  [["employer-of-record.html", "employer-of-record-uzbekistan.html", "employer-of-record-uz.html"], "0.9"],
+  [["privacy.html", "privacy-en.html", "privacy-uz.html"], "0.2"],
+];
+
 module.exports = async function handler(req, res) {
   const out = ['<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'];
@@ -39,12 +46,17 @@ module.exports = async function handler(req, res) {
     console.error(e);
     ok = false; // без вакансий, но карта сайта всё равно отдаётся
   }
-  // отдельные страницы без языковых версий
-  out.push("  <url>", "    <loc>" + SITE + "/hr-services-uzbekistan.html</loc>", "    <lastmod>2026-10-22</lastmod>",
-    "    <priority>0.9</priority>", "  </url>");
-  out.push("  <url>", "    <loc>" + SITE + "/employer-of-record-uzbekistan.html</loc>", "    <lastmod>2026-10-23</lastmod>",
-    "    <priority>0.9</priority>", "  </url>");
-  out.push("  <url>", "    <loc>" + SITE + "/privacy.html</loc>", "    <priority>0.2</priority>", "  </url>", "</urlset>", "");
+  // страницы, у которых адреса языковых версий не по схеме p / p-en / p-uz
+  for (const [names, prio] of TRIOS) {
+    for (const n of names) {
+      out.push("  <url>", "    <loc>" + pageUrl(n) + "</loc>", "    <lastmod>" + LASTMOD_PAGES + "</lastmod>");
+      ["ru", "en", "uz"].forEach((hl, i) =>
+        out.push('    <xhtml:link rel="alternate" hreflang="' + hl + '" href="' + pageUrl(names[i]) + '"/>'));
+      out.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + pageUrl(names[0]) + '"/>',
+        "    <priority>" + prio + "</priority>", "  </url>");
+    }
+  }
+  out.push("</urlset>", "");
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/xml; charset=utf-8");
   res.setHeader("Cache-Control", ok ? "public, max-age=0, s-maxage=600, stale-while-revalidate=86400" : "no-store");
