@@ -15,6 +15,7 @@ CSS = CSS_B + """
   .oss-card{background:var(--white);border:1px solid var(--grey-100);border-radius:18px;padding:26px 24px;}
   .oss-card h3{font-family:var(--ff-display);font-weight:600;font-size:17px;line-height:1.35;margin-bottom:10px;color:var(--black);}
   .oss-card p{font-size:15px;line-height:1.65;color:var(--grey-700);}
+  .oss-card p a{color:var(--mustard-dim);font-weight:600;}
   #os-compare{background:var(--white);}
   .oss-table-wrap{overflow-x:auto;border:1px solid var(--grey-100);border-radius:18px;}
   .oss-table{width:100%;border-collapse:collapse;min-width:720px;font-size:15px;}
@@ -166,7 +167,7 @@ L["en"] = dict(
         ("Employment", "Employees are hired by our company under Uzbek law."),
         ("Work & support", "Staff work on your tasks while we handle HR, payroll and reporting."),
     ],
-    links='Need recruitment only? – <a href="recruitment-en.html">Recruitment</a>. All our services – <a href="hr-services-uzbekistan.html">HR services in Uzbekistan</a>. Building a team from abroad? – read <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan: a guide for foreign companies</a>.',
+    links='Need recruitment only? – <a href="recruitment-en.html">Recruitment</a>. All our services – <a href="hr-services-uzbekistan.html">HR services in Uzbekistan</a>. Hiring from abroad without a local entity? – <a href="employer-of-record-uzbekistan.html">Employer of Record in Uzbekistan</a>. Building a team from abroad? – read <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan: a guide for foreign companies</a>.',
     faq_eyebrow="FAQ", faq_title="Outstaffing in Uzbekistan: frequently asked questions",
     faq=[
         ("What is outstaffing?", "Employees are formally employed by an outstaffing company but work on the client's tasks under the client's management. The provider is responsible for employment, payroll, HR records and reporting, while the client sets the tasks and owns the results."),

@@ -38,7 +38,7 @@ L["ru"] = dict(
     fmt_eyebrow="Форматы подбора", fmt_title="Кого мы подбираем",
     fmt=[
         ("Специалисты", "Поиск и отбор специалистов уровня middle и senior в продажи, финансы, маркетинг, логистику и другие направления."),
-        ("Руководители – executive search", "Прямой поиск топ-менеджеров и редких специалистов, которые не ищут работу активно."),
+        ("Руководители – executive search", "Прямой поиск топ-менеджеров и редких специалистов, которые не ищут работу активно. <a href=\"/executive-search.html\">Подробнее об executive search</a>"),
         ("IT-рекрутинг", "Разработчики, инженеры, QA, аналитики и системные администраторы для IT-компаний и IT-отделов."),
         ("Массовый подбор", "Десятки однотипных позиций в сжатые сроки – для ритейла, BPO и контакт-центров, производства."),
         ("Языковые позиции", "Специалисты со знанием английского, немецкого, французского, корейского и других языков с проверкой уровня."),
@@ -86,7 +86,7 @@ L["en"] = dict(
     fmt_eyebrow="Recruitment formats", fmt_title="Who we hire for you",
     fmt=[
         ("Specialists", "Search and selection of middle and senior specialists in sales, finance, marketing, logistics and other functions."),
-        ("Executive search", "Direct search for top managers and rare specialists who are not actively looking for a job."),
+        ("Executive search", "Direct search for top managers and rare specialists who are not actively looking for a job. <a href=\"/executive-search-en.html\">More about executive search</a>"),
         ("IT recruitment", "Developers, engineers, QA, analysts and system administrators for IT companies and IT departments."),
         ("Mass recruitment", "Dozens of similar roles in tight timelines – for retail, BPO and contact centres, manufacturing."),
         ("Language roles", "Specialists with English, German, French, Korean and other languages, with a verified language level."),
@@ -134,7 +134,7 @@ L["uz"] = dict(
     fmt_eyebrow="Tanlash formatlari", fmt_title="Kimlarni tanlaymiz",
     fmt=[
         ("Mutaxassislar", "Savdo, moliya, marketing, logistika va boshqa yo‘nalishlar uchun middle va senior darajadagi mutaxassislarni qidirish va tanlash."),
-        ("Rahbarlar – executive search", "Faol ish qidirmayotgan top-menejerlar va noyob mutaxassislarni to‘g‘ridan-to‘g‘ri qidirish."),
+        ("Rahbarlar – executive search", "Faol ish qidirmayotgan top-menejerlar va noyob mutaxassislarni to‘g‘ridan-to‘g‘ri qidirish. <a href=\"/executive-search-uz.html\">Executive search haqida batafsil</a>"),
         ("IT-rekrutment", "IT-kompaniyalar va IT-bo‘limlar uchun dasturchilar, muhandislar, QA, tahlilchilar va tizim administratorlari."),
         ("Ommaviy tanlov", "Qisqa muddatda o‘nlab bir xil lavozimlar – chakana savdo, BPO va kontakt-markazlar, ishlab chiqarish uchun."),
         ("Til biladigan mutaxassislar", "Ingliz, nemis, fransuz, koreys va boshqa tillarni biladigan mutaxassislar, til darajasi tekshiriladi."),

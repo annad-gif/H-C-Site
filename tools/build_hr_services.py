@@ -108,6 +108,7 @@ extra_css = """
   .hrs-svc p{font-size:15px;color:var(--grey-300);line-height:1.7;position:relative;}
   .hrs-svc ul{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;position:relative;}
   .hrs-svc li{display:flex;gap:11px;align-items:flex-start;font-size:14px;line-height:1.55;color:var(--grey-300);}
+  .hrs-svc li a{color:var(--mustard-light);font-weight:600;}
   .hrs-svc li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--mustard);flex-shrink:0;margin-top:7px;box-shadow:0 0 9px rgba(198,154,46,0.7);}
   .hrs-svc .hrs-more{margin-top:auto;display:inline-flex;align-items:center;gap:8px;color:var(--mustard-light);font-weight:600;font-size:14px;text-decoration:none;position:relative;}
   .hrs-svc .hrs-more svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .2s;}
@@ -286,7 +287,7 @@ main = f"""
       <p><strong>Human and Capital</strong> is an HR company based in Tashkent that provides <strong>HR services in Uzbekistan</strong> to local businesses and international companies entering the Uzbek market. We find the right people, employ and support them on your behalf when needed, and help you build HR processes that keep them in the company.</p>
       <p>Instead of working with separate recruitment, outstaffing and consulting providers, you get one team that knows the local labour market, labour law and hiring practices – and that covers the whole cycle from the first request to the employee's adaptation.</p>
       <p>Our motto is simple: <strong>people and time are the most valuable resources</strong>. We help you find the first while saving the second.</p>
-      <p>Planning to build a team here from abroad? Start with our guide <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan</a>: the three employment models, the local talent market and the hiring process step by step.</p>
+      <p>Planning to build a team here from abroad? Start with our guide <a href="/articles/hiring-in-uzbekistan-d0f28979">Hiring in Uzbekistan</a>: the three employment models, the local talent market and the hiring process step by step. To employ people here without opening a local entity, see <a href="employer-of-record-uzbekistan.html">Employer of Record in Uzbekistan</a>.</p>
     </div>
   </div>
 </section>
@@ -306,7 +307,7 @@ main = f"""
         <p>End-to-end search and selection of specialists at every level – from entry roles to C-level executives and rare niche experts.</p>
         <ul>
           <li>Search &amp; selection of middle and senior specialists</li>
-          <li>Executive search through direct approach</li>
+          <li><span><a href="executive-search-en.html">Executive search</a> through direct approach</span></li>
           <li>IT recruitment</li>
           <li>Mass recruitment for retail, BPO and manufacturing</li>
           <li>Hiring from our candidate database</li>
@@ -323,6 +324,7 @@ main = f"""
           <li>Sourcing, assessment and monitoring of staff</li>
           <li>Multilingual teams for BPO, contact centres and support</li>
           <li>IT Park residency benefits</li>
+          <li><span><a href="employer-of-record-uzbekistan.html">Employer of Record</a> for foreign companies</span></li>
         </ul>
         <a href="outstaffing-en.html" class="hrs-more">Outstaffing details {ARROW}</a>
       </article>

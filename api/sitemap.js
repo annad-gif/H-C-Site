@@ -3,7 +3,7 @@
 
 const { SITE, articlePath, loadMaterials, vacancyPath, loadVacancies, PAGES, pageUrl, esc } = require("./_lib");
 
-const LASTMOD_PAGES = "2026-10-22"; // обновлять при заметных правках страниц
+const LASTMOD_PAGES = "2026-10-23"; // обновлять при заметных правках страниц
 
 module.exports = async function handler(req, res) {
   const out = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -41,6 +41,8 @@ module.exports = async function handler(req, res) {
   }
   // отдельные страницы без языковых версий
   out.push("  <url>", "    <loc>" + SITE + "/hr-services-uzbekistan.html</loc>", "    <lastmod>2026-10-22</lastmod>",
+    "    <priority>0.9</priority>", "  </url>");
+  out.push("  <url>", "    <loc>" + SITE + "/employer-of-record-uzbekistan.html</loc>", "    <lastmod>2026-10-23</lastmod>",
     "    <priority>0.9</priority>", "  </url>");
   out.push("  <url>", "    <loc>" + SITE + "/privacy.html</loc>", "    <priority>0.2</priority>", "  </url>", "</urlset>", "");
   res.statusCode = 200;
