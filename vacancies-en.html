@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script src="/hc-analytics.js" async></script>
 <meta name="description" content="Current Human and Capital vacancies in Uzbekistan. Open roles in IT, BPO, finance, marketing and sales. Apply and send your CV online."/>
-<title>Jobs in Tashkent and Uzbekistan — Human and Capital</title>
+<title>Jobs in Tashkent and Uzbekistan – Human and Capital</title>
 <!-- SEO -->
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://humancapital.uz/vacancies-en.html"/>
@@ -20,14 +20,14 @@
 <meta property="og:locale:alternate" content="ru_RU"/>
 <meta property="og:locale:alternate" content="uz_UZ"/>
 <meta property="og:url" content="https://humancapital.uz/vacancies-en.html"/>
-<meta property="og:title" content="Jobs in Tashkent and Uzbekistan — Human and Capital"/>
+<meta property="og:title" content="Jobs in Tashkent and Uzbekistan – Human and Capital"/>
 <meta property="og:description" content="Current Human and Capital vacancies in Uzbekistan. Open roles in IT, BPO, finance, marketing and sales. Apply and send your CV online."/>
 <meta property="og:image" content="https://humancapital.uz/og-cover.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Jobs in Tashkent and Uzbekistan — Human and Capital"/>
+<meta name="twitter:title" content="Jobs in Tashkent and Uzbekistan – Human and Capital"/>
 <meta name="twitter:description" content="Current Human and Capital vacancies in Uzbekistan. Open roles in IT, BPO, finance, marketing and sales. Apply and send your CV online."/>
 <meta name="twitter:image" content="https://humancapital.uz/og-cover.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -649,7 +649,7 @@
     .rec-hero-lottie{max-width:300px;margin:0 auto;}
   }
 
-  /* AUTOMATION — ORBIT LAYOUT */
+  /* AUTOMATION – ORBIT LAYOUT */
   #rec-automation{background:var(--grey-50);}
   .orbit-wrap{position:relative;width:min(720px,92vw);height:min(720px,92vw);margin:56px auto 0;}
   .orbit-center{
@@ -990,7 +990,7 @@
   <div class="container">
     <p class="tp-count"><span class="dot"></span><span id="vcTotal">Loading vacancies…</span></p>
     <h1>Our Vacancies</h1>
-    <p class="lead">Open roles from vetted employers. Click a card to read the full description and send your CV online — it reaches us instantly.</p>
+    <p class="lead">Open roles from vetted employers. Click a card to read the full description and send your CV online – it reaches us instantly.</p>
     <div class="tp-filters">
       <div class="tp-search">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -1043,7 +1043,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const I18N = {"none": "There are no open vacancies right now. Check back later or join our <a href=\"talent-pool-en.html\">candidate bank</a>.", "page": "Vacancy page", "all": "All", "city": "City", "total": "Open vacancies: {n}", "shown": "Showing <b>{n}</b> of {m}", "more": "Learn more", "apply": "Send CV", "m_about": "About the company", "m_resp": "Responsibilities", "m_req": "Requirements", "m_offer": "What we offer", "a_title": "Send your CV", "a_sub": "Fill in the form or upload an existing CV — the application goes straight into our system.", "f_name": "Full name", "f_phone": "Phone", "f_email": "Email", "f_city": "City", "f_exp": "Work experience", "f_skills": "Key skills", "f_msg": "Cover message", "ph_name": "Your name", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Your city", "ph_exp": "e.g. 4 years, backend development", "ph_skills": "e.g. Python, SQL, Docker", "ph_msg": "A few words about you and why this role interests you…", "file_b": "Upload CV", "file_h": "PDF, DOC, DOCX up to 10 MB", "orr": "or fill in manually", "back": "Back to vacancy", "submit": "Submit application", "sending": "Sending…", "toast": "CV sent! We’ll get in touch shortly."};
+const I18N = {"none": "There are no open vacancies right now. Check back later or join our <a href=\"talent-pool-en.html\">candidate bank</a>.", "page": "Vacancy page", "all": "All", "city": "City", "total": "Open vacancies: {n}", "shown": "Showing <b>{n}</b> of {m}", "more": "Learn more", "apply": "Send CV", "m_about": "About the company", "m_resp": "Responsibilities", "m_req": "Requirements", "m_offer": "What we offer", "a_title": "Send your CV", "a_sub": "Fill in the form or upload an existing CV – the application goes straight into our system.", "f_name": "Full name", "f_phone": "Phone", "f_email": "Email", "f_city": "City", "f_exp": "Work experience", "f_skills": "Key skills", "f_msg": "Cover message", "ph_name": "Your name", "ph_phone": "+998 __ ___ __ __", "ph_email": "you@mail.com", "ph_city": "Your city", "ph_exp": "e.g. 4 years, backend development", "ph_skills": "e.g. Python, SQL, Docker", "ph_msg": "A few words about you and why this role interests you…", "file_b": "Upload CV", "file_h": "PDF, DOC, DOCX up to 10 MB", "orr": "or fill in manually", "back": "Back to vacancy", "submit": "Submit application", "sending": "Sending…", "toast": "CV sent! We’ll get in touch shortly."};
 const CRM_CONFIG = { useLiveCRM:false, endpoint:'https://your-crm.example/api/vacancies', applyEndpoint:'https://your-crm.example/api/applications', apiKey:'' };
 function mapCrmVacancy(r){
   return { id:r.id, field:r.category||r.field||'', title:r.title||r.position||'',
@@ -1300,7 +1300,7 @@ function buildChips(){ const fields=[I18N.all,...Array.from(new Set(ALL.map(v=>v
 searchEl.addEventListener('input',e=>{ query=e.target.value; render(); });
 
 
-// Разметка JobPosting — на страницах /vacancies/<slug> (api/vacancy.js), не на списке.
+// Разметка JobPosting – на страницах /vacancies/<slug> (api/vacancy.js), не на списке.
 
 (async function init(){ grid.innerHTML=Array(6).fill('<div class="tp-skel" style="height:280px"></div>').join('');
   ALL=await loadVacancies(); totalEl.textContent=I18N.total.replace('{n}',ALL.length); buildChips(); render();

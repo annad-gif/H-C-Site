@@ -1,13 +1,13 @@
 """Собирает оболочки страниц статей из resources*.html.
 
-Страницы /articles/<slug> рендерит функция api/article.js, страницы вакансий — api/vacancy.js.
+Страницы /articles/<slug> рендерит функция api/article.js, страницы вакансий – api/vacancy.js.
 Чтобы шапка, подвал и стили совпадали с остальным сайтом, они берутся из раздела
 «Полезные материалы» на языке статьи (site_materials.lang):
 
-  - article.css          — стили resources.html + стили статьи (tools/article-extra.css)
-  - api/_shell.html      — RU: <nav>, <footer>, кнопка «Связаться» и скрипт меню (из resources.html)
-  - api/_shell-en.html   — EN (из resources-en.html)
-  - api/_shell-uz.html   — UZ (из resources-uz.html)
+  - article.css          – стили resources.html + стили статьи (tools/article-extra.css)
+  - api/_shell.html      – RU: <nav>, <footer>, кнопка «Связаться» и скрипт меню (из resources.html)
+  - api/_shell-en.html   – EN (из resources-en.html)
+  - api/_shell-uz.html   – UZ (из resources-uz.html)
 
 Запускать после правок меню/подвала/стилей в resources*.html:
     python3 tools/build_article_shell.py
@@ -39,7 +39,7 @@ def build(lang, src_name, out_name):
         style = re.search(r"<style>(.*?)</style>", src, re.S).group(1)
         extra = open(os.path.join(ROOT, "tools", "article-extra.css"), encoding="utf-8").read()
         open(os.path.join(ROOT, "article.css"), "w", encoding="utf-8").write(
-            "/* Сгенерировано tools/build_article_shell.py из resources.html — не править вручную */\n"
+            "/* Сгенерировано tools/build_article_shell.py из resources.html – не править вручную */\n"
             + style.strip() + "\n\n" + extra)
 
     fonts = grab(r'<link rel="preconnect" href="https://fonts.googleapis.com"/>.*?rel="stylesheet"/>')

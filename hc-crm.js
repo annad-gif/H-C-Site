@@ -1,12 +1,12 @@
 /* ============================================================
-   Human and Capital — интеграция сайта с Supabase
+   Human and Capital – интеграция сайта с Supabase
    ATS (RecruitPro)  : вакансии, отклики, кадровый резерв
    Staffly CRM       : заявки с сайта (воронка → «Новый лид»)
 
    Подключается одной строкой на каждой странице:
      <script src="hc-crm.js" defer></script>
 
-   Серверная часть — в файлах ats_setup.sql и staffly_setup.sql
+   Серверная часть – в файлах ats_setup.sql и staffly_setup.sql
    (функции submit_lead / apply_to_vacancy и витрины public_*).
    ============================================================ */
 (function () {
@@ -37,7 +37,7 @@
   }
 
   // --- helpers ---
-  // цели веб-аналитики (hc-analytics.js); без него — тихо ничего не делаем
+  // цели веб-аналитики (hc-analytics.js); без него – тихо ничего не делаем
   function goal(name, params) { try { if (window.hcGoal) window.hcGoal(name, params); } catch (e) {} }
   function txt(v) { return (v == null ? "" : String(v)).trim(); }
   function lines(s) {
@@ -110,7 +110,7 @@
   }
 
   // --- адрес страницы вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
-  // Та же схема в api/_lib.js (vacancySlug/articleSlug) — менять синхронно.
+  // Та же схема в api/_lib.js (vacancySlug/articleSlug) – менять синхронно.
   var TR = { "а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"zh","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya","ў":"o","қ":"q","ғ":"g","ҳ":"h" };
   function vacancyPath(v) {
     var base = String(v.title || "").toLowerCase().split("").map(function (c) { return c in TR ? TR[c] : c; }).join("")
@@ -290,7 +290,7 @@
     } catch (e) {
       console.error("submitApplication", e);
       var reason = applyError(e);
-      // Отклик на эту вакансию с этим email уже есть — для человека это не ошибка.
+      // Отклик на эту вакансию с этим email уже есть – для человека это не ошибка.
       if (reason === "dup") { toast(amsg("dup")); return { ok: true, reason: "dup" }; }
       toast(amsg(reason), false); return { ok: false, reason: reason };
     } finally {
@@ -312,7 +312,7 @@
         ev.preventDefault(); ev.stopPropagation(); submitLead(lead);
       }, true);
     }
-    // форма отклика появляется в модалке позже — следим за DOM
+    // форма отклика появляется в модалке позже – следим за DOM
     var obs = new MutationObserver(function () {
       var af = document.getElementById("vcApplyForm");
       if (af && !af.dataset.hcReady) { af.dataset.hcReady = "1"; injectConsent(af, "vcConsent"); honeypot(af); }

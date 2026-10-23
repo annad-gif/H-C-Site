@@ -8,7 +8,7 @@ const SB_URL = "https://byerqfuuprmmykncjqms.supabase.co";
 const SB_KEY = "sb_publishable_JBo7zlA02IyeaJLuTdZX5A_YEatYU6_";
 
 // --- адрес статьи: /articles/<транслит заголовка>-<первые 8 символов id> ---
-// Та же функция продублирована в resources*.html (articleSlug) — менять синхронно.
+// Та же функция продублирована в resources*.html (articleSlug) – менять синхронно.
 const TR = { "а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"zh","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya","ў":"o","қ":"q","ғ":"g","ҳ":"h" };
 function articleSlug(m) {
   const base = String(m.title || "").toLowerCase().split("").map(c => (c in TR ? TR[c] : c)).join("")
@@ -19,7 +19,7 @@ function articleSlug(m) {
 function articlePath(m) { return "/articles/" + articleSlug(m); }
 
 // --- адрес вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
-// Та же схема, что у статей; продублирована в hc-crm.js (vacancyPath) — менять синхронно.
+// Та же схема, что у статей; продублирована в hc-crm.js (vacancyPath) – менять синхронно.
 function vacancySlug(v) { return articleSlug(v); }
 function vacancyPath(v) { return "/vacancies/" + vacancySlug(v); }
 

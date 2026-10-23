@@ -1,13 +1,13 @@
 /* ============================================================
-   Human and Capital — веб-аналитика (Google Analytics 4 + Яндекс Метрика)
+   Human and Capital – веб-аналитика (Google Analytics 4 + Яндекс Метрика)
 
    Подключается в <head> каждой публичной страницы:
      <script src="/hc-analytics.js" async></script>
 
    Цели (одинаковые идентификаторы в GA4 и Метрике):
-     generate_lead  — отправлена заявка с сайта (hc-crm.js → submitLead)
-     vacancy_apply  — отправлен отклик на вакансию (hc-crm.js → submitApplication)
-     click_phone / click_email / click_telegram / click_whatsapp — клики по контактам
+     generate_lead  – отправлена заявка с сайта (hc-crm.js → submitLead)
+     vacancy_apply  – отправлен отклик на вакансию (hc-crm.js → submitApplication)
+     click_phone / click_email / click_telegram / click_whatsapp – клики по контактам
    ============================================================ */
 (function () {
   "use strict";

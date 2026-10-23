@@ -7,7 +7,7 @@
       --allow-file-access-from-files --window-size=1600,900 --virtual-time-budget=6000 \
       --screenshot=<имя>.png file://<папка>/<имя>.html
     sips -s format jpeg -s formatOptions 86 <имя>.png --out img/articles/<slug статьи>.jpg
-В статье (site_materials) — media_type='image', media_url='https://humancapital.uz/img/articles/<slug>.jpg'.
+В статье (site_materials) – media_type='image', media_url='https://humancapital.uz/img/articles/<slug>.jpg'.
 """
 import os, sys
 D = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()

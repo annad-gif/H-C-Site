@@ -1,4 +1,4 @@
-/* Сгенерировано tools/build_article_shell.py из resources.html — не править вручную */
+/* Сгенерировано tools/build_article_shell.py из resources.html – не править вручную */
 :root{
     --black:#0e0e0d;
     --black-soft:#171716;
@@ -614,7 +614,7 @@
     .rec-hero-lottie{max-width:300px;margin:0 auto;}
   }
 
-  /* AUTOMATION — ORBIT LAYOUT */
+  /* AUTOMATION – ORBIT LAYOUT */
   #rec-automation{background:var(--grey-50);}
   .orbit-wrap{position:relative;width:min(720px,92vw);height:min(720px,92vw);margin:56px auto 0;}
   .orbit-center{

@@ -5,8 +5,8 @@ ROOT = sys.argv[1]
 src = open(f"{ROOT}/consulting-en.html", encoding="utf-8").read()
 
 URL = "https://humancapital.uz/hr-services-uzbekistan.html"
-TITLE = "HR Services in Uzbekistan — Recruitment, Outstaffing, HR Consulting | Human and Capital"
-SHORT_TITLE = "HR Services in Uzbekistan — Human and Capital"
+TITLE = "HR Services in Uzbekistan – Recruitment, Outstaffing, HR Consulting | Human and Capital"
+SHORT_TITLE = "HR Services in Uzbekistan – Human and Capital"
 DESC = ("HR services in Uzbekistan for local and international companies: recruitment and executive search, "
         "outstaffing with legal employment and payroll, HR consulting and HR audit. Tashkent-based team, 500+ positions filled.")
 
@@ -251,7 +251,7 @@ main = f"""
     <div class="rec-hero-text">
       <p class="hero-eyebrow"><span class="dot"></span>HR services · Uzbekistan</p>
       <h1>HR Services in <span class="accent">Uzbekistan</span></h1>
-      <p class="lead">Recruitment, outstaffing and HR consulting for local and international companies — one Tashkent-based partner for hiring, legal employment and HR processes.</p>
+      <p class="lead">Recruitment, outstaffing and HR consulting for local and international companies – one Tashkent-based partner for hiring, legal employment and HR processes.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn btn-mustard">Discuss your task
           {ARROW.replace('<svg ', '<svg fill="none" stroke="currentColor" stroke-width="2" ')}
@@ -283,7 +283,7 @@ main = f"""
       <p class="sec-eyebrow">HR company in Tashkent</p>
       <h2 class="sec-title">One partner for hiring, staffing and HR</h2>
       <p><strong>Human and Capital</strong> is an HR company based in Tashkent that provides <strong>HR services in Uzbekistan</strong> to local businesses and international companies entering the Uzbek market. We find the right people, employ and support them on your behalf when needed, and help you build HR processes that keep them in the company.</p>
-      <p>Instead of working with separate recruitment, outstaffing and consulting providers, you get one team that knows the local labour market, labour law and hiring practices — and that covers the whole cycle from the first request to the employee's adaptation.</p>
+      <p>Instead of working with separate recruitment, outstaffing and consulting providers, you get one team that knows the local labour market, labour law and hiring practices – and that covers the whole cycle from the first request to the employee's adaptation.</p>
       <p>Our motto is simple: <strong>people and time are the most valuable resources</strong>. We help you find the first while saving the second.</p>
     </div>
   </div>
@@ -301,7 +301,7 @@ main = f"""
       <article class="cons-card hrs-svc reveal">
         <span class="hrs-num">01 / RECRUITMENT</span>
         <h3>Recruitment &amp; executive search</h3>
-        <p>End-to-end search and selection of specialists at every level — from entry roles to C-level executives and rare niche experts.</p>
+        <p>End-to-end search and selection of specialists at every level – from entry roles to C-level executives and rare niche experts.</p>
         <ul>
           <li>Search &amp; selection of middle and senior specialists</li>
           <li>Executive search through direct approach</li>
@@ -327,7 +327,7 @@ main = f"""
       <article class="cons-card hrs-svc reveal">
         <span class="hrs-num">03 / HR CONSULTING</span>
         <h3>HR consulting &amp; HR audit</h3>
-        <p>Turnkey solutions that put your HR processes in order — from documents and structure to assessment, onboarding and motivation.</p>
+        <p>Turnkey solutions that put your HR processes in order – from documents and structure to assessment, onboarding and motivation.</p>
         <ul>
           <li>HR audit, staffing schedule and standard documents</li>
           <li>Training, evaluation and assessment systems</li>
@@ -375,7 +375,7 @@ main = f"""
     <div class="sec-head reveal">
       <p class="sec-eyebrow">How we work</p>
       <h2 class="sec-title">A simple, transparent process</h2>
-      <p class="sec-lead">Every step is agreed with you in advance — from the first request to the employee's adaptation.</p>
+      <p class="sec-lead">Every step is agreed with you in advance – from the first request to the employee's adaptation.</p>
     </div>
     <ol class="hrs-steps">
 {chr(10).join(f'      <li class="reveal"><h3>{t}</h3><p>{d}</p></li>' for t, d in steps)}
@@ -444,7 +444,7 @@ tail = tail.replace(old_select, """<select id="service">
         </select>""")
 tail = tail.replace('<a href="#contact">Contacts</a>', '<a href="index-en.html">Home</a>\n    <a href="recruitment-en.html">Recruitment</a>\n    <a href="outstaffing-en.html">Outstaffing</a>\n    <a href="consulting-en.html">HR consulting</a>\n    <a href="#contact">Contacts</a>', 1)
 
-# основной скрипт страницы — без инициализации Lottie (анимации на этой странице нет)
+# основной скрипт страницы – без инициализации Lottie (анимации на этой странице нет)
 scripts = src[src.index("<script>\n  try{"):]
 scripts = re.sub(r"<script>\n  try\{.*?\}catch\(e\)\{ console.error\('Lottie init error:', e\); \}\n", "<script>\n", scripts, count=1, flags=re.S)
 assert "recLottie" not in scripts

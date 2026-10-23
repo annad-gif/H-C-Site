@@ -17,7 +17,7 @@ const L10N = {
   ru: { locale: "ru-RU", og: "ru_RU", home: "Главная", homeUrl: "/", res: "Полезные материалы", resUrl: "/resources.html",
         cat: { article: "Статья", news: "Новость", video: "Видео", photo: "Фото" },
         ctaH: "Нужна помощь с подбором персонала?",
-        ctaP: "Human and Capital — рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.",
+        ctaP: "Human and Capital – рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.",
         ctaA: "Оставить заявку →", ctaUrl: "/index.html#contact", related: "Читайте также", all: "Все материалы →" },
   en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
         cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
@@ -27,7 +27,7 @@ const L10N = {
   uz: { locale: "uz-Latn-UZ", og: "uz_UZ", home: "Bosh sahifa", homeUrl: "/index-uz.html", res: "Foydali materiallar", resUrl: "/resources-uz.html",
         cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
         ctaH: "Xodim tanlashda yordam kerakmi?",
-        ctaP: "Human and Capital — O‘zbekistondagi rekruting agentligi. Ommaviy tanlovdan executive searchgacha — vazifangizga mos xodimlarni topamiz.",
+        ctaP: "Human and Capital – O‘zbekistondagi rekruting agentligi. Ommaviy tanlovdan executive searchgacha – vazifangizga mos xodimlarni topamiz.",
         ctaA: "Ariza qoldirish →", ctaUrl: "/index-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →" },
 };
 function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
@@ -80,7 +80,7 @@ function plainText(html) {
 function clip(s, n) {
   if (s.length <= n) return s;
   const cut = s.slice(0, n - 1);
-  return cut.slice(0, cut.lastIndexOf(" ") > n * 0.6 ? cut.lastIndexOf(" ") : cut.length).replace(/[\s,.;:—-]+$/, "") + "…";
+  return cut.slice(0, cut.lastIndexOf(" ") > n * 0.6 ? cut.lastIndexOf(" ") : cut.length).replace(/[\s,.;:–-]+$/, "") + "…";
 }
 // «Прескрининг» + «Как мы экономим время…» → «Прескрининг: как мы экономим время…»
 function headline(m) {
@@ -112,7 +112,7 @@ function relatedHTML(all, m) {
   const L = L10N[langOf(m)];
   const i = all.findIndex(x => x.id === m.id);
   const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => x.id !== m.id);
-  // сначала материалы на том же языке, внутри — того же типа
+  // сначала материалы на том же языке, внутри – того же типа
   const rank = x => (langOf(x) === langOf(m) ? 0 : 2) + (x.cat === m.cat ? 0 : 1);
   const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
   if (!pick.length) return "";
@@ -168,7 +168,7 @@ function articlePage(all, m) {
       },
     ],
   };
-  const title = h + " — Human and Capital";
+  const title = h + " – Human and Capital";
   const head = [
     "<title>" + esc(title) + "</title>",
     '<meta name="description" content="' + esc(desc) + '"/>',
@@ -210,7 +210,7 @@ function articlePage(all, m) {
 
 function notFoundPage() {
   return render(
-    '<title>Материал не найден — Human and Capital</title>\n<meta name="robots" content="noindex"/>',
+    '<title>Материал не найден – Human and Capital</title>\n<meta name="robots" content="noindex"/>',
     '<main class="ar-404"><div class="container"><h1>Материал не найден</h1>'
     + "<p>Возможно, он был снят с публикации или ссылка устарела.</p>"
     + '<a href="/resources.html">Перейти ко всем материалам →</a></div></main>');
@@ -228,7 +228,7 @@ module.exports = async function handler(req, res) {
     res.statusCode = 503;
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Retry-After", "60");
-    return res.end(render('<title>Временная ошибка — Human and Capital</title>\n<meta name="robots" content="noindex"/>',
+    return res.end(render('<title>Временная ошибка – Human and Capital</title>\n<meta name="robots" content="noindex"/>',
       '<main class="ar-404"><div class="container"><h1>Не удалось загрузить материал</h1><p>Попробуйте обновить страницу через минуту.</p>'
       + '<a href="/resources.html">Все материалы →</a></div></main>'));
   }
@@ -239,7 +239,7 @@ module.exports = async function handler(req, res) {
     return res.end(notFoundPage());
   }
   if (slug !== articleSlug(m)) {
-    // заголовок поменяли или ссылка набрана с ошибкой — ведём на актуальный адрес
+    // заголовок поменяли или ссылка набрана с ошибкой – ведём на актуальный адрес
     res.statusCode = 301;
     res.setHeader("Location", articlePath(m));
     res.setHeader("Cache-Control", "public, s-maxage=300");

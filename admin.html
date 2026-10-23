@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="description" content="Внутренняя панель управления Human and Capital."/>
-<title>Панель управления — Human and Capital</title>
+<title>Панель управления – Human and Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -623,7 +623,7 @@
     .rec-hero-lottie{max-width:300px;margin:0 auto;}
   }
 
-  /* AUTOMATION — ORBIT LAYOUT */
+  /* AUTOMATION – ORBIT LAYOUT */
   #rec-automation{background:var(--grey-50);}
   .orbit-wrap{position:relative;width:min(720px,92vw);height:min(720px,92vw);margin:56px auto 0;}
   .orbit-center{
@@ -945,7 +945,7 @@
       <button data-sec="seo" data-perm="seo"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>SEO</button>
     </nav>
     <div class="adm-user">
-      <div class="who"><div class="adm-avatar" id="admAvatar">A</div><div><div class="nm" id="admName">—</div><div class="rl" id="admRole">—</div></div></div>
+      <div class="who"><div class="adm-avatar" id="admAvatar">A</div><div><div class="nm" id="admName">–</div><div class="rl" id="admRole">–</div></div></div>
       <button class="adm-logout" id="admLogout"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>Выйти</button>
     </div>
   </aside>
@@ -969,7 +969,7 @@
    АВТОРИЗАЦИЯ И РОЛИ
    ВАЖНО: проверки ниже выполняются в браузере и нужны только для удобства
    интерфейса. Реальную авторизацию, выдачу доступа по почте и проверку
-   ролей ОБЯЗАТЕЛЬНО реализуйте на сервере — клиентские проверки можно обойти.
+   ролей ОБЯЗАТЕЛЬНО реализуйте на сервере – клиентские проверки можно обойти.
    Точки интеграции помечены AUTH_CONFIG и TODO CRM.
    ===================================================================== */
 /* ===== Supabase: реальный вход через Google + данные сайта ===== */
@@ -996,10 +996,10 @@ function can(perm){ return !!(current && PERMS[current.role] && PERMS[current.ro
 let EMP = [{"id": "E-001", "name": "Анна Дж.", "email": "anna@human-capital.org", "role": "super_admin", "status": "active", "added": "01.01.2026"}, {"id": "E-002", "name": "Дилшод Р.", "email": "dilshod@human-capital.org", "role": "admin", "status": "active", "added": "12.02.2026"}, {"id": "E-003", "name": "Мадина К.", "email": "madina@human-capital.org", "role": "admin", "status": "invited", "added": "10.06.2026"}];
 let CUST = [{"id": "C-101", "company": "Texnopro LLC", "contact": "Бекзод А.", "email": "hr@texnopro.uz", "phone": "+998 90 111 22 33", "status": "active", "since": "03.2026"}, {"id": "C-102", "company": "Silk Finance", "contact": "Нигора С.", "email": "people@silkfin.uz", "phone": "+998 91 222 33 44", "status": "active", "since": "04.2026"}, {"id": "C-103", "company": "BPO United", "contact": "Тимур В.", "email": "recruit@bpou.uz", "phone": "+998 93 333 44 55", "status": "paused", "since": "05.2026"}];
 let VAC = [{"id": "VAC-501", "field": "IT", "title": "Senior Backend-разработчик (Python)", "company": "Финтех-компания, разрабатывающая платёжные сервисы для рынка СНГ.", "city": "Ташкент", "salary": "2 500–3 500 $", "type": "Полная занятость · Гибрид", "disabled": false, "responsibilities": ["Проектирование и разработка backend-сервисов на Python/Django.", "Оптимизация производительности и масштабирование под нагрузку.", "Код-ревью и менторинг junior-разработчиков."], "requirements": ["От 5 лет коммерческого опыта на Python.", "Опыт с PostgreSQL, Docker, REST API.", "Английский от B2."], "offer": ["Конкурентная зарплата в $ и пересмотр раз в год.", "Гибридный формат и гибкий график.", "Оплата обучения и сертификаций."]}, {"id": "VAC-502", "field": "BPO", "title": "Оператор контакт-центра (со знанием английского)", "company": "Международный BPO-провайдер, обслуживающий клиентов из Европы и США.", "city": "Самарканд", "salary": "700–1 000 $", "type": "Полная занятость · Офис", "disabled": false, "responsibilities": ["Обработка входящих обращений клиентов на английском.", "Ведение карточек в CRM, фиксация результатов.", "Соблюдение стандартов качества и SLA."], "requirements": ["Английский от B1 (разговорный).", "Грамотная речь, стрессоустойчивость.", "Готовность к сменному графику."], "offer": ["Обучение за счёт компании.", "Бонусы за качество и выполнение плана.", "Карьерный рост до супервайзера."]}, {"id": "VAC-503", "field": "Маркетинг", "title": "Performance-маркетолог", "company": "E-commerce проект с собственным брендом и розничной сетью.", "city": "Ташкент", "salary": "1 200–1 800 $", "type": "Полная занятость · Гибрид", "disabled": false, "responsibilities": ["Запуск и оптимизация рекламы в Google и Meta.", "Аналитика воронок и улучшение ROMI.", "A/B-тесты лендингов и креативов."], "requirements": ["От 3 лет в performance-маркетинге.", "Опыт управления бюджетами от 20 000 $/мес.", "Уверенная аналитика (GA4, дашборды)."], "offer": ["Бюджет на тесты и инструменты.", "Бонусы от результата.", "Команда сильных специалистов."]}, {"id": "VAC-504", "field": "Финансы", "title": "Финансовый менеджер", "company": "Производственный холдинг с международными контрактами.", "city": "Ташкент", "salary": "1 600–2 200 $", "type": "Полная занятость · Офис", "disabled": true, "responsibilities": ["Управленческий учёт и финансовая отчётность.", "Бюджетирование и контроль исполнения.", "Подготовка финмоделей для руководства."], "requirements": ["От 5 лет в финансах/аудите.", "Знание IFRS, уверенный Excel/1С.", "Английский от B2."], "offer": ["Белая зарплата и годовой бонус.", "Медицинская страховка.", "Развитие до финансового директора."]}];
-let CAND = [{"id": "HC-1042", "field": "IT — Backend-разработка", "date": "12.06.2026", "city": "Ташкент", "experience": "6 лет: финтех, e-commerce, SaaS", "results": "Снизил время отклика API на 40%, вывел 3 продукта в прод", "salary": "от 2 500 $", "languages": "Русский (родной), English (B2)", "skills": ["Python", "Django", "PostgreSQL", "Docker"], "description": "Senior backend-инженер с опытом высоконагруженных сервисов и менторства команды.", "disabled": false}, {"id": "HC-1057", "field": "BPO — Контакт-центр", "date": "11.06.2026", "city": "Самарканд", "experience": "4 года: поддержка клиентов, продажи", "results": "CSAT 96%, перевыполнение плана продаж на 18%", "salary": "от 700 $", "languages": "Русский (родной), English (B1)", "skills": ["Customer Support", "CRM", "Продажи"], "description": "Специалист контакт-центра с сильными коммуникативными навыками.", "disabled": false}, {"id": "HC-1063", "field": "Маркетинг", "date": "10.06.2026", "city": "Ташкент", "experience": "5 лет: digital, performance-маркетинг", "results": "ROMI 320%, рост лидов в 2,4 раза за год", "salary": "от 1 400 $", "languages": "Русский (родной), English (C1)", "skills": ["Performance", "Google Ads", "Аналитика"], "description": "Performance-маркетолог с опытом управления бюджетами и построения воронок.", "disabled": true}];
-let MAT = [{"id": "M-01", "cat": "Статья", "title": "Как составить вакансию, на которую откликаются", "desc": "7 принципов, которые повышают конверсию объявления.", "body": "Хорошее объявление о вакансии — это продукт. Оно отвечает на три вопроса кандидата: что я буду делать, что я получу и почему именно эта компания.", "disabled": false}, {"id": "M-02", "cat": "Новость", "title": "Рынок IT-найма в Узбекистане", "desc": "Спрос на разработчиков вырос, сроки закрытия вакансий сократились.", "body": "За первое полугодие 2026 года спрос на IT-специалистов в Узбекистане заметно вырос, а доля удалённых офферов продолжает расти.", "disabled": false}, {"id": "M-03", "cat": "Видео", "title": "Онбординг в Human and Capital", "desc": "За 4 минуты показываем путь нового сотрудника.", "body": "В этом видео мы показываем, как устроен процесс адаптации новых сотрудников: ключевые этапы, роль наставника и первая неделя.", "disabled": true}];
-let SEO = [{"id": "home", "page": "Главная", "url": "index.html", "title": "Human and Capital — кадровое агентство в Узбекистане", "desc": "Подбор персонала, рекрутмент, консалтинг и аутстаффинг в Ташкенте. Закрываем вакансии быстро и с гарантией.", "keywords": "кадровое агентство ташкент, подбор персонала узбекистан, рекрутмент", "indexed": true}, {"id": "rec", "page": "Рекрутмент", "url": "recruitment.html", "title": "Рекрутмент — Human and Capital", "desc": "Профессиональный подбор персонала под ключ: от заявки до выхода кандидата. Executive search и массовый подбор.", "keywords": "рекрутмент, executive search, поиск сотрудников", "indexed": true}, {"id": "cons", "page": "Консалтинг", "url": "consulting.html", "title": "Консалтинг — Human and Capital", "desc": "HR-консалтинг под ключ: кадровый аудит, обучение, адаптация, анализ рынка труда и прескриннинг.", "keywords": "hr консалтинг, кадровый аудит, анализ рынка труда", "indexed": true}, {"id": "vac", "page": "Наши вакансии", "url": "vacancies.html", "title": "Наши вакансии — Human and Capital", "desc": "Актуальные вакансии в IT, BPO, финансах и маркетинге. Откликнитесь и отправьте резюме онлайн.", "keywords": "вакансии ташкент, работа узбекистан, it вакансии", "indexed": true}, {"id": "tp", "page": "Банк резюме", "url": "talent-pool.html", "title": "Банк резюме — Human and Capital", "desc": "База проверенных кандидатов. Фильтруйте по навыкам, сфере и городу и отправляйте заявку.", "keywords": "банк резюме, база кандидатов, найти сотрудника", "indexed": true}, {"id": "res", "page": "Полезные материалы", "url": "resources.html", "title": "Полезные материалы — Human and Capital", "desc": "Статьи, новости и видео о подборе персонала, HR и рынке труда в Узбекистане.", "keywords": "hr блог, статьи о подборе, рынок труда", "indexed": false}];
-let SEO_CHECKS = [{"k": "Заголовки (title) заданы для всех страниц", "ok": true}, {"k": "Мета-описания заполнены", "ok": true}, {"k": "Карта сайта sitemap.xml отправлена в Google", "ok": true}, {"k": "robots.txt разрешает индексацию", "ok": true}, {"k": "HTTPS-сертификат активен", "ok": true}, {"k": "Сайт адаптирован под мобильные", "ok": true}, {"k": "Микроразметка Schema.org (Organization)", "ok": false}, {"k": "Alt-теги у всех изображений", "ok": false}, {"k": "Подключён Google Search Console", "ok": true}, {"k": "Скорость загрузки (Core Web Vitals) — зелёная зона", "ok": false}];
+let CAND = [{"id": "HC-1042", "field": "IT – Backend-разработка", "date": "12.06.2026", "city": "Ташкент", "experience": "6 лет: финтех, e-commerce, SaaS", "results": "Снизил время отклика API на 40%, вывел 3 продукта в прод", "salary": "от 2 500 $", "languages": "Русский (родной), English (B2)", "skills": ["Python", "Django", "PostgreSQL", "Docker"], "description": "Senior backend-инженер с опытом высоконагруженных сервисов и менторства команды.", "disabled": false}, {"id": "HC-1057", "field": "BPO – Контакт-центр", "date": "11.06.2026", "city": "Самарканд", "experience": "4 года: поддержка клиентов, продажи", "results": "CSAT 96%, перевыполнение плана продаж на 18%", "salary": "от 700 $", "languages": "Русский (родной), English (B1)", "skills": ["Customer Support", "CRM", "Продажи"], "description": "Специалист контакт-центра с сильными коммуникативными навыками.", "disabled": false}, {"id": "HC-1063", "field": "Маркетинг", "date": "10.06.2026", "city": "Ташкент", "experience": "5 лет: digital, performance-маркетинг", "results": "ROMI 320%, рост лидов в 2,4 раза за год", "salary": "от 1 400 $", "languages": "Русский (родной), English (C1)", "skills": ["Performance", "Google Ads", "Аналитика"], "description": "Performance-маркетолог с опытом управления бюджетами и построения воронок.", "disabled": true}];
+let MAT = [{"id": "M-01", "cat": "Статья", "title": "Как составить вакансию, на которую откликаются", "desc": "7 принципов, которые повышают конверсию объявления.", "body": "Хорошее объявление о вакансии – это продукт. Оно отвечает на три вопроса кандидата: что я буду делать, что я получу и почему именно эта компания.", "disabled": false}, {"id": "M-02", "cat": "Новость", "title": "Рынок IT-найма в Узбекистане", "desc": "Спрос на разработчиков вырос, сроки закрытия вакансий сократились.", "body": "За первое полугодие 2026 года спрос на IT-специалистов в Узбекистане заметно вырос, а доля удалённых офферов продолжает расти.", "disabled": false}, {"id": "M-03", "cat": "Видео", "title": "Онбординг в Human and Capital", "desc": "За 4 минуты показываем путь нового сотрудника.", "body": "В этом видео мы показываем, как устроен процесс адаптации новых сотрудников: ключевые этапы, роль наставника и первая неделя.", "disabled": true}];
+let SEO = [{"id": "home", "page": "Главная", "url": "index.html", "title": "Human and Capital – кадровое агентство в Узбекистане", "desc": "Подбор персонала, рекрутмент, консалтинг и аутстаффинг в Ташкенте. Закрываем вакансии быстро и с гарантией.", "keywords": "кадровое агентство ташкент, подбор персонала узбекистан, рекрутмент", "indexed": true}, {"id": "rec", "page": "Рекрутмент", "url": "recruitment.html", "title": "Рекрутмент – Human and Capital", "desc": "Профессиональный подбор персонала под ключ: от заявки до выхода кандидата. Executive search и массовый подбор.", "keywords": "рекрутмент, executive search, поиск сотрудников", "indexed": true}, {"id": "cons", "page": "Консалтинг", "url": "consulting.html", "title": "Консалтинг – Human and Capital", "desc": "HR-консалтинг под ключ: кадровый аудит, обучение, адаптация, анализ рынка труда и прескриннинг.", "keywords": "hr консалтинг, кадровый аудит, анализ рынка труда", "indexed": true}, {"id": "vac", "page": "Наши вакансии", "url": "vacancies.html", "title": "Наши вакансии – Human and Capital", "desc": "Актуальные вакансии в IT, BPO, финансах и маркетинге. Откликнитесь и отправьте резюме онлайн.", "keywords": "вакансии ташкент, работа узбекистан, it вакансии", "indexed": true}, {"id": "tp", "page": "Банк резюме", "url": "talent-pool.html", "title": "Банк резюме – Human and Capital", "desc": "База проверенных кандидатов. Фильтруйте по навыкам, сфере и городу и отправляйте заявку.", "keywords": "банк резюме, база кандидатов, найти сотрудника", "indexed": true}, {"id": "res", "page": "Полезные материалы", "url": "resources.html", "title": "Полезные материалы – Human and Capital", "desc": "Статьи, новости и видео о подборе персонала, HR и рынке труда в Узбекистане.", "keywords": "hr блог, статьи о подборе, рынок труда", "indexed": false}];
+let SEO_CHECKS = [{"k": "Заголовки (title) заданы для всех страниц", "ok": true}, {"k": "Мета-описания заполнены", "ok": true}, {"k": "Карта сайта sitemap.xml отправлена в Google", "ok": true}, {"k": "robots.txt разрешает индексацию", "ok": true}, {"k": "HTTPS-сертификат активен", "ok": true}, {"k": "Сайт адаптирован под мобильные", "ok": true}, {"k": "Микроразметка Schema.org (Organization)", "ok": false}, {"k": "Alt-теги у всех изображений", "ok": false}, {"k": "Подключён Google Search Console", "ok": true}, {"k": "Скорость загрузки (Core Web Vitals) – зелёная зона", "ok": false}];
 let LEADS = [];
 let APPS = [];
 let SITE_LEADS = {new_count:0,total_count:0};
@@ -1033,7 +1033,7 @@ async function checkSession(){
   try{
     const { data:{ session } } = await sb.auth.getSession();
     if(!session){ _entered=false; document.body.classList.remove('authed'); return; }
-    if(_entered) return;                 /* уже внутри — не перезапускаем и не сбрасываем экран */
+    if(_entered) return;                 /* уже внутри – не перезапускаем и не сбрасываем экран */
     const email=(session.user.email||'').toLowerCase();
     let role=null;
     let name=(session.user.user_metadata && session.user.user_metadata.full_name) || email;
@@ -1072,10 +1072,10 @@ async function loadAllData(){
     if(mat.data) MAT=mat.data.map(m=>({ id:m.id, lang:m.lang||'ru', cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', media_url:m.media_url||'', media_type:m.media_type||'', disabled:!m.published }));
     if(seo.data) SEO=seo.data.map(x=>({ id:x.id, page:x.page||'', url:x.url||'', title:x.title||'', desc:x.description||'', keywords:x.keywords||'', indexed:!!x.indexed }));
     if(adm.data) EMP=adm.data.map(a=>({ id:a.id, name:a.name||a.email, email:a.email, role:a.role, status:a.status, added:fmtDate(a.created_at) }));
-    if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'—'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
-    if(cand.data) CAND=cand.data.map(c=>({ id:c.id, field:c.public_field||c.position||'—', city:c.public_city||'', date:fmtDate(c.created_at), experience:c.public_experience||'', results:c.public_results||'', salary:c.salary?('от '+Number(c.salary).toLocaleString('ru-RU')+' $'):'', languages:c.public_languages||'', skills:c.public_skills||[], description:c.public_summary||'', disabled:!c.is_public }));
+    if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'–'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
+    if(cand.data) CAND=cand.data.map(c=>({ id:c.id, field:c.public_field||c.position||'–', city:c.public_city||'', date:fmtDate(c.created_at), experience:c.public_experience||'', results:c.public_results||'', salary:c.salary?('от '+Number(c.salary).toLocaleString('ru-RU')+' $'):'', languages:c.public_languages||'', skills:c.public_skills||[], description:c.public_summary||'', disabled:!c.is_public }));
     try{ const ap=await sb.rpc('site_applications');
-         APPS=(ap.data||[]).map(a=>({ id:a.id, date:fmtDate(a.created_at), name:a.name||'—', vacancy:a.vacancy_title||a.position||'—', phone:a.phone||'', email:a.email||'', cv:a.resume_name||'', cv_url:a.resume_url||'' }));
+         APPS=(ap.data||[]).map(a=>({ id:a.id, date:fmtDate(a.created_at), name:a.name||'–', vacancy:a.vacancy_title||a.position||'–', phone:a.phone||'', email:a.email||'', cv:a.resume_name||'', cv_url:a.resume_url||'' }));
     }catch(e2){ console.error('site_applications',e2); }
     try{ const lc=await sbStaffly.rpc('site_leads_count'); if(lc.data) SITE_LEADS=lc.data; }catch(e3){ console.error('site_leads_count',e3); }
   }catch(e){ console.error('loadAllData',e); toast('Не удалось загрузить часть данных.'); }
@@ -1204,7 +1204,7 @@ function renderVacancies(){
 function vacModal(v){
   const isEdit=!!v;
   document.getElementById('admModalBody').innerHTML =
-    '<h3>'+(isEdit?'Редактирование вакансии':'Новая вакансия')+'</h3><p class="msub">Заполните поля — они появятся в карточке и в полном описании на сайте.</p>'
+    '<h3>'+(isEdit?'Редактирование вакансии':'Новая вакансия')+'</h3><p class="msub">Заполните поля – они появятся в карточке и в полном описании на сайте.</p>'
     +'<form id="vacForm" data-id="'+(isEdit?v.id:'')+'">'
     + fg('Сфера', inp('vField', isEdit?v.field:'', 'IT, BPO, Финансы…'))
     + fg('Название вакансии', inp('vTitle', isEdit?v.title:'', 'Напр.: Senior Backend-разработчик'))
@@ -1248,7 +1248,7 @@ function candModal(c){
   document.getElementById('admModalBody').innerHTML =
     '<h3>'+(isEdit?'Редактирование резюме':'Новый соискатель')+'</h3><p class="msub">Поля карточки в банке резюме.</p>'
     +'<form id="candForm" data-id="'+(isEdit?c.id:'')+'">'
-    + fg('Сфера деятельности', inp('cField', isEdit?c.field:'', 'IT — Backend-разработка'))
+    + fg('Сфера деятельности', inp('cField', isEdit?c.field:'', 'IT – Backend-разработка'))
     + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'
     + fg('Город', inp('cCity', isEdit?c.city:'', 'Ташкент'))
     + fg('Дата публикации', inp('cDate', isEdit?c.date:'', 'дд.мм.гггг'))
@@ -1452,7 +1452,7 @@ function renderCustomers(){
     +'<td><div class="row-actions">'+(can_?
         '<button class="ic-btn" data-cust-toggle="'+c.id+'"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>'+(c.status==='active'?'На паузу':'Активировать')+'</button>'
        +'<button class="ic-btn" data-cust-edit="'+c.id+'"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Изменить</button>'
-       +'<button class="ic-btn danger" data-cust-del="'+c.id+'"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>':'—')
+       +'<button class="ic-btn danger" data-cust-del="'+c.id+'"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>':'–')
     +'</div></td></tr>').join('');
   main.innerHTML = head('Заказчики','Добавляйте компаний-заказчиков, отслеживайте статус и убирайте неактивных.',
       can_?'<button class="adm-btn" data-cust-add><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить заказчика</button>':'')
@@ -1504,7 +1504,7 @@ function renderRequests(){
     }
   } else {
     body='<div class="adm-card">'
-      +'<p class="adm-sub" style="margin:2px 2px 16px">Заявки из формы обратной связи автоматически попадают в CRM продаж (Staffly) на этап «Новый лид» с источником «Сайт». Их ведёт отдел продаж — здесь они не дублируются, чтобы персональные данные клиентов оставались в защищённой CRM.</p>'
+      +'<p class="adm-sub" style="margin:2px 2px 16px">Заявки из формы обратной связи автоматически попадают в CRM продаж (Staffly) на этап «Новый лид» с источником «Сайт». Их ведёт отдел продаж – здесь они не дублируются, чтобы персональные данные клиентов оставались в защищённой CRM.</p>'
       +'<div class="adm-stats">'
       +'<div class="adm-stat"><div class="num">'+(SITE_LEADS.new_count||0)+'</div><div class="lbl">Новых заявок с сайта</div></div>'
       +'<div class="adm-stat"><div class="num">'+(SITE_LEADS.total_count||0)+'</div><div class="lbl">Всего заявок с сайта</div></div>'
@@ -1517,8 +1517,8 @@ function reqViewModal(kind,id){
   const a=APPS.find(x=>x.id===id); if(!a) return;
   const html='<h3>Отклик с сайта</h3><p class="msub">'+esc(a.date)+' · <span class="badge badge-gold">Сайт</span></p>'
     +'<div class="adm-kv"><b>Кандидат</b><span>'+esc(a.name)+'</span></div>'
-    +'<div class="adm-kv"><b>Телефон</b><span>'+esc(a.phone||'—')+'</span></div>'
-    +'<div class="adm-kv"><b>Email</b><span>'+esc(a.email||'—')+'</span></div>'
+    +'<div class="adm-kv"><b>Телефон</b><span>'+esc(a.phone||'–')+'</span></div>'
+    +'<div class="adm-kv"><b>Email</b><span>'+esc(a.email||'–')+'</span></div>'
     +'<div class="adm-kv"><b>Вакансия</b><span>'+esc(a.vacancy)+'</span></div>'
     +'<div class="adm-kv"><b>Резюме</b><span>'+(a.cv_url?'<a href="'+esc(a.cv_url)+'" target="_blank" rel="noopener" style="color:#8a701f;text-decoration:underline">'+esc(a.cv||'скачать резюме')+'</a>':'заполнена анкета на сайте')+'</span></div>';
   document.getElementById('admModalBody').innerHTML=html; openModal();
@@ -1527,9 +1527,9 @@ function renderAnalytics(){
   const EMBED='https://datastudio.google.com/embed/reporting/d54b9418-3e7b-4263-a6e1-a4fd673151c6/page/8Ys2F';
   main.innerHTML = head('Аналитика','Данные из Google Search Console: клики, показы, поисковые запросы и страницы в результатах Google.')
     + '<div class="adm-card" style="padding:0;overflow:hidden;border-radius:16px">'
-    +   '<iframe title="Search Console — Human and Capital" src="'+EMBED+'" style="width:100%;height:1500px;border:0;display:block" allowfullscreen></iframe>'
+    +   '<iframe title="Search Console – Human and Capital" src="'+EMBED+'" style="width:100%;height:1500px;border:0;display:block" allowfullscreen></iframe>'
     + '</div>'
-    + '<div class="adm-note" style="margin-top:16px"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Данные из Google Search Console обновляются автоматически (задержка ~2–3 дня). Если отчёт не отображается — в Looker Studio должны быть включены доступ «Все, у кого есть ссылка» и встраивание отчёта.</div></div>';
+    + '<div class="adm-note" style="margin-top:16px"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Данные из Google Search Console обновляются автоматически (задержка ~2–3 дня). Если отчёт не отображается – в Looker Studio должны быть включены доступ «Все, у кого есть ссылка» и встраивание отчёта.</div></div>';
 }
 
 /* ---------- SEO ---------- */
@@ -1556,7 +1556,7 @@ function renderSeo(){
     +'<button class="adm-btn-ghost adm-btn" data-seotool="schema"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Микроразметка Schema.org</button>'
     +'</div>';
   main.innerHTML = head('SEO-оптимизация','Управляйте мета-тегами, ключевыми словами и индексацией. Эти настройки помогают сайту подниматься в Google.')
-    + '<div class="adm-note"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Позиции в Google зависят от контента и поведения пользователей — гарантировать «топ-1» нельзя. Эти инструменты дают сайту максимум для роста, а реальные позиции отслеживаются в Search Console.</div></div>'
+    + '<div class="adm-note"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg><div>Позиции в Google зависят от контента и поведения пользователей – гарантировать «топ-1» нельзя. Эти инструменты дают сайту максимум для роста, а реальные позиции отслеживаются в Search Console.</div></div>'
     + checklist + tools
     + '<div class="adm-card"><div class="adm-card-title" style="padding:18px 20px 0">Мета-теги по страницам</div><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Страница</th><th>Title</th><th>Индексация</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
@@ -1652,7 +1652,7 @@ async function pushCRM(action,item){
       if(r.error) throw r.error; item.id=r.data.id; renderVacancies();
     } else if(action==='vacancies.delete'){
       const r=await sb.from('vacancies').update({ show_on_site:false }).eq('id',item.id); if(r.error) throw r.error;
-      toast('Вакансия скрыта на сайте. Полное удаление — в ATS.'); await loadAllData(); go('vacancies');
+      toast('Вакансия скрыта на сайте. Полное удаление – в ATS.'); await loadAllData(); go('vacancies');
     } else if(action==='candidates.toggle'){
       const r=await sb.from('candidates').update({ is_public:!item.disabled }).eq('id',item.id); if(r.error) throw r.error;
     } else if(action==='candidate.update'){
@@ -1661,7 +1661,7 @@ async function pushCRM(action,item){
       toast('Карточки кандидатов создаются и удаляются в ATS (персональные данные).');
       await loadAllData(); go('candidates'); return;
     }
-    // customer.*, leads.*, apps.*, seo.tool, seo.check — демонстрационные разделы (для них нет таблиц), не сохраняются
+    // customer.*, leads.*, apps.*, seo.tool, seo.check – демонстрационные разделы (для них нет таблиц), не сохраняются
   }catch(e){ console.error('save',action,e); toast('Ошибка сохранения: '+(e.message||e)); await loadAllData(); }
 }
 </script>
