@@ -23,7 +23,7 @@ PAGES = {
         ("/recruitment-uz.html", "Toshkentda xodimlarni tanlash", "Mutaxassislar, rahbarlar, IT va ommaviy tanlov"),
         ("/outstaffing-uz.html", "O‘zbekistonda xodimlar autstaffingi", "Rasmiylashtirish, ish haqi va hisobotlar"),
         (A + "sovremennye-metody-otsenki-kandidatov-ca76824c", "Современные методы оценки кандидатов", "rus tilida"),
-        (A + "dvukhfaktornaya-teoriya-motivatsii-gertsberga-90ce2867", "Двухфакторная теория мотивации Герцберга", "rus tilida"),
+        (A + "toshkentda-kadrlar-agentligini-qanday-tanlash-kerak-1f022de9", "Toshkentda kadrlar agentligini qanday tanlash kerak", "Shartnomadan oldin beriladigan 10 ta savol"),
     ]),
 }
 

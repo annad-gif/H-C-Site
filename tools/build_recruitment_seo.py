@@ -166,7 +166,7 @@ L["uz"] = dict(
     ],
     read_eyebrow="Foydali", read_title="Xodim tanlash haqida maqolalar",
     read=[
-        (A + "kak-vybrat-kadrovoe-agentstvo-v-tashkente-fcdacdb7", "Как выбрать кадровое агентство в Ташкенте", "rus tilida"),
+        (A + "toshkentda-kadrlar-agentligini-qanday-tanlash-kerak-1f022de9", "Toshkentda kadrlar agentligini qanday tanlash kerak", "Shartnomadan oldin beriladigan 10 ta savol"),
         (A + "massovyy-podbor-personala-v-uzbekistane-37157357", "Массовый подбор персонала в Узбекистане", "rus tilida"),
         ("/outstaffing-uz.html", "O‘zbekistonda xodimlar autstaffingi", "Rasmiylashtirish, ish haqi va hisobotlar"),
         ("/consulting-uz.html", "HR-konsalting", "HR-audit, baholash va moslashuv tizimlari"),
