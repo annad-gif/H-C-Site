@@ -1047,7 +1047,7 @@ const PAGE_LANG = 'ru'; // язык этой страницы (site_materials.la
 function mapDbMaterial(r){
   const img = (r.media_type==='image'||r.media_type==='photo') ? (r.media_url||null) : null;
   const vid = (r.media_type==='video') ? (r.media_url||null) : null;
-  return { id:r.id, lang:r.lang||'ru', cat:r.cat||'article', date:(r.created_at||'').slice(0,10),
+  return { id:r.id, group:r.translation_of||r.id, lang:r.lang||'ru', cat:r.cat||'article', date:(r.created_at||'').slice(0,10),
     title:r.title||'', desc:r.description||'', body:r.body||'',
     image:img, video:vid, disabled:!r.published };
 }
@@ -1057,8 +1057,13 @@ async function loadMaterials(){
     const { data, error } = await sbMat.from('site_materials')
       .select('*').order('sort',{ascending:true}).order('created_at',{ascending:false});
     if(error) throw error;
+    // из языковых версий одного материала показываем одну: на языке страницы, иначе оригинал
+    const rows=(data||[]).map(mapDbMaterial), pick={};
+    for(const m of rows){ const cur=pick[m.group];
+      const score=x=>(x.lang===PAGE_LANG?0:(x.group===x.id?1:2));
+      if(!cur||score(m)<score(cur)) pick[m.group]=m; }
     // сначала материалы на языке страницы, затем остальные (порядок внутри групп сохраняется)
-    return (data||[]).map(mapDbMaterial).sort((a,b)=>(a.lang===PAGE_LANG?0:1)-(b.lang===PAGE_LANG?0:1));
+    return rows.filter(m=>pick[m.group]===m).sort((a,b)=>(a.lang===PAGE_LANG?0:1)-(b.lang===PAGE_LANG?0:1));
   }catch(e){ console.error('Не удалось загрузить материалы из админки:', e); return []; }
 }
 const SAMPLE = [
