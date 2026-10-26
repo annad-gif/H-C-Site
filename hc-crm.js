@@ -116,15 +116,15 @@
   function isBot(form) { var h = form.querySelector(".hc-hp"); return !!(h && h.value); }
 
   // === ЗАЯВКИ → Staffly (deals, этап «Новый лид») ===
-  async function submitLead(form) {
+  async function leadAttempt(form) {
     if (isBot(form)) return { ok: true };
     var L = leadMsg();
-    if (!consentOk("hcLeadConsent")) { toast(L.consent, false); return { ok: false }; }
+    if (!consentOk("hcLeadConsent")) { toast(L.consent, false); return { ok: false, reason: "consent" }; }
     var name = val("name"), email = val("email"), phone = val("phone"),
         company = val("company"), message = val("message");
     var service = (document.getElementById("service") || {}).value || "";
-    if (!name) { toast(L.name, false); return { ok: false }; }
-    if (!email && !phone) { toast(L.contact, false); return { ok: false }; }
+    if (!name) { toast(L.name, false); return { ok: false, reason: "name" }; }
+    if (!email && !phone) { toast(L.contact, false); return { ok: false, reason: "contact" }; }
     var head = (service ? "Услуга: " + service + "\n" : "") + (company ? "Компания: " + company + "\n" : "");
     var msg = head + message;
     try {
@@ -136,7 +136,7 @@
       });
       if (r.error) throw r.error;
       form.reset(); goal("generate_lead", { form: "contact" }); toast(L.ok); return { ok: true };
-    } catch (e) { console.error("submitLead", e); toast(L.fail, false); return { ok: false }; }
+    } catch (e) { console.error("submitLead", e); toast(L.fail, false); return { ok: false, reason: "fail" }; }
   }
 
   // --- адрес страницы вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
@@ -260,20 +260,20 @@
   var _uploaded = {};
   var _applyBusy = false;
 
-  async function submitApplication(vacancyId) {
+  async function applyAttempt(vacancyId) {
     if (_applyBusy) return { ok: false };
-    if (!consentOk("vcConsent")) { toast(amsg("consent"), false); return { ok: false }; }
+    if (!consentOk("vcConsent")) { toast(amsg("consent"), false); return { ok: false, reason: "consent" }; }
     var name = val("apName"), phone = val("apPhone"), email = val("apEmail");
-    if (!name) { toast(amsg("name"), false); return { ok: false }; }
-    if (!email && !phone) { toast(amsg("contact"), false); return { ok: false }; }
-    if (name.length > 200 || email.length > 254 || phone.length > 40) { toast(amsg("too_long"), false); return { ok: false }; }
+    if (!name) { toast(amsg("name"), false); return { ok: false, reason: "name" }; }
+    if (!email && !phone) { toast(amsg("contact"), false); return { ok: false, reason: "contact" }; }
+    if (name.length > 200 || email.length > 254 || phone.length > 40) { toast(amsg("too_long"), false); return { ok: false, reason: "too_long" }; }
     var fileInput = document.getElementById("vcFile");
     var file = fileInput && fileInput.files && fileInput.files[0];
     var ext = file ? (file.name.split(".").pop() || "").toLowerCase() : "";
     if (file) {
-      if (!file.size) { toast(amsg("file_empty"), false); return { ok: false }; }
-      if (file.size > 10 * 1024 * 1024) { toast(amsg("file_big"), false); return { ok: false }; }
-      if (!RESUME_TYPES[ext] || file.name.length > 255) { toast(amsg("file_type"), false); return { ok: false }; }
+      if (!file.size) { toast(amsg("file_empty"), false); return { ok: false, reason: "file_empty" }; }
+      if (file.size > 10 * 1024 * 1024) { toast(amsg("file_big"), false); return { ok: false, reason: "file_big" }; }
+      if (!RESUME_TYPES[ext] || file.name.length > 255) { toast(amsg("file_type"), false); return { ok: false, reason: "file_type" }; }
     }
     var position = [
       val("apExp") ? "Опыт: " + val("apExp") : "",
@@ -281,7 +281,7 @@
       val("apCity") ? "Город: " + val("apCity") : "",
       val("apMsg")
     ].filter(Boolean).join(" · ");
-    if (position.length > 5000) { toast(amsg("too_long"), false); return { ok: false }; }
+    if (position.length > 5000) { toast(amsg("too_long"), false); return { ok: false, reason: "too_long" }; }
 
     var form = document.getElementById("vcApplyForm");
     var btn = form && form.querySelector('button[type="submit"], button:not([type])');
@@ -326,6 +326,18 @@
     } finally {
       _applyBusy = false; if (btn) btn.disabled = false;
     }
+  }
+
+  // Неудачная попытка отправки – отдельная цель form_error с причиной (consent, contact, network…):
+  // без неё такие попытки видны только как автоцель Метрики «Отправка формы».
+  function report(form, r) {
+    if (!r) return;
+    if (r.reason === "dup") goal("vacancy_apply_dup", { form: form });
+    else if (!r.ok && r.reason) goal("form_error", { form: form, reason: r.reason });
+  }
+  async function submitLead(form) { var r = await leadAttempt(form); report("contact", r); return r; }
+  async function submitApplication(vacancyId) {
+    var r = await applyAttempt(vacancyId); report(vacancyId ? "vacancy" : "general", r); return r;
   }
 
   // --- авто-подключение ---

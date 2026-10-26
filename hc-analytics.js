@@ -7,6 +7,8 @@
    Цели (одинаковые идентификаторы в GA4 и Метрике):
      generate_lead  – отправлена заявка с сайта (hc-crm.js → submitLead)
      vacancy_apply  – отправлен отклик на вакансию (hc-crm.js → submitApplication)
+     vacancy_apply_dup – повторный отклик (этот email уже откликался на вакансию)
+     form_error     – попытка отправки не прошла; reason: consent / name / contact / file_* / closed / network / fail
      click_phone / click_email / click_telegram / click_whatsapp – клики по контактам
    ============================================================ */
 (function () {
