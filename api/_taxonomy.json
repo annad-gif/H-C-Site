@@ -32,7 +32,7 @@
     },
     "anna": {
       "type": "Person",
-      "name": { "ru": "Анна Джу", "en": "Anna Ju", "uz": "Anna Ju" },
+      "name": { "ru": "Анна Джу", "en": "Anna Dju", "uz": "Anna Dju" },
       "role": { "ru": "Генеральный директор и соучредитель", "en": "CEO & Co-founder", "uz": "Bosh direktor va hammuassis" },
       "photo": "/team-anna-dzhu.png",
       "url": "https://www.linkedin.com/in/anna-dju-122983211/"

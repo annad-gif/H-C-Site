@@ -122,7 +122,7 @@ create index on site_materials (rubric) where rubric is not null;
 const AUTHORS = {
   akmal: { ru: "Акмаль Саипов", en: "Akmal Saipov", role: { ru: "Сооснователь", en: "Co-founder" },
            photo: "/team-akmal-saipov.png", url: "https://www.linkedin.com/in/akmal-saipov-38b144153/" },
-  anna:  { ru: "Анна Джу", en: "Anna Ju", role: { ru: "Генеральный директор и соучредитель", en: "CEO & Co-founder" },
+  anna:  { ru: "Анна Джу", en: "Anna Dju", role: { ru: "Генеральный директор и соучредитель", en: "CEO & Co-founder" },
            photo: "/team-anna-dzhu.png", url: "https://www.linkedin.com/in/anna-dju-122983211/" },
   team:  { ru: "Аналитический центр Human and Capital", en: "Human and Capital Research", … },
 };
@@ -280,7 +280,7 @@ Supabase Storage проекта ATS, бакет `reports`, публичный. �
 - `/analytics`, `/analytics/en`, `/analytics/uz`, `/insights` – в `vercel.json`; страница – в sitemap;
 - админка: блок «Аналитика» в редакторе материала + выбор «перевод какого материала»; появляется только когда в базе есть колонка `rubric`.
 
-Отличия от ТЗ: подписка на email и CTA `download` – во второй очереди вместе с формой отчёта; авторы – «Акмаль Саипов» и «Анна Джу» (EN: Anna Ju), должности как на главной.
+Отличия от ТЗ: подписка на email и CTA `download` – во второй очереди вместе с формой отчёта; авторы – «Акмаль Саипов» и «Анна Джу» (EN: Anna Dju), должности как на главной.
 
 Миграция: `Recruitpro/db/migrations/2026-10-29_site_materials_analytics.sql`.
 
