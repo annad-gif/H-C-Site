@@ -245,6 +245,17 @@ COVERS = {
  <div class="item"><div class="ico">{ic('doc')}</div><div><b>Pudratchilar</b><span>qisqa loyihalar uchun</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Foydali materiallar</div>""",
+
+"it_salaries_2026_autumn": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Зарплаты <span class="acc">в IT</span> в Узбекистане</h1>
+<p class="sub">Осень 2026: сколько просят по ролям и опыту – от джуниора до IT-директора</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>10 млн сум</b><span>медиана ожиданий IT-специалиста</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×1,8</b><span>скачок от 1–2 к 3–5 годам опыта</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>от $5 000</b><span>верхние 10% сеньоров-разработчиков</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Аналитика</div>""",
 }
 
 for name, body in COVERS.items():
