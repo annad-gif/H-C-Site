@@ -8,8 +8,13 @@
      generate_lead  – отправлена заявка с сайта (hc-crm.js → submitLead)
      vacancy_apply  – отправлен отклик на вакансию (hc-crm.js → submitApplication)
      vacancy_apply_dup – повторный отклик (этот email уже откликался на вакансию)
-     form_error     – попытка отправки не прошла; reason: consent / name / contact / file_* / closed / network / fail
+     form_error     – попытка отправки не прошла; form: contact / vacancy / general / report;
+                      reason: consent / name / contact / company / role / email / email_bad / file_* / closed / network / fail
+     report_download – отправлена форма скачивания отчёта (hc-crm.js → submitReport); report, rubric
      click_phone / click_email / click_telegram / click_whatsapp – клики по контактам
+
+   UTM: utm_* из адреса сохраняются в sessionStorage (hc_utm) – hc-crm.js добавляет их
+   к источнику заявки, даже если человек перешёл на другую страницу.
    ============================================================ */
 (function () {
   "use strict";
@@ -39,6 +44,16 @@
     s.async = true; s.src = src;
     document.head.appendChild(s);
   }
+
+  // --- UTM-метки визита (ТЗ раздела «Аналитика», §4.2, §7) ---
+  try {
+    var q = new URLSearchParams(location.search), utm = {};
+    ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) {
+      var v = (q.get(k) || "").trim().slice(0, 100);
+      if (v) utm[k] = v;
+    });
+    if (Object.keys(utm).length) sessionStorage.setItem("hc_utm", JSON.stringify(utm));
+  } catch (e) {}
 
   // --- цели: hcGoal("generate_lead", { form: "contact" }) ---
   function goal(name, params) {

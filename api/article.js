@@ -27,7 +27,11 @@ const L10N = {
           consult: ["Обсудим ваш найм?", "Подберём сотрудников под ваши задачи и поделимся данными рынка по вашей отрасли.", "Обсудить найм →"],
           download: ["Получите обзор по вашей отрасли", "Подготовим срез зарплат и сроков найма по вашей отрасли и позициям.", "Получить обзор →"],
           subscribe: ["Новые обзоры – раз в месяц", "Подпишитесь на канал аналитики Human and Capital в Telegram.", "Подписаться →"] },
-        tg: ["Аналитика рынка труда Узбекистана – в нашем Telegram-канале", "Подписаться"] },
+        tg: ["Аналитика рынка труда Узбекистана – в нашем Telegram-канале", "Подписаться"],
+        rf: { h: "Полная версия отчёта – в PDF", p: "Подробные таблицы по всем срезам и выводы для работодателя. Заполните форму – PDF откроется сразу.",
+              name: "Имя", company: "Компания", role: "Должность", email: "Рабочий email", phone: "Телефон",
+              opt: "необязательно", phoneHint: "для приглашения на презентацию отчёта", send: "Получить отчёт →",
+              done: "Спасибо! Отчёт готов.", doneP: "Ссылка работает и при следующих визитах с этого устройства.", dl: "Скачать PDF" } },
   en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
         cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
         ctaH: "Need help hiring in Uzbekistan?",
@@ -39,7 +43,11 @@ const L10N = {
           consult: ["Let’s discuss your hiring", "We will find people for your roles and share market data for your industry.", "Discuss hiring →"],
           download: ["Get a review for your industry", "We will prepare salary and time-to-hire benchmarks for your industry and roles.", "Get the review →"],
           subscribe: ["New reviews every month", "Follow Human and Capital insights on Telegram.", "Subscribe →"] },
-        tg: ["Uzbekistan labour market insights – on our Telegram channel", "Subscribe"] },
+        tg: ["Uzbekistan labour market insights – on our Telegram channel", "Subscribe"],
+        rf: { h: "Get the full report (PDF)", p: "Detailed tables for every breakdown and takeaways for employers. Fill in the form and the PDF opens right away.",
+              name: "Name", company: "Company", role: "Job title", email: "Work email", phone: "Phone",
+              opt: "optional", phoneHint: "to invite you to the report presentation", send: "Get the report →",
+              done: "Thank you! Your report is ready.", doneP: "The link will also work on your next visits from this device.", dl: "Download PDF" } },
   uz: { locale: "uz-Latn-UZ", og: "uz_UZ", home: "Bosh sahifa", homeUrl: "/index-uz.html", res: "Foydali materiallar", resUrl: "/resources-uz.html",
         cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
         ctaH: "Xodim tanlashda yordam kerakmi?",
@@ -51,7 +59,11 @@ const L10N = {
           consult: ["Xodim tanlashni muhokama qilamizmi?", "Vazifalaringizga mos xodimlarni topamiz va sohangiz bo‘yicha bozor ma’lumotlarini ulashamiz.", "Muhokama qilish →"],
           download: ["Sohangiz bo‘yicha sharh oling", "Sohangiz va lavozimlaringiz bo‘yicha maoshlar va yollash muddatlari kesimini tayyorlaymiz.", "Sharhni olish →"],
           subscribe: ["Yangi sharhlar – har oy", "Human and Capital tahlil kanaliga Telegramda obuna bo‘ling.", "Obuna bo‘lish →"] },
-        tg: ["O‘zbekiston mehnat bozori tahlili – Telegram kanalimizda", "Obuna bo‘lish"] },
+        tg: ["O‘zbekiston mehnat bozori tahlili – Telegram kanalimizda", "Obuna bo‘lish"],
+        rf: { h: "Hisobotning to‘liq versiyasi – PDF", p: "Barcha kesimlar bo‘yicha batafsil jadvallar va ish beruvchi uchun xulosalar. Formani to‘ldiring – PDF darhol ochiladi.",
+              name: "Ism", company: "Kompaniya", role: "Lavozim", email: "Ish email", phone: "Telefon",
+              opt: "ixtiyoriy", phoneHint: "hisobot taqdimotiga taklif qilish uchun", send: "Hisobotni olish →",
+              done: "Rahmat! Hisobot tayyor.", doneP: "Havola shu qurilmadan keyingi tashriflarda ham ishlaydi.", dl: "PDF yuklab olish" } },
 };
 function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
 const CAT = L10N.ru.cat;
@@ -69,22 +81,27 @@ function keyFiguresHTML(m) {
   return '<div class="ar-kf">' + list.map(f => '<div class="ar-kf-item"><b>' + esc(String(f.value).trim()) + "</b>"
     + (f.label ? "<span>" + esc(String(f.label).trim()) + "</span>" : "") + "</div>").join("") + "</div>";
 }
-function authorOf(m) { return m && TAX.authors[m.author_key] ? TAX.authors[m.author_key] : null; }
+// author_key – один ключ или несколько через запятую («akmal,anna»), в порядке показа
+function authorsOf(m) {
+  return String((m && m.author_key) || "").split(",").map(k => k.trim())
+    .filter((k, i, all) => TAX.authors[k] && all.indexOf(k) === i).map(k => TAX.authors[k]);
+}
 function authorHTML(m, lang) {
-  const a = authorOf(m);
-  if (!a) return "";
-  const name = a.name[lang] || a.name.ru, role = a.role[lang] || a.role.ru;
-  const ext = /^https?:\/\//.test(a.url) && !a.url.startsWith(SITE);
-  return '<a class="ar-author" href="' + esc(a.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">"
-    + '<img src="' + esc(a.photo) + '" alt="' + esc(name) + '" width="44" height="44" loading="lazy"/>'
-    + "<span><b>" + esc(name) + "</b><i>" + esc(role) + "</i></span></a>";
+  return authorsOf(m).map(a => {
+    const name = a.name[lang] || a.name.ru, role = a.role[lang] || a.role.ru;
+    const ext = /^https?:\/\//.test(a.url) && !a.url.startsWith(SITE);
+    return '<a class="ar-author" href="' + esc(a.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">"
+      + '<img src="' + esc(a.photo) + '" alt="' + esc(name) + '" width="44" height="44" loading="lazy"/>'
+      + "<span><b>" + esc(name) + "</b><i>" + esc(role) + "</i></span></a>";
+  }).join("");
 }
 function authorLD(m, lang) {
-  const a = authorOf(m);
-  if (!a) return { "@type": "Organization", name: "Human and Capital", url: SITE + "/" };
-  if (a.type !== "Person") return { "@type": "Organization", name: a.name[lang] || a.name.ru, url: SITE + "/" };
-  return { "@type": "Person", name: a.name[lang] || a.name.ru, jobTitle: a.role[lang] || a.role.ru, sameAs: [a.url],
-    worksFor: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital" } };
+  const list = authorsOf(m).map(a => a.type !== "Person"
+    ? { "@type": "Organization", name: a.name[lang] || a.name.ru, url: SITE + "/" }
+    : { "@type": "Person", name: a.name[lang] || a.name.ru, jobTitle: a.role[lang] || a.role.ru, sameAs: [a.url],
+        worksFor: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital" } });
+  if (!list.length) return { "@type": "Organization", name: "Human and Capital", url: SITE + "/" };
+  return list.length === 1 ? list[0] : list;
 }
 function methodHTML(m, L) {
   const rows = [[L.method, m.methodology], [L.period, m.period], [L.sample, m.sample_size]]
@@ -92,9 +109,30 @@ function methodHTML(m, L) {
   if (!rows.length) return "";
   return '<aside class="ar-method">' + rows.map(r => "<p><b>" + esc(r[0]) + ".</b> " + esc(String(r[1]).trim()) + "</p>").join("") + "</aside>";
 }
+// Форма скачивания отчёта (ТЗ §4): cta = 'download' и задан gated_pdf_url.
+// Отправку, согласие на ПДн, honeypot и показ кнопки «Скачать PDF» делает hc-crm.js (initReport).
+function reportPdf(m) { return m && m.cta === "download" ? safeUrl(m.gated_pdf_url) : null; }
+function reportHTML(m, L) {
+  const R = L.rf, pdf = reportPdf(m);
+  // opt – необязательное поле: [пометка, подсказка под полем]
+  const field = (id, label, type, auto, opt) => '<label class="ar-rf-f" for="' + id + '"><span>' + esc(label)
+    + (opt ? " <i>(" + esc(opt[0]) + ")</i>" : "") + '</span><input id="' + id + '" type="' + type + '" autocomplete="' + auto + '"'
+    + (opt ? "" : " required") + ' maxlength="' + (type === "tel" ? 40 : 200) + '"/>' + (opt ? "<small>" + esc(opt[1]) + "</small>" : "") + "</label>";
+  return '<aside class="ar-cta ar-report" id="report"><div class="ar-rf-head"><h2>' + esc(R.h) + "</h2><p>" + esc(R.p) + "</p></div>"
+    + '<form class="ar-rf" id="hcReportForm" method="post" action="#report" novalidate data-id="' + esc(m.id) + '" data-report="' + esc(m.title)
+    + '" data-rubric="' + esc(rubricOf(m) || "") + '" data-pdf="' + esc(pdf) + '"><div class="ar-rf-grid">'
+    + field("rfName", R.name, "text", "name") + field("rfCompany", R.company, "text", "organization")
+    + field("rfRole", R.role, "text", "organization-title") + field("rfEmail", R.email, "email", "email")
+    + field("rfPhone", R.phone, "tel", "tel", [R.opt, R.phoneHint])
+    + '</div><button type="submit">' + esc(R.send) + "</button></form>"
+    + '<div class="ar-rf-done" hidden><div><b>' + esc(R.done) + "</b><p>" + esc(R.doneP) + "</p></div>"
+    + '<a href="' + esc(pdf) + '" target="_blank" rel="noopener">' + esc(R.dl) + "</a></div></aside>"
+    + '<script src="/hc-crm.js" defer></script>';
+}
 // CTA в конце статьи. Обычный материал — как раньше; аналитика — по полю cta.
-// download (форма скачивания PDF) — вторая очередь; пока ведёт на форму заявки.
+// download без PDF ведёт на форму заявки.
 function ctaHTML(m, L) {
+  if (reportPdf(m)) return reportHTML(m, L);
   let h = L.ctaH, p = L.ctaP, a = L.ctaA, url = L.ctaUrl, ext = false;
   if (rubricOf(m)) {
     let kind = L.cta[m.cta] ? m.cta : "consult";
@@ -189,10 +227,11 @@ function relatedHTML(all, m) {
   const L = L10N[langOf(m)];
   const i = all.findIndex(x => x.id === m.id);
   const root = m.translation_of || m.id;
-  const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => (x.translation_of || x.id) !== root);
-  // сначала материалы на том же языке, внутри – того же типа
+  // только материалы на языке статьи; сначала той же рубрики (или того же типа)
+  const others = all.slice(i + 1).concat(all.slice(0, i))
+    .filter(x => (x.translation_of || x.id) !== root && langOf(x) === langOf(m));
   const rub = rubricOf(m);
-  const rank = x => (langOf(x) === langOf(m) ? 0 : 4) + (rub ? (rubricOf(x) === rub ? 0 : rubricOf(x) ? 1 : 2) : (x.cat === m.cat ? 0 : 1));
+  const rank = x => rub ? (rubricOf(x) === rub ? 0 : rubricOf(x) ? 1 : 2) : (x.cat === m.cat ? 0 : 1);
   const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
   if (!pick.length) return "";
   return '<section class="ar-related"><div class="container"><h2>' + esc(L.related) + '</h2><div class="ar-rel-grid">'

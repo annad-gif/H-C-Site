@@ -256,6 +256,26 @@ COVERS = {
  <div class="item"><div class="ico">{ic('people')}</div><div><b>от $5 000</b><span>верхние 10% сеньоров-разработчиков</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Аналитика</div>""",
+"it_salaries_2026_autumn_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">IT</span> salaries in Uzbekistan</h1>
+<p class="sub">Autumn 2026: what IT specialists ask by role and experience – from junior to IT director</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>UZS 10M</b><span>median expectation of an IT specialist</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×1.8</b><span>jump from 1–2 to 3–5 years of experience</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>$5,000+</b><span>top 10% of senior developers</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Insights</div>""",
+"it_salaries_2026_autumn_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda <span class="acc">IT</span> maoshlari</h1>
+<p class="sub">Kuz 2026: rol va tajriba bo‘yicha qancha so‘rashadi – juniordan IT direktorgacha</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>10 mln so‘m</b><span>IT mutaxassisi kutilmalari medianasi</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×1,8</b><span>1–2 yildan 3–5 yillik tajribaga sakrash</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>$5 000 dan</b><span>senior dasturchilarning yuqori 10%</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Tahlil</div>""",
 }
 
 for name, body in COVERS.items():

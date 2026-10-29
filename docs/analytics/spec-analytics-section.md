@@ -284,6 +284,13 @@ Supabase Storage проекта ATS, бакет `reports`, публичный. �
 
 Миграция: `Recruitpro/db/migrations/2026-10-29_site_materials_analytics.sql`.
 
+**Вторая очередь – форма отчёта (29.10.2026, ветка `claude/pdf-download-form-5e27cf`):**
+- `api/article.js` → `reportHTML`: при `cta = 'download'` и заданном `gated_pdf_url` вместо CTA – форма (имя, компания, должность, email обязательны; телефон – нет); без PDF `download` ведёт на форму заявки, как раньше;
+- `hc-crm.js` → `initReport` / `submitReport`: согласие и honeypot – общие, отправка – `submit_lead` (`p_message` «Компания / Должность / Отчёт», `p_source` «Отчёт: … | путь | utm…»), после успеха – кнопка «Скачать PDF», флаг `hc_report:<id>` в `localStorage`;
+- `hc-analytics.js`: `utm_*` из адреса → `sessionStorage` (`hc_utm`); цели `report_download` (`report`, `rubric`) и `form_error` с `form: "report"`;
+- админка: «Скачать отчёт (форма)» в «Призыве», поле «PDF для скачивания»; `download` без ссылки не сохраняется;
+- PDF лежит в репозитории сайта (`/reports/<slug>-<случайная часть>.pdf`, заголовок `X-Robots-Tag: noindex`), а не в Supabase Storage: так проще и бесплатно; собирает `tools/build_report.py` из агрегатов `tools/reports/*.json`.
+
 ## 10. Порядок работ и оценка
 
 | # | Задача | Оценка |

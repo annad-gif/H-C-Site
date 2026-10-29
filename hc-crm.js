@@ -139,6 +139,92 @@
     } catch (e) { console.error("submitLead", e); toast(L.fail, false); return { ok: false, reason: "fail" }; }
   }
 
+  // === СКАЧИВАНИЕ ОТЧЁТА → Staffly (ТЗ раздела «Аналитика», §4) ===
+  // Форма #hcReportForm – в статье с cta = 'download' (api/article.js → reportHTML).
+  // После отправки форма сменяется кнопкой «Скачать PDF»; на этом устройстве – сразу кнопка (localStorage).
+  var REPORT_MSG = {
+    ru: { name: "Укажите имя", company: "Укажите компанию", role: "Укажите должность", email: "Укажите email",
+      email_bad: "Проверьте email – похоже, в нём опечатка", too_long: "Слишком длинный текст в одном из полей",
+      network: "Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.", fail: "Не удалось отправить. Попробуйте позже." },
+    en: { name: "Please enter your name", company: "Please enter your company", role: "Please enter your job title", email: "Please enter your email",
+      email_bad: "Please check your email – it looks like a typo", too_long: "One of the fields is too long",
+      network: "No connection to the server. Check your internet and try again.", fail: "Could not send. Please try again later." },
+    uz: { name: "Ismingizni kiriting", company: "Kompaniyani kiriting", role: "Lavozimni kiriting", email: "Email kiriting",
+      email_bad: "Emailni tekshiring – xato bor shekilli", too_long: "Maydonlardan birida matn juda uzun",
+      network: "Server bilan aloqa yo‘q. Internetni tekshirib, qayta urinib ko‘ring.", fail: "Yuborib bo‘lmadi. Keyinroq urinib ko‘ring." }
+  };
+  function rmsg(k) { return (REPORT_MSG[locale()] || REPORT_MSG.ru)[k] || (leadMsg())[k]; }
+
+  // utm_* из адреса, иначе – сохранённые при входе на сайт (hc-analytics.js → sessionStorage hc_utm)
+  function utmSuffix() {
+    var utm = {};
+    try { utm = JSON.parse(sessionStorage.getItem("hc_utm") || "{}") || {}; } catch (e) {}
+    try {
+      var q = new URLSearchParams(location.search), fresh = {};
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (k) { if (txt(q.get(k))) fresh[k] = txt(q.get(k)).slice(0, 100); });
+      if (Object.keys(fresh).length) utm = fresh;
+    } catch (e) {}
+    var parts = Object.keys(utm).map(function (k) { return k + "=" + utm[k]; });
+    return parts.length ? " | " + parts.join(", ") : "";
+  }
+  function reportKey(form) { return "hc_report:" + (form.dataset.id || form.dataset.pdf || ""); }
+  function reportDone(form) {
+    var box = form.parentNode.querySelector(".ar-rf-done");
+    if (!box) return;
+    form.hidden = true; box.hidden = false;
+  }
+  var _reportBusy = false;
+  async function reportAttempt(form) {
+    if (_reportBusy) return { ok: false };
+    if (isBot(form)) { reportDone(form); return { ok: true }; }
+    form.querySelectorAll("[aria-invalid]").forEach(function (el) { el.removeAttribute("aria-invalid"); });
+    function bad(id, reason) {
+      var el = document.getElementById(id);
+      if (el) { el.setAttribute("aria-invalid", "true"); el.focus(); }
+      toast(reason === "consent" ? leadMsg().consent : rmsg(reason), false);
+      return { ok: false, reason: reason };
+    }
+    var name = val("rfName"), company = val("rfCompany"), role = val("rfRole"), email = val("rfEmail"), phone = val("rfPhone");
+    if (!name) return bad("rfName", "name");
+    if (!company) return bad("rfCompany", "company");
+    if (!role) return bad("rfRole", "role");
+    if (!email) return bad("rfEmail", "email");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return bad("rfEmail", "email_bad");
+    if (name.length > 200 || company.length > 200 || role.length > 200 || email.length > 254 || phone.length > 40) return bad(null, "too_long");
+    if (!consentOk("hcReportConsent")) return bad("hcReportConsent", "consent");
+    var title = form.dataset.report || document.title;
+    var btn = form.querySelector('button[type="submit"]');
+    _reportBusy = true; if (btn) btn.disabled = true;
+    try {
+      var c = await sb();
+      var r = await c.staffly.rpc("submit_lead", {
+        p_name: name, p_email: email, p_phone: phone || null,
+        p_message: "Компания: " + company + "\nДолжность: " + role + "\nОтчёт: " + title, p_service: null,
+        p_source: "Отчёт: " + title + " | " + location.pathname + utmSuffix(), p_locale: locale(), p_consent: true
+      });
+      if (r.error) throw r.error;
+      try { localStorage.setItem(reportKey(form), "1"); } catch (e) {}
+      goal("report_download", { report: title, rubric: form.dataset.rubric || "" });
+      reportDone(form);
+      return { ok: true };
+    } catch (e) {
+      console.error("submitReport", e);
+      var reason = /failed to fetch|networkerror|network request|load failed/i.test(String((e && e.message) || e)) ? "network" : "fail";
+      toast(rmsg(reason), false); return { ok: false, reason: reason };
+    } finally {
+      _reportBusy = false; if (btn) btn.disabled = false;
+    }
+  }
+  async function submitReport(form) { var r = await reportAttempt(form); report("report", r); return r; }
+  function initReport(form) {
+    var seen = false;
+    try { seen = localStorage.getItem(reportKey(form)) === "1"; } catch (e) {}
+    if (seen) { reportDone(form); return; }
+    injectConsent(form, "hcReportConsent");
+    honeypot(form);
+    form.addEventListener("submit", function (ev) { ev.preventDefault(); submitReport(form); });
+  }
+
   // --- адрес страницы вакансии: /vacancies/<транслит названия>-<первые 8 символов id> ---
   // Та же схема в api/_lib.js (vacancySlug/articleSlug) – менять синхронно.
   var TR = { "а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"zh","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya","ў":"o","қ":"q","ғ":"g","ҳ":"h","‘":"","’":"","ʻ":"","ʼ":"","'":"" };
@@ -354,6 +440,8 @@
         ev.preventDefault(); ev.stopPropagation(); submitLead(lead);
       }, true);
     }
+    var rep = document.getElementById("hcReportForm");
+    if (rep) initReport(rep);
     // форма отклика появляется в модалке позже – следим за DOM
     var obs = new MutationObserver(function () {
       var af = document.getElementById("vcApplyForm");
@@ -364,7 +452,7 @@
 
   window.HCCRM = {
     loadVacancies: loadVacancies, loadTalent: loadTalent,
-    submitApplication: submitApplication, submitLead: submitLead,
+    submitApplication: submitApplication, submitLead: submitLead, submitReport: submitReport,
     config: { POLICY_VERSION: POLICY_VERSION }
   };
 })();

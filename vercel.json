@@ -190,6 +190,15 @@
   },
   "headers": [
     {
+      "source": "/reports/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/anim/(.*)",
       "headers": [
         {

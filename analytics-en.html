@@ -979,6 +979,7 @@
 .an-body h3{font-family:var(--ff-display);font-weight:600;font-size:17px;line-height:1.32;color:var(--black);}
 .an-body p{font-size:13.5px;line-height:1.55;color:var(--grey-700);}
 .an-empty{padding:48px 20px;text-align:center;color:var(--grey-500);font-size:15px;background:var(--white);border:1px dashed var(--grey-100);border-radius:18px;}
+.an-empty a{color:var(--mustard-dim);font-weight:600;white-space:nowrap;}
 .an-skel{height:300px;border-radius:18px;background:linear-gradient(90deg,#efefed,#f7f7f5,#efefed);background-size:200% 100%;animation:anSk 1.4s infinite;}
 @keyframes anSk{to{background-position:-200% 0;}}
 .an-cta{margin-top:48px;padding:32px 34px;border-radius:20px;background:var(--black);color:var(--white);display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
@@ -1083,7 +1084,7 @@
 
 <script>
 const PAGE_LANG = "en";
-const T = {"feat": "Featured review", "feat_a": "Read the review →", "all": "All", "all_ind": "All industries", "shown": "Showing <b>{n}</b> of {m}", "empty_none": "The first reviews will appear here soon.", "empty_filter": "No materials for the selected filters yet.", "locale": "en-GB"};
+const T = {"feat": "Featured review", "feat_a": "Read the review →", "all": "All", "all_ind": "All industries", "shown": "Showing <b>{n}</b> of {m}", "empty_none": "English versions of our reviews are coming soon.", "empty_filter": "No materials for the selected filters yet.", "locale": "en-GB"};
 const TAX = {"rubrics": {"salary": {"ru": "Зарплатный обзор", "en": "Salary review", "uz": "Maosh sharhi"}, "pulse": {"ru": "Пульс рынка", "en": "Market pulse", "uz": "Bozor pulsi"}, "case": {"ru": "Кейсы", "en": "Case studies", "uz": "Keyslar"}, "regulation": {"ru": "HR-регулирование", "en": "HR regulation", "uz": "HR qonunchiligi"}, "annual": {"ru": "Годовой отчёт", "en": "Annual report", "uz": "Yillik hisobot"}}, "industries": {"general": {"ru": "Все отрасли", "en": "All industries", "uz": "Barcha sohalar"}, "it": {"ru": "IT", "en": "IT", "uz": "IT"}, "finance": {"ru": "Финансы и банки", "en": "Finance & banking", "uz": "Moliya va banklar"}, "retail": {"ru": "Ритейл и FMCG", "en": "Retail & FMCG", "uz": "Chakana savdo va FMCG"}, "manufacturing": {"ru": "Производство", "en": "Manufacturing", "uz": "Ishlab chiqarish"}, "construction": {"ru": "Строительство и девелопмент", "en": "Construction & real estate", "uz": "Qurilish va ko‘chmas mulk"}, "logistics": {"ru": "Логистика", "en": "Logistics", "uz": "Logistika"}, "pharma": {"ru": "Фарма и медицина", "en": "Pharma & healthcare", "uz": "Farmatsevtika va tibbiyot"}, "telecom": {"ru": "Телеком", "en": "Telecom", "uz": "Telekom"}, "horeca": {"ru": "HoReCa", "en": "HoReCa", "uz": "HoReCa"}, "energy": {"ru": "Энергетика и горнодобыча", "en": "Energy & mining", "uz": "Energetika va kon sanoati"}, "services": {"ru": "B2B-услуги", "en": "B2B services", "uz": "B2B xizmatlar"}, "public": {"ru": "Госсектор и международные организации", "en": "Public sector & NGOs", "uz": "Davlat sektori va xalqaro tashkilotlar"}}, "telegram": "", "authors": {"akmal": {"name": {"ru": "Акмаль Саипов", "en": "Akmal Saipov", "uz": "Akmal Saipov"}}, "anna": {"name": {"ru": "Анна Джу", "en": "Anna Ju", "uz": "Anna Ju"}}, "team": {"name": {"ru": "Аналитика Human and Capital", "en": "Human and Capital Research", "uz": "Human and Capital tahlili"}}}};
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function lbl(o){ return o ? (o[PAGE_LANG] || o.ru) : ''; }
@@ -1099,7 +1100,7 @@ const UZ_MONTHS=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','
 function fmtDate(iso){ if(PAGE_LANG==='uz'){ const d=new Date(new Date(iso).getTime()+5*3600000); if(!isNaN(d)) return d.getUTCDate()+'-'+UZ_MONTHS[d.getUTCMonth()]+', '+d.getUTCFullYear(); }
   try{ return new Intl.DateTimeFormat(T.locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Tashkent'}).format(new Date(iso)).replace(/\s*г\.$/,''); }catch(e){ return String(iso||'').slice(0,10); } }
 function imgOf(m){ return (m.media_type==='image'||m.media_type==='photo') && /^(https?:\/\/|\/)/.test(m.media_url||'') ? m.media_url : ''; }
-function authorName(m){ const a=TAX.authors[m.author_key]; return a ? lbl(a.name) : ''; }
+function authorName(m){ return String(m.author_key||'').split(',').map(k=>TAX.authors[k.trim()]).filter(Boolean).map(a=>lbl(a.name)).join(', '); }
 
 const grid=document.getElementById('anGrid'), chipsEl=document.getElementById('anChips'),
   indWrap=document.getElementById('anIndWrap'), indSel=document.getElementById('anInd'),
@@ -1110,12 +1111,8 @@ async function load(){
   // лёгкий список с CDN сайта (api/materials.js) – без полного HTML статей
   const r=await fetch('/api/materials');
   if(!r.ok) throw new Error('materials '+r.status);
-  const rows=(await r.json()).filter(m=>TAX.rubrics[m.rubric]);
-  // из языковых версий одного материала – на языке страницы, иначе оригинал (как в resources.html)
-  const pick={}, score=x=>x.lang===PAGE_LANG?0:(x.translation_of?2:1);
-  for(const m of rows){ const g=m.translation_of||m.id; if(!pick[g]||score(m)<score(pick[g])) pick[g]=m; }
-  return rows.filter(m=>pick[m.translation_of||m.id]===m)
-    .sort((a,b)=>(a.lang===PAGE_LANG?0:1)-(b.lang===PAGE_LANG?0:1));
+  // только материалы на языке страницы (как в resources.html): без перевода обзор здесь не показывается
+  return (await r.json()).filter(m=>TAX.rubrics[m.rubric]&&m.lang===PAGE_LANG);
 }
 
 function card(m){
@@ -1152,11 +1149,15 @@ function filters(){
   indWrap.hidden=!inds.length;
 }
 
+// пока переводов обзоров нет – ссылка на русскую версию раздела
+const RU_LINK={en:'Read the reviews in Russian →', uz:'Sharhlarni rus tilida o‘qish →'};
+
 function render(){
   // отраслевой фильтр: материал «для всех отраслей» (general или без отрасли) виден при любом выборе
   const list=ALL.filter(m=>(!rubric||m.rubric===rubric)
     &&(!industry||!(m.industries||[]).length||(m.industries||[]).includes(industry)||(m.industries||[]).includes('general')));
-  if(!ALL.length){ grid.innerHTML='<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_none)+'</div>'; shownEl.textContent=''; return; }
+  if(!ALL.length){ grid.innerHTML='<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_none)
+    +(RU_LINK[PAGE_LANG]?' <a href="analytics.html">'+esc(RU_LINK[PAGE_LANG])+'</a>':'')+'</div>'; shownEl.textContent=''; return; }
   grid.innerHTML=list.length?list.map(card).join(''):'<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_filter)+'</div>';
   shownEl.innerHTML=T.shown.replace('{n}',list.length).replace('{m}',ALL.length);
   const q=new URLSearchParams(); if(rubric)q.set('rubric',rubric); if(industry)q.set('industry',industry);
