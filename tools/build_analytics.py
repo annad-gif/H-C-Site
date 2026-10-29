@@ -82,6 +82,7 @@ CSS = """
 #an-list{background:var(--grey-50);padding:40px 0 90px;}
 .an-filters{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;margin-bottom:26px;}
 .an-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.an-chips[hidden]{display:none;}
 .an-chip{padding:9px 16px;border-radius:999px;border:1px solid var(--grey-100);background:var(--white);color:var(--grey-700);font-size:13.5px;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:inherit;}
 .an-chip:hover{border-color:var(--mustard);color:var(--black);}
 .an-chip.active{background:var(--black);border-color:var(--black);color:var(--white);font-weight:600;}
