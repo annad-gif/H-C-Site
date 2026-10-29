@@ -31,7 +31,7 @@ T = {
         tg="Подписаться в Telegram", read="Читать",
         cta_h="Нужны данные по вашей отрасли или позиции?",
         cta_p="Подготовим срез зарплат и сроков найма под вашу задачу и поможем закрыть вакансию.",
-        cta_a="Обсудить найм →", cta_url="recruitment.html#contact", tool_k="Инструмент · обновляется дважды в месяц", tool_h="Калькулятор зарплат в IT", tool_p="Медиана, вилка и верхние 10% ожиданий кандидатов по 10 направлениям и опыту.", tool_a="Открыть →", tool_url="analytics-salaries.html",
+        cta_a="Обсудить найм →", cta_url="recruitment.html#contact", tool_k="Инструмент · обновляется дважды в месяц", tool_h="Калькулятор зарплат: IT, продажи, финансы", tool_p="Медиана, вилка и верхние 10% ожиданий кандидатов по направлениям и опыту.", tool_a="Открыть →", tool_url="analytics-salaries.html",
         locale="ru-RU", og="ru_RU"),
     "en": dict(
         title="Uzbekistan Labour Market Insights – Human and Capital",
@@ -45,7 +45,7 @@ T = {
         tg="Follow on Telegram", read="Read",
         cta_h="Need data for your industry or role?",
         cta_p="We will prepare salary and time-to-hire benchmarks for your task and help you fill the role.",
-        cta_a="Discuss hiring →", cta_url="hr-services-uzbekistan.html#contact", tool_k="Tool · updated twice a month", tool_h="IT salary calculator", tool_p="Median, range and top 10% of candidates’ expectations across 10 role groups and experience levels.", tool_a="Open →", tool_url="analytics-salaries-en.html",
+        cta_a="Discuss hiring →", cta_url="hr-services-uzbekistan.html#contact", tool_k="Tool · updated twice a month", tool_h="Salary calculator: IT, sales, finance", tool_p="Median, range and top 10% of candidates’ expectations by role group and experience.", tool_a="Open →", tool_url="analytics-salaries-en.html",
         locale="en-GB", og="en_US"),
     "uz": dict(
         title="O‘zbekiston mehnat bozori tahlili – Human and Capital",
@@ -59,7 +59,7 @@ T = {
         tg="Telegramda obuna bo‘lish", read="O‘qish",
         cta_h="Sohangiz yoki lavozimingiz bo‘yicha ma’lumot kerakmi?",
         cta_p="Vazifangiz uchun maoshlar va yollash muddatlari kesimini tayyorlaymiz va vakansiyani yopishga yordam beramiz.",
-        cta_a="Muhokama qilish →", cta_url="recruitment-uz.html#contact", tool_k="Vosita · oyiga ikki marta yangilanadi", tool_h="IT maoshlari kalkulyatori", tool_p="10 ta yo‘nalish va tajriba bo‘yicha nomzodlar kutilmalarining medianasi, oralig‘i va eng yuqori 10%.", tool_a="Ochish →", tool_url="analytics-salaries-uz.html",
+        cta_a="Muhokama qilish →", cta_url="recruitment-uz.html#contact", tool_k="Vosita · oyiga ikki marta yangilanadi", tool_h="Maoshlar kalkulyatori: IT, savdo, moliya", tool_p="Yo‘nalish va tajriba bo‘yicha nomzodlar kutilmalarining medianasi, oralig‘i va eng yuqori 10%.", tool_a="Ochish →", tool_url="analytics-salaries-uz.html",
         locale="uz-Latn-UZ", og="uz_UZ"),
 }
 

@@ -5,8 +5,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script src="/hc-analytics.js" async></script>
-<meta name="description" content="How much IT specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
-<title>IT Salaries in Uzbekistan: Salary Calculator – Human and Capital</title>
+<meta name="description" content="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
+<title>Salaries in Uzbekistan: Calculator for IT, Sales and Finance – Human and Capital</title>
 <!-- SEO -->
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://humancapital.uz/analytics-salaries-en.html"/>
@@ -21,15 +21,15 @@
 <meta property="og:locale:alternate" content="ru_RU"/>
 <meta property="og:locale:alternate" content="uz_UZ"/>
 <meta property="og:url" content="https://humancapital.uz/analytics-salaries-en.html"/>
-<meta property="og:title" content="IT Salaries in Uzbekistan: Salary Calculator – Human and Capital"/>
-<meta property="og:description" content="How much IT specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
+<meta property="og:title" content="Salaries in Uzbekistan: Calculator for IT, Sales and Finance – Human and Capital"/>
+<meta property="og:description" content="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
 <meta property="og:image" content="https://humancapital.uz/og-cover.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="IT Salaries in Uzbekistan: Salary Calculator – Human and Capital"/>
-<meta name="twitter:description" content="How much IT specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
+<meta name="twitter:title" content="Salaries in Uzbekistan: Calculator for IT, Sales and Finance – Human and Capital"/>
+<meta name="twitter:description" content="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month."/>
 <meta name="twitter:image" content="https://humancapital.uz/og-cover.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -946,7 +946,7 @@
 .sl-ctl select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--grey-100);background:var(--white);font:inherit;font-size:14.5px;color:var(--black);cursor:pointer;}
 .sl-seg{display:flex;flex-wrap:wrap;gap:6px;}
 .sl-seg button{padding:8px 13px;border-radius:999px;border:1px solid var(--grey-100);background:var(--white);color:var(--grey-700);font:inherit;font-size:13.5px;cursor:pointer;transition:all .2s;}
-.sl-seg button:hover:not(:disabled){border-color:var(--mustard);color:var(--black);}
+.sl-seg button:hover:not(:disabled):not([aria-pressed="true"]){border-color:var(--mustard);color:var(--black);}
 .sl-seg button[aria-pressed="true"]{background:var(--black);border-color:var(--black);color:var(--white);font-weight:600;}
 .sl-seg button:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through;}
 .sl-card{background:var(--white);border:1px solid var(--grey-100);border-radius:18px;padding:26px 28px;min-height:420px;}
@@ -998,6 +998,7 @@
 .sl-form button[type=submit]:hover{background:var(--mustard-light);}
 .sl-art{display:inline-block;margin-top:26px;color:var(--black);font-weight:600;text-decoration:none;border-bottom:2px solid var(--mustard);}
 .sl-art:hover{color:var(--mustard-dim);}
+.sl-art[hidden],.sl-field[hidden]{display:none;}
 .sl-note{margin-top:22px;font-size:13px;line-height:1.6;color:var(--grey-700);max-width:900px;}
 @media (max-width:900px){ .sl-panel{grid-template-columns:1fr;} .sl-ctl{position:static;} .sl-lead{grid-template-columns:1fr;} }
 @media (max-width:640px){
@@ -1045,8 +1046,8 @@
   <div class="container">
     <a class="sl-back" href="analytics-en.html">← Insights</a>
     <p class="rs-count"><span class="dot"></span><span>Tool · updated on the 1st and 15th</span></p>
-    <h1>What IT specialists in Uzbekistan ask for</h1>
-    <p class="lead">Pick a role group and experience to see the median, the typical range and the top 10% of candidates’ salary expectations – and, where there is enough data, the ranges in open vacancies.</p>
+    <h1>What specialists in Uzbekistan ask for: IT, sales, finance</h1>
+    <p class="lead">Pick a field, role group and experience to see the median, the typical range and the top 10% of candidates’ salary expectations – and, where there is enough data, the ranges in open vacancies.</p>
   </div>
 </section>
 
@@ -1054,6 +1055,7 @@
   <div class="container">
     <div class="sl-panel">
       <aside class="sl-ctl">
+        <div class="sl-field" id="slSphF"><span class="sl-lbl">Field</span><div class="sl-seg" id="slSph"></div></div>
         <div class="sl-field"><label class="sl-lbl" for="slGrp">Role group</label><select id="slGrp"></select></div>
         <div class="sl-field"><span class="sl-lbl">Experience</span><div class="sl-seg" id="slExp"></div></div>
         <div class="sl-field"><span class="sl-lbl">Show in</span><div class="sl-seg" id="slCur"></div></div>
@@ -1070,7 +1072,7 @@
       <form class="sl-form" id="contactForm" novalidate>
         <label>Name<input id="name" name="name" autocomplete="name" required></label>
         <label>Company<input id="company" name="company" autocomplete="organization"></label>
-        <label class="wide">Role to benchmark<input id="slPos" placeholder="E.g. Senior Java developer, fintech, office in Tashkent"></label>
+        <label class="wide">Role to benchmark<input id="slPos" placeholder="E.g. Head of sales, FMCG, Tashkent"></label>
         <label>Phone or Telegram<input id="phone" name="phone" type="tel" autocomplete="tel"></label>
         <label>Email<input id="email" name="email" type="email" autocomplete="email"></label>
         <textarea id="message" hidden></textarea>
@@ -1078,7 +1080,7 @@
       </form>
     </div>
 
-    <a class="sl-art" href="/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e">Full review (in Russian): “IT salaries in Uzbekistan: autumn 2026” →</a>
+    <a class="sl-art" id="slArt" href="/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e" hidden>Full review (in Russian): “IT salaries in Uzbekistan: autumn 2026” →</a>
     <p class="sl-note" id="slNote"></p>
   </div>
 </section>
@@ -1109,19 +1111,21 @@
 
 <script>
 const PAGE_LANG = "en";
-const T = {"few": "Not enough data: fewer than 30 CVs", "r_title": "{grp} · experience: {exp} · median expectation, net per month", "k_iqr": "typical range (25–75% of CVs)", "k_top": "top 10% ask for", "k_usd": "state their salary in USD", "k_n": "CVs in this slice, {t}% in Tashkent", "from_": "{v}+", "leg_iqr": "25–75%", "leg_top": "75–90%", "leg_med": "median", "ladder": "By experience: 25–75% range and median", "ladder_na": "not enough data", "vac_h": "What employers offer", "vac_p": "Typical range in open vacancies: {f} – {t} net (medians of the lower and upper bounds, {n} vacancies with a stated salary).", "vac_none": "Fewer than 30 open vacancies with a stated salary in this slice, so we do not show ranges. Data is available for:", "error": "Could not load the data. Please refresh the page a bit later.", "note": "<b>Methodology.</b> Candidates’ expectations come from CVs available to the agency as an employer on job sites in Uzbekistan: IT CVs with a stated salary updated within the last 90 days ({total} CVs). Amounts are net per month; salaries in USD and other currencies are converted at the rate on the calculation date (UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs are hidden. Vacancy ranges are medians of the lower and upper bounds in open vacancies with a stated salary as of {vdate}; gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month. For reference: the average accrued salary in programming according to the Statistics Agency for January–September 2026 is UZS 22.3m before tax.", "uzs": "UZS {v}m", "locale": "en-GB", "c_uzs": "UZS", "c_usd": "USD"};
-const GROUPS = {"it_core": "All IT roles", "dev": "Software development", "it_lead": "IT leadership: team leads, CTO, CIO", "product": "Product management", "ba_sa": "Business and systems analysis", "data": "Data and analytics: BI, data science", "devops": "DevOps", "qa": "QA and testing", "security": "Information security", "infra": "System administration and networks", "support": "Technical support"};
+const T = {"few": "Not enough data: fewer than 30 CVs", "r_title": "{grp} · experience: {exp} · median expectation, net per month", "k_iqr": "typical range (25–75% of CVs)", "k_top": "top 10% ask for", "k_usd": "state their salary in USD", "k_n": "CVs in this slice, {t}% in Tashkent", "from_": "{v}+", "leg_iqr": "25–75%", "leg_top": "75–90%", "leg_med": "median", "ladder": "By experience: 25–75% range and median", "ladder_na": "not enough data", "vac_h": "What employers offer", "vac_p": "Typical range in open vacancies: {f} – {t} net (medians of the lower and upper bounds, {n} vacancies with a stated salary).", "vac_none": "Fewer than 30 open vacancies with a stated salary in this slice, so we do not show ranges. Data is available for:", "error": "Could not load the data. Please refresh the page a bit later.", "note": "<b>Methodology.</b> Candidates’ expectations come from CVs available to the agency as an employer on job sites in Uzbekistan: {cv} with a stated salary updated within the last 90 days ({total} CVs). Amounts are net per month; salaries in USD and other currencies are converted at the rate on the calculation date (UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs are hidden. Vacancy ranges are medians of the lower and upper bounds in open vacancies with a stated salary as of {vdate}; gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month.", "note_it": " For reference: the average accrued salary in programming according to the Statistics Agency for January–September 2026 is UZS 22.3m before tax.", "cv": {"it": "IT CVs", "sales": "sales and customer service CVs", "fin": "finance and accounting CVs"}, "crm": "Калькулятор зарплат", "uzs": "UZS {v}m", "locale": "en-GB", "c_uzs": "UZS", "c_usd": "USD"};
+const GROUPS = {"it_core": "All IT roles", "dev": "Software development", "it_lead": "IT leadership: team leads, CTO, CIO", "product": "Product management", "ba_sa": "Business and systems analysis", "data": "Data and analytics: BI, data science", "devops": "DevOps", "qa": "QA and testing", "security": "Information security", "infra": "System administration and networks", "support": "Technical support", "sales_core": "All sales and customer service", "sales_mgr": "Sales and account managers", "sales_head": "Sales leadership: heads of sales, CCO", "sales_rep": "Sales representatives", "call_center": "Call centre operators", "fin_core": "All finance and accounting", "accounting": "Accounting, incl. chief accountants", "fin_analysis": "Financial managers and analysts", "economist": "Economists", "audit": "Audit and compliance", "credit": "Loan officers", "cfo": "Chief financial officers (CFO)"};
+const SPHERES = {"it": "IT", "sales": "Sales", "fin": "Finance"}, SPHERE_OF = {"it_core": "it", "dev": "it", "it_lead": "it", "product": "it", "ba_sa": "it", "data": "it", "devops": "it", "qa": "it", "security": "it", "infra": "it", "support": "it", "sales_core": "sales", "sales_mgr": "sales", "sales_head": "sales", "sales_rep": "sales", "call_center": "sales", "fin_core": "fin", "accounting": "fin", "fin_analysis": "fin", "economist": "fin", "audit": "fin", "credit": "fin", "cfo": "fin"};
 const EXP = {"all": "Any", "0": "No experience", "1-2": "1–3 years", "3-5": "3–6 years", "6+": "6+ years"};
 const EXP_ORDER = ['all','0','1-2','3-5','6+']; // ключ «0» в объекте JS всегда идёт первым – порядок задаём явно
 // для заявки в CRM – по-русски, независимо от языка страницы
-const GROUPS_RU = {"it_core": "Все IT-направления", "dev": "Разработка", "it_lead": "Руководители IT: тимлиды, CTO, CIO", "product": "Продакт-менеджмент", "ba_sa": "Бизнес- и системный анализ", "data": "Данные и аналитика: BI, Data Science", "devops": "DevOps", "qa": "Тестирование (QA)", "security": "Информационная безопасность", "infra": "Системное администрирование и сети", "support": "Техническая поддержка"}, EXP_RU = {"all": "Любой", "0": "Без опыта", "1-2": "1–3 года", "3-5": "3–6 лет", "6+": "6+ лет"};
+const GROUPS_RU = {"it_core": "Все IT-направления", "dev": "Разработка", "it_lead": "Руководители IT: тимлиды, CTO, CIO", "product": "Продакт-менеджмент", "ba_sa": "Бизнес- и системный анализ", "data": "Данные и аналитика: BI, Data Science", "devops": "DevOps", "qa": "Тестирование (QA)", "security": "Информационная безопасность", "infra": "Системное администрирование и сети", "support": "Техническая поддержка", "sales_core": "Все продажи и клиентский сервис", "sales_mgr": "Менеджеры по продажам и работе с клиентами", "sales_head": "Руководители продаж: РОП, CCO", "sales_rep": "Торговые представители", "call_center": "Операторы колл-центра", "fin_core": "Все финансы и бухгалтерия", "accounting": "Бухгалтерия, включая главных бухгалтеров", "fin_analysis": "Финансовые менеджеры и аналитики", "economist": "Экономисты", "audit": "Аудит и комплаенс", "credit": "Кредитные специалисты", "cfo": "Финансовые директора (CFO)"}, EXP_RU = {"all": "Любой", "0": "Без опыта", "1-2": "1–3 года", "3-5": "3–6 лет", "6+": "6+ лет"}, SPHERES_RU = {"it": "IT", "sales": "Продажи", "fin": "Финансы"};
 const UZ_MONTHS=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function fmtDate(iso){ const [y,m,d]=String(iso||'').slice(0,10).split('-').map(Number); if(!y) return '';
   if(PAGE_LANG==='uz') return d+'-'+UZ_MONTHS[m-1]+', '+y;
   try{ return new Intl.DateTimeFormat(T.locale,{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d))).replace(/\s*г\.$/,''); }catch(e){ return iso; } }
 
-const grpSel=document.getElementById('slGrp'), expEl=document.getElementById('slExp'), curEl=document.getElementById('slCur'),
+const sphEl=document.getElementById('slSph'), artEl=document.getElementById('slArt'),
+  grpSel=document.getElementById('slGrp'), expEl=document.getElementById('slExp'), curEl=document.getElementById('slCur'),
   resEl=document.getElementById('slRes'), vacEl=document.getElementById('slVac'), execEl=document.getElementById('slExec'),
   noteEl=document.getElementById('slNote');
 let DATA=null, R={}, V={}, s={g:'it_core', e:'all', c:'uzs'};
@@ -1133,12 +1137,25 @@ const f=v=>s.c==='usd'?usd(v):uzs(v), alt=v=>'≈ '+(s.c==='usd'?uzs(v):usd(v));
 const row=(g,e)=>R[g+'|'+e];
 
 function seg(el, items, key){
+  const cur=key==='sp'?SPHERE_OF[s.g]:s[key];
   el.innerHTML=items.map(([k,t])=>{ const off=key==='e'&&!row(s.g,k);
-    return '<button type="button" data-k="'+k+'" aria-pressed="'+(s[key]===k)+'"'+(off?' disabled title="'+esc(T.few)+'"':'')+'>'+esc(t)+'</button>'; }).join('');
+    return '<button type="button" data-k="'+k+'" aria-pressed="'+(cur===k)+'"'+(off?' disabled title="'+esc(T.few)+'"':'')+'>'+esc(t)+'</button>'; }).join('');
 }
 
+// направления выбранной сферы, в которых есть данные; итог сферы – первым
+function fillGroups(){ const sp=SPHERE_OF[s.g]; grpSel.innerHTML='';
+  for(const g of Object.keys(GROUPS)) if(SPHERE_OF[g]===sp&&row(g,'all')) grpSel.add(new Option(GROUPS[g],g)); }
+function spheres(){ return Object.keys(SPHERES).filter(k=>row(k+'_core','all')); }
+function note(){ const sp=SPHERE_OF[s.g], m=(DATA.spheres&&DATA.spheres[sp])||{resumes_total:DATA.resumes_total,snapshot_date:DATA.snapshot_date};
+  noteEl.innerHTML=(T.note+(sp==='it'?T.note_it:'')).replace('{cv}',esc(T.cv[sp])).replace('{total}',num(m.resumes_total,0))
+    .replace('{rate}',num(Math.round(DATA.usd_rate),0)).replace('{date}',esc(fmtDate(m.snapshot_date))).replace('{vdate}',esc(fmtDate(DATA.vacancies_date))); }
+
 function render(){
+  const sp=SPHERE_OF[s.g];
+  seg(sphEl, spheres().map(k=>[k,SPHERES[k]]), 'sp');
+  if(grpSel.dataset.sp!==sp){ fillGroups(); grpSel.dataset.sp=sp; note(); }
   grpSel.value=s.g;
+  artEl.hidden=sp!=='it';
   seg(expEl, EXP_ORDER.map(k=>[k,EXP[k]]), 'e');
   seg(curEl, [['uzs',T.c_uzs],['usd',T.c_usd]], 'c');
   const x=row(s.g,s.e); if(!x) return;
@@ -1178,9 +1195,10 @@ function render(){
 
 // куда перейти, если в срезе нет вилок: другой опыт той же группы, иначе группы с вилками при любом опыте
 function vacAlt(){ const same=DATA.vacancies.filter(r=>r.grp===s.g&&r.exp!==s.e);
-  return same.length?same:DATA.vacancies.filter(r=>r.exp==='all'); }
+  return same.length?same:DATA.vacancies.filter(r=>r.exp==='all'&&SPHERE_OF[r.grp]===SPHERE_OF[s.g]&&row(r.grp,'all')); }
 function set(g,e){ s.g=g; s.e=row(g,e)?e:'all'; render(); }
 grpSel.addEventListener('change',()=>set(grpSel.value,s.e));
+sphEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b) set(b.dataset.k+'_core',s.e); });
 expEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b&&!b.disabled){ s.e=b.dataset.k; render(); } });
 curEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b){ s.c=b.dataset.k; render(); } });
 resEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-e]'); if(b){ s.e=b.dataset.e; render(); } });
@@ -1190,7 +1208,7 @@ vacEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-g]'); 
 const posEl=document.getElementById('slPos'), msgEl=document.getElementById('message');
 function syncLead(){
   const x=DATA&&row(s.g,s.e);
-  msgEl.value='Калькулятор зарплат IT: '+GROUPS_RU[s.g]+', опыт: '+EXP_RU[s.e].toLowerCase()+(x?', медиана ожиданий '+(x.p50/1e6).toFixed(1).replace('.',',')+' млн сум':'')
+  msgEl.value=T.crm+': '+SPHERES_RU[SPHERE_OF[s.g]]+' – '+GROUPS_RU[s.g]+', опыт: '+EXP_RU[s.e].toLowerCase()+(x?', медиана ожиданий '+(x.p50/1e6).toFixed(1).replace('.',',')+' млн сум':'')
     +'\nПозиция: '+(posEl.value.trim()||'—')+'\nЯзык страницы: '+PAGE_LANG;
 }
 posEl.addEventListener('input',syncLead);
@@ -1204,12 +1222,10 @@ document.getElementById('contactForm').addEventListener('reset',()=>setTimeout(s
     for(const x of DATA.resumes) R[x.grp+'|'+x.exp]=x;
     for(const x of DATA.vacancies) V[x.grp+'|'+x.exp]=x;
   }catch(e){ console.error('salaries',e); resEl.innerHTML='<p class="sl-err">'+esc(T.error)+'</p>'; syncLead(); return; }
-  for(const g of Object.keys(GROUPS)) if(row(g,'all')) grpSel.add(new Option(GROUPS[g],g));
-  const g=p.get('g'); if(g&&row(g,'all')) s.g=g;
+  const g=p.get('g'); if(g&&GROUPS[g]&&row(g,'all')) s.g=g;
   const e=p.get('e'); if(e&&row(s.g,e)) s.e=e;
   if(p.get('c')==='usd') s.c='usd';
-  noteEl.innerHTML=T.note.replace('{total}',num(DATA.resumes_total,0)).replace('{rate}',num(Math.round(DATA.usd_rate),0))
-    .replace('{date}',esc(fmtDate(DATA.snapshot_date))).replace('{vdate}',esc(fmtDate(DATA.vacancies_date)));
+  document.getElementById('slSphF').hidden=spheres().length<2;
   render();
 })();
 

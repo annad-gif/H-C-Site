@@ -1,7 +1,8 @@
 /* /api/salaries – данные для калькулятора зарплат (analytics-salaries*.html, tools/build_salaries.py).
 
    Источник – функция public_salary_stats() в базе ATS (миграция Recruitpro db/migrations/
-   2026-10-29_public_salary_stats.sql): только агрегаты последнего успешного прогона hh-resumes и сводка вилок
+   2026-10-29_public_salary_stats.sql): только агрегаты последнего успешного прогона hh-resumes по каждой сфере
+   (IT, продажи, финансы) и сводка вилок
    открытых вакансий, срезы меньше 30 наблюдений функция не отдаёт. Расчёт обновляется 1-го и 15-го числа,
    поэтому ответ живёт на CDN Vercel час (+ stale-while-revalidate): для посетителя это доли секунды. */
 "use strict";

@@ -1,4 +1,4 @@
-"""Калькулятор зарплат в IT: analytics-salaries.html, analytics-salaries-en.html, analytics-salaries-uz.html.
+"""Калькулятор зарплат (IT, продажи, финансы): analytics-salaries.html, analytics-salaries-en.html, analytics-salaries-uz.html.
 
 Оболочка (head, меню, подвал, кнопка «Связаться») – из resources*.html через tools/build_analytics.py (shell).
 Данные – /api/salaries (api/salaries.js → функция public_salary_stats() в базе ATS): агрегаты последнего успешного
@@ -17,7 +17,12 @@ FILES = {"ru": "analytics-salaries.html", "en": "analytics-salaries-en.html", "u
 HUB = {"ru": "analytics.html", "en": "analytics-en.html", "uz": "analytics-uz.html"}
 ARTICLE = "/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e"  # обзор осени 2026, есть только на русском
 
-GROUPS = {  # порядок в списке; ключи – grp в hh_resume_stats
+SPHERES = {  # ключ – sphere в public_salary_stats(); итог сферы без повторов – группа «<sphere>_core»
+    "it": ("IT", "IT", "IT"),
+    "sales": ("Продажи", "Sales", "Savdo"),
+    "fin": ("Финансы", "Finance", "Moliya"),
+}
+GROUPS = {  # порядок в списке; ключи – grp в hh_resume_stats (SPHERES в hh-resumes у Recruitpro), сфера – по префиксу ниже
     "it_core": ("Все IT-направления", "All IT roles", "Barcha IT yo‘nalishlari"),
     "dev": ("Разработка", "Software development", "Dasturlash"),
     "it_lead": ("Руководители IT: тимлиды, CTO, CIO", "IT leadership: team leads, CTO, CIO", "IT rahbarlari: timlidlar, CTO, CIO"),
@@ -29,7 +34,22 @@ GROUPS = {  # порядок в списке; ключи – grp в hh_resume_st
     "security": ("Информационная безопасность", "Information security", "Axborot xavfsizligi"),
     "infra": ("Системное администрирование и сети", "System administration and networks", "Tizim ma’muriyati va tarmoqlar"),
     "support": ("Техническая поддержка", "Technical support", "Texnik yordam"),
+    "sales_core": ("Все продажи и клиентский сервис", "All sales and customer service", "Barcha savdo va mijozlarga xizmat"),
+    "sales_mgr": ("Менеджеры по продажам и работе с клиентами", "Sales and account managers", "Savdo va mijozlar bilan ishlash menejerlari"),
+    "sales_head": ("Руководители продаж: РОП, CCO", "Sales leadership: heads of sales, CCO", "Savdo rahbarlari: bo‘lim boshliqlari, CCO"),
+    "sales_rep": ("Торговые представители", "Sales representatives", "Savdo vakillari"),
+    "call_center": ("Операторы колл-центра", "Call centre operators", "Call-markaz operatorlari"),
+    "fin_core": ("Все финансы и бухгалтерия", "All finance and accounting", "Barcha moliya va buxgalteriya"),
+    "accounting": ("Бухгалтерия, включая главных бухгалтеров", "Accounting, incl. chief accountants", "Buxgalteriya, bosh buxgalterlar bilan"),
+    "fin_analysis": ("Финансовые менеджеры и аналитики", "Financial managers and analysts", "Moliyaviy menejerlar va tahlilchilar"),
+    "economist": ("Экономисты", "Economists", "Iqtisodchilar"),
+    "audit": ("Аудит и комплаенс", "Audit and compliance", "Audit va komplaens"),
+    "credit": ("Кредитные специалисты", "Loan officers", "Kredit mutaxassislari"),
+    "cfo": ("Финансовые директора (CFO)", "Chief financial officers (CFO)", "Moliya direktorlari (CFO)"),
 }
+SPHERE_OF = {g: ("sales" if g.startswith(("sales_", "call_")) else
+                 "fin" if g in ("fin_core", "accounting", "fin_analysis", "economist", "audit", "credit", "cfo") else "it")
+             for g in GROUPS}
 EXP = {  # корзины стажа в hh_resume_stats: «1-2» – от 1 года до 3 лет, «3-5» – от 3 до 6 лет
     "all": ("Любой", "Any", "Har qanday"),
     "0": ("Без опыта", "No experience", "Tajribasiz"),
@@ -41,12 +61,12 @@ LI = {"ru": 0, "en": 1, "uz": 2}
 
 T = {
     "ru": dict(
-        title="Зарплаты в IT в Узбекистане: калькулятор – Human and Capital",
-        desc="Сколько просят IT-специалисты в Узбекистане: медиана, вилка и верхние 10% зарплатных ожиданий по направлению и опыту. Обновляется 1-го и 15-го числа.",
+        title="Зарплаты в Узбекистане: калькулятор для IT, продаж и финансов – Human and Capital",
+        desc="Сколько просят специалисты IT, продаж и финансов в Узбекистане: медиана, вилка и верхние 10% зарплатных ожиданий по направлению и опыту. Обновляется 1-го и 15-го числа.",
         back="Аналитика", eyebrow="Инструмент · обновляется 1-го и 15-го числа",
-        h1="Сколько просят IT-специалисты в Узбекистане",
-        lead="Выберите направление и опыт – покажем медиану, рабочую вилку и верхние 10% зарплатных ожиданий кандидатов, а где хватает данных – вилки в открытых вакансиях.",
-        l_grp="Направление", l_exp="Опыт", l_cur="Показывать в", c_uzs="Сумах", c_usd="Долларах",
+        h1="Сколько просят специалисты в Узбекистане: IT, продажи, финансы",
+        lead="Выберите сферу, направление и опыт – покажем медиану, рабочую вилку и верхние 10% зарплатных ожиданий кандидатов, а где хватает данных – вилки в открытых вакансиях.",
+        l_sph="Сфера", l_grp="Направление", l_exp="Опыт", l_cur="Показывать в", c_uzs="Сумах", c_usd="Долларах",
         few="Мало данных: меньше 30 резюме",
         r_title="{grp} · опыт: {exp} · медиана ожиданий, на руки в месяц",
         k_iqr="рабочая вилка (25–75% резюме)", k_top="просят верхние 10%", k_usd="указывают сумму в долларах",
@@ -61,25 +81,27 @@ T = {
         loading="Загружаем расчёт…", error="Не удалось загрузить данные. Обновите страницу чуть позже.",
         lead_h="Нужна вилка под конкретную позицию?",
         lead_p="Учтём отрасль, стек, формат работы и уровень позиции и подскажем, какую вилку закладывать в оффер.",
-        f_name="Имя", f_company="Компания", f_pos="Позиция, которую нужно рассчитать", f_pos_ph="Например: Senior Java-разработчик, финтех, офис в Ташкенте",
+        f_name="Имя", f_company="Компания", f_pos="Позиция, которую нужно рассчитать", f_pos_ph="Например: руководитель отдела продаж, FMCG, Ташкент",
         f_phone="Телефон или Telegram", f_email="Email", f_send="Получить расчёт",
         art="Подробный обзор: «Зарплаты в IT в Узбекистане: осень 2026» →",
         note=("<b>Методология.</b> Ожидания кандидатов – из резюме, доступных агентству как работодателю на job-сайтах "
-              "Узбекистана: IT-резюме с указанной зарплатой, обновлённые за последние 90 дней ({total} резюме). "
+              "Узбекистана: {cv} с указанной зарплатой, обновлённые за последние 90 дней ({total} резюме). "
               "Суммы – «на руки» в месяц; зарплаты в долларах и других валютах пересчитаны по курсу на дату расчёта "
               "({rate} сум за $1). Показаны медиана и квантили, а не средние; срезы, где меньше 30 резюме, скрыты. "
               "Вилки в вакансиях – медианы нижней и верхней границ в открытых вакансиях с указанной зарплатой на {vdate}; "
-              "суммы «до вычета налога» пересчитаны в «на руки» (−12%). Расчёт от {date}, обновляется 1-го и 15-го числа. "
-              "Для сравнения: средняя начисленная зарплата в программировании по данным Нацкомстата за январь–сентябрь "
-              "2026 года – 22,3 млн сум до вычета налога."),
+              "суммы «до вычета налога» пересчитаны в «на руки» (−12%). Расчёт от {date}, обновляется 1-го и 15-го числа."),
+        cv={"it": "IT-резюме", "sales": "резюме в продажах и клиентском сервисе", "fin": "резюме в финансах и бухгалтерии"},
+        note_it=(" Для сравнения: средняя начисленная зарплата в программировании по данным Нацкомстата за январь–сентябрь "
+                 "2026 года – 22,3 млн сум до вычета налога."),
+        crm="Калькулятор зарплат",
         uzs="{v} млн сум", locale="ru-RU"),
     "en": dict(
-        title="IT Salaries in Uzbekistan: Salary Calculator – Human and Capital",
-        desc="How much IT specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month.",
+        title="Salaries in Uzbekistan: Calculator for IT, Sales and Finance – Human and Capital",
+        desc="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month.",
         back="Insights", eyebrow="Tool · updated on the 1st and 15th",
-        h1="What IT specialists in Uzbekistan ask for",
-        lead="Pick a role group and experience to see the median, the typical range and the top 10% of candidates’ salary expectations – and, where there is enough data, the ranges in open vacancies.",
-        l_grp="Role group", l_exp="Experience", l_cur="Show in", c_uzs="UZS", c_usd="USD",
+        h1="What specialists in Uzbekistan ask for: IT, sales, finance",
+        lead="Pick a field, role group and experience to see the median, the typical range and the top 10% of candidates’ salary expectations – and, where there is enough data, the ranges in open vacancies.",
+        l_sph="Field", l_grp="Role group", l_exp="Experience", l_cur="Show in", c_uzs="UZS", c_usd="USD",
         few="Not enough data: fewer than 30 CVs",
         r_title="{grp} · experience: {exp} · median expectation, net per month",
         k_iqr="typical range (25–75% of CVs)", k_top="top 10% ask for", k_usd="state their salary in USD",
@@ -94,25 +116,27 @@ T = {
         loading="Loading…", error="Could not load the data. Please refresh the page a bit later.",
         lead_h="Need a range for a specific role?",
         lead_p="We will factor in the industry, tech stack, work format and seniority and suggest the range to put in your offer.",
-        f_name="Name", f_company="Company", f_pos="Role to benchmark", f_pos_ph="E.g. Senior Java developer, fintech, office in Tashkent",
+        f_name="Name", f_company="Company", f_pos="Role to benchmark", f_pos_ph="E.g. Head of sales, FMCG, Tashkent",
         f_phone="Phone or Telegram", f_email="Email", f_send="Get a benchmark",
         art="Full review (in Russian): “IT salaries in Uzbekistan: autumn 2026” →",
         note=("<b>Methodology.</b> Candidates’ expectations come from CVs available to the agency as an employer on job "
-              "sites in Uzbekistan: IT CVs with a stated salary updated within the last 90 days ({total} CVs). Amounts are "
+              "sites in Uzbekistan: {cv} with a stated salary updated within the last 90 days ({total} CVs). Amounts are "
               "net per month; salaries in USD and other currencies are converted at the rate on the calculation date "
               "(UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs are hidden. "
               "Vacancy ranges are medians of the lower and upper bounds in open vacancies with a stated salary as of {vdate}; "
-              "gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month. "
-              "For reference: the average accrued salary in programming according to the Statistics Agency for "
-              "January–September 2026 is UZS 22.3m before tax."),
+              "gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month."),
+        cv={"it": "IT CVs", "sales": "sales and customer service CVs", "fin": "finance and accounting CVs"},
+        note_it=(" For reference: the average accrued salary in programming according to the Statistics Agency for "
+                 "January–September 2026 is UZS 22.3m before tax."),
+        crm="Калькулятор зарплат",
         uzs="UZS {v}m", locale="en-GB"),
     "uz": dict(
-        title="O‘zbekistonda IT maoshlari: kalkulyator – Human and Capital",
-        desc="O‘zbekistonda IT mutaxassislari qancha maosh so‘raydi: yo‘nalish va tajriba bo‘yicha mediana, oraliq va eng yuqori 10%. Har oyning 1 va 15-sanasida yangilanadi.",
+        title="O‘zbekistonda maoshlar: IT, savdo va moliya uchun kalkulyator – Human and Capital",
+        desc="O‘zbekistonda IT, savdo va moliya mutaxassislari qancha maosh so‘raydi: yo‘nalish va tajriba bo‘yicha mediana, oraliq va eng yuqori 10%. Har oyning 1 va 15-sanasida yangilanadi.",
         back="Tahlil", eyebrow="Vosita · har oyning 1 va 15-sanasida yangilanadi",
-        h1="O‘zbekistonda IT mutaxassislari qancha so‘raydi",
-        lead="Yo‘nalish va tajribani tanlang – nomzodlar maosh kutilmalarining medianasi, ishchi oralig‘i va eng yuqori 10% ko‘rsatiladi, ma’lumot yetarli bo‘lsa – ochiq vakansiyalardagi oraliqlar ham.",
-        l_grp="Yo‘nalish", l_exp="Tajriba", l_cur="Valyuta", c_uzs="So‘m", c_usd="Dollar",
+        h1="O‘zbekistonda mutaxassislar qancha so‘raydi: IT, savdo, moliya",
+        lead="Soha, yo‘nalish va tajribani tanlang – nomzodlar maosh kutilmalarining medianasi, ishchi oralig‘i va eng yuqori 10% ko‘rsatiladi, ma’lumot yetarli bo‘lsa – ochiq vakansiyalardagi oraliqlar ham.",
+        l_sph="Soha", l_grp="Yo‘nalish", l_exp="Tajriba", l_cur="Valyuta", c_uzs="So‘m", c_usd="Dollar",
         few="Ma’lumot kam: 30 tadan kam rezyume",
         r_title="{grp} · tajriba: {exp} · kutilma medianasi, qo‘lga oylik",
         k_iqr="ishchi oraliq (rezyumelarning 25–75%)", k_top="eng yuqori 10% so‘raydi", k_usd="maoshni dollarda ko‘rsatgan",
@@ -127,18 +151,21 @@ T = {
         loading="Yuklanmoqda…", error="Ma’lumotlarni yuklab bo‘lmadi. Sahifani birozdan keyin yangilang.",
         lead_h="Aniq lavozim uchun oraliq kerakmi?",
         lead_p="Soha, texnologiyalar, ish formati va lavozim darajasini hisobga olib, offerga qanday oraliq qo‘yishni maslahat beramiz.",
-        f_name="Ism", f_company="Kompaniya", f_pos="Hisoblash kerak bo‘lgan lavozim", f_pos_ph="Masalan: Senior Java dasturchi, fintex, Toshkentdagi ofis",
+        f_name="Ism", f_company="Kompaniya", f_pos="Hisoblash kerak bo‘lgan lavozim", f_pos_ph="Masalan: savdo bo‘limi boshlig‘i, FMCG, Toshkent",
         f_phone="Telefon yoki Telegram", f_email="Email", f_send="Hisob-kitob olish",
         art="Batafsil sharh (rus tilida): «O‘zbekistonda IT maoshlari: kuz 2026» →",
         note=("<b>Metodologiya.</b> Nomzodlar kutilmalari – agentlikka ish beruvchi sifatida O‘zbekiston job-saytlarida "
-              "mavjud rezyumelardan: so‘nggi 90 kunda yangilangan, maosh ko‘rsatilgan IT rezyumelar ({total} ta). "
+              "mavjud rezyumelardan: so‘nggi 90 kunda yangilangan, maosh ko‘rsatilgan {cv} ({total} ta). "
               "Summalar – oyiga qo‘lga; dollar va boshqa valyutadagi maoshlar hisob-kitob sanasidagi kurs bo‘yicha "
               "qayta hisoblangan ($1 uchun {rate} so‘m). O‘rtacha emas, mediana va kvantillar ko‘rsatilgan; 30 tadan kam "
               "rezyumeli kesimlar yashirilgan. Vakansiyalardagi oraliqlar – {vdate} holatiga maosh ko‘rsatilgan ochiq "
               "vakansiyalardagi quyi va yuqori chegaralar medianasi; soliq chegirilgunga qadar summalar qo‘lga hisoblangan "
-              "(−12%). Hisob-kitob sanasi – {date}, har oyning 1 va 15-sanasida yangilanadi. Taqqoslash uchun: Statistika "
-              "agentligi ma’lumotlariga ko‘ra, 2026-yil yanvar–sentabrda dasturlashda o‘rtacha hisoblangan maosh – "
-              "soliqqa qadar 22,3 mln so‘m."),
+              "(−12%). Hisob-kitob sanasi – {date}, har oyning 1 va 15-sanasida yangilanadi."),
+        cv={"it": "IT rezyumelar", "sales": "savdo va mijozlarga xizmat ko‘rsatish rezyumelari",
+            "fin": "moliya va buxgalteriya rezyumelari"},
+        note_it=(" Taqqoslash uchun: Statistika agentligi ma’lumotlariga ko‘ra, 2026-yil yanvar–sentabrda dasturlashda "
+                 "o‘rtacha hisoblangan maosh – soliqqa qadar 22,3 mln so‘m."),
+        crm="Калькулятор зарплат",
         uzs="{v} mln so‘m", locale="ru-RU"),
 }
 
@@ -157,7 +184,7 @@ CSS = """
 .sl-ctl select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--grey-100);background:var(--white);font:inherit;font-size:14.5px;color:var(--black);cursor:pointer;}
 .sl-seg{display:flex;flex-wrap:wrap;gap:6px;}
 .sl-seg button{padding:8px 13px;border-radius:999px;border:1px solid var(--grey-100);background:var(--white);color:var(--grey-700);font:inherit;font-size:13.5px;cursor:pointer;transition:all .2s;}
-.sl-seg button:hover:not(:disabled){border-color:var(--mustard);color:var(--black);}
+.sl-seg button:hover:not(:disabled):not([aria-pressed="true"]){border-color:var(--mustard);color:var(--black);}
 .sl-seg button[aria-pressed="true"]{background:var(--black);border-color:var(--black);color:var(--white);font-weight:600;}
 .sl-seg button:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through;}
 .sl-card{background:var(--white);border:1px solid var(--grey-100);border-radius:18px;padding:26px 28px;min-height:420px;}
@@ -209,6 +236,7 @@ CSS = """
 .sl-form button[type=submit]:hover{background:var(--mustard-light);}
 .sl-art{display:inline-block;margin-top:26px;color:var(--black);font-weight:600;text-decoration:none;border-bottom:2px solid var(--mustard);}
 .sl-art:hover{color:var(--mustard-dim);}
+.sl-art[hidden],.sl-field[hidden]{display:none;}
 .sl-note{margin-top:22px;font-size:13px;line-height:1.6;color:var(--grey-700);max-width:900px;}
 @media (max-width:900px){ .sl-panel{grid-template-columns:1fr;} .sl-ctl{position:static;} .sl-lead{grid-template-columns:1fr;} }
 @media (max-width:640px){
@@ -232,6 +260,7 @@ MAIN = """
   <div class="container">
     <div class="sl-panel">
       <aside class="sl-ctl">
+        <div class="sl-field" id="slSphF"><span class="sl-lbl">{l_sph}</span><div class="sl-seg" id="slSph"></div></div>
         <div class="sl-field"><label class="sl-lbl" for="slGrp">{l_grp}</label><select id="slGrp"></select></div>
         <div class="sl-field"><span class="sl-lbl">{l_exp}</span><div class="sl-seg" id="slExp"></div></div>
         <div class="sl-field"><span class="sl-lbl">{l_cur}</span><div class="sl-seg" id="slCur"></div></div>
@@ -256,7 +285,7 @@ MAIN = """
       </form>
     </div>
 
-    <a class="sl-art" href="{article}">{art}</a>
+    <a class="sl-art" id="slArt" href="{article}" hidden>{art}</a>
     <p class="sl-note" id="slNote"></p>
   </div>
 </section>
@@ -266,17 +295,19 @@ JS = r"""
 const PAGE_LANG = %(lang)s;
 const T = %(t)s;
 const GROUPS = %(groups)s;
+const SPHERES = %(spheres)s, SPHERE_OF = %(sphere_of)s;
 const EXP = %(exp)s;
 const EXP_ORDER = ['all','0','1-2','3-5','6+']; // ключ «0» в объекте JS всегда идёт первым – порядок задаём явно
 // для заявки в CRM – по-русски, независимо от языка страницы
-const GROUPS_RU = %(groups_ru)s, EXP_RU = %(exp_ru)s;
+const GROUPS_RU = %(groups_ru)s, EXP_RU = %(exp_ru)s, SPHERES_RU = %(spheres_ru)s;
 const UZ_MONTHS=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function fmtDate(iso){ const [y,m,d]=String(iso||'').slice(0,10).split('-').map(Number); if(!y) return '';
   if(PAGE_LANG==='uz') return d+'-'+UZ_MONTHS[m-1]+', '+y;
   try{ return new Intl.DateTimeFormat(T.locale,{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d))).replace(/\s*г\.$/,''); }catch(e){ return iso; } }
 
-const grpSel=document.getElementById('slGrp'), expEl=document.getElementById('slExp'), curEl=document.getElementById('slCur'),
+const sphEl=document.getElementById('slSph'), artEl=document.getElementById('slArt'),
+  grpSel=document.getElementById('slGrp'), expEl=document.getElementById('slExp'), curEl=document.getElementById('slCur'),
   resEl=document.getElementById('slRes'), vacEl=document.getElementById('slVac'), execEl=document.getElementById('slExec'),
   noteEl=document.getElementById('slNote');
 let DATA=null, R={}, V={}, s={g:'it_core', e:'all', c:'uzs'};
@@ -288,12 +319,25 @@ const f=v=>s.c==='usd'?usd(v):uzs(v), alt=v=>'≈ '+(s.c==='usd'?uzs(v):usd(v));
 const row=(g,e)=>R[g+'|'+e];
 
 function seg(el, items, key){
+  const cur=key==='sp'?SPHERE_OF[s.g]:s[key];
   el.innerHTML=items.map(([k,t])=>{ const off=key==='e'&&!row(s.g,k);
-    return '<button type="button" data-k="'+k+'" aria-pressed="'+(s[key]===k)+'"'+(off?' disabled title="'+esc(T.few)+'"':'')+'>'+esc(t)+'</button>'; }).join('');
+    return '<button type="button" data-k="'+k+'" aria-pressed="'+(cur===k)+'"'+(off?' disabled title="'+esc(T.few)+'"':'')+'>'+esc(t)+'</button>'; }).join('');
 }
 
+// направления выбранной сферы, в которых есть данные; итог сферы – первым
+function fillGroups(){ const sp=SPHERE_OF[s.g]; grpSel.innerHTML='';
+  for(const g of Object.keys(GROUPS)) if(SPHERE_OF[g]===sp&&row(g,'all')) grpSel.add(new Option(GROUPS[g],g)); }
+function spheres(){ return Object.keys(SPHERES).filter(k=>row(k+'_core','all')); }
+function note(){ const sp=SPHERE_OF[s.g], m=(DATA.spheres&&DATA.spheres[sp])||{resumes_total:DATA.resumes_total,snapshot_date:DATA.snapshot_date};
+  noteEl.innerHTML=(T.note+(sp==='it'?T.note_it:'')).replace('{cv}',esc(T.cv[sp])).replace('{total}',num(m.resumes_total,0))
+    .replace('{rate}',num(Math.round(DATA.usd_rate),0)).replace('{date}',esc(fmtDate(m.snapshot_date))).replace('{vdate}',esc(fmtDate(DATA.vacancies_date))); }
+
 function render(){
+  const sp=SPHERE_OF[s.g];
+  seg(sphEl, spheres().map(k=>[k,SPHERES[k]]), 'sp');
+  if(grpSel.dataset.sp!==sp){ fillGroups(); grpSel.dataset.sp=sp; note(); }
   grpSel.value=s.g;
+  artEl.hidden=sp!=='it';
   seg(expEl, EXP_ORDER.map(k=>[k,EXP[k]]), 'e');
   seg(curEl, [['uzs',T.c_uzs],['usd',T.c_usd]], 'c');
   const x=row(s.g,s.e); if(!x) return;
@@ -333,9 +377,10 @@ function render(){
 
 // куда перейти, если в срезе нет вилок: другой опыт той же группы, иначе группы с вилками при любом опыте
 function vacAlt(){ const same=DATA.vacancies.filter(r=>r.grp===s.g&&r.exp!==s.e);
-  return same.length?same:DATA.vacancies.filter(r=>r.exp==='all'); }
+  return same.length?same:DATA.vacancies.filter(r=>r.exp==='all'&&SPHERE_OF[r.grp]===SPHERE_OF[s.g]&&row(r.grp,'all')); }
 function set(g,e){ s.g=g; s.e=row(g,e)?e:'all'; render(); }
 grpSel.addEventListener('change',()=>set(grpSel.value,s.e));
+sphEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b) set(b.dataset.k+'_core',s.e); });
 expEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b&&!b.disabled){ s.e=b.dataset.k; render(); } });
 curEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-k]'); if(b){ s.c=b.dataset.k; render(); } });
 resEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-e]'); if(b){ s.e=b.dataset.e; render(); } });
@@ -345,7 +390,7 @@ vacEl.addEventListener('click',e=>{ const b=e.target.closest('button[data-g]'); 
 const posEl=document.getElementById('slPos'), msgEl=document.getElementById('message');
 function syncLead(){
   const x=DATA&&row(s.g,s.e);
-  msgEl.value='Калькулятор зарплат IT: '+GROUPS_RU[s.g]+', опыт: '+EXP_RU[s.e].toLowerCase()+(x?', медиана ожиданий '+(x.p50/1e6).toFixed(1).replace('.',',')+' млн сум':'')
+  msgEl.value=T.crm+': '+SPHERES_RU[SPHERE_OF[s.g]]+' – '+GROUPS_RU[s.g]+', опыт: '+EXP_RU[s.e].toLowerCase()+(x?', медиана ожиданий '+(x.p50/1e6).toFixed(1).replace('.',',')+' млн сум':'')
     +'\nПозиция: '+(posEl.value.trim()||'—')+'\nЯзык страницы: '+PAGE_LANG;
 }
 posEl.addEventListener('input',syncLead);
@@ -359,12 +404,10 @@ document.getElementById('contactForm').addEventListener('reset',()=>setTimeout(s
     for(const x of DATA.resumes) R[x.grp+'|'+x.exp]=x;
     for(const x of DATA.vacancies) V[x.grp+'|'+x.exp]=x;
   }catch(e){ console.error('salaries',e); resEl.innerHTML='<p class="sl-err">'+esc(T.error)+'</p>'; syncLead(); return; }
-  for(const g of Object.keys(GROUPS)) if(row(g,'all')) grpSel.add(new Option(GROUPS[g],g));
-  const g=p.get('g'); if(g&&row(g,'all')) s.g=g;
+  const g=p.get('g'); if(g&&GROUPS[g]&&row(g,'all')) s.g=g;
   const e=p.get('e'); if(e&&row(s.g,e)) s.e=e;
   if(p.get('c')==='usd') s.c='usd';
-  noteEl.innerHTML=T.note.replace('{total}',num(DATA.resumes_total,0)).replace('{rate}',num(Math.round(DATA.usd_rate),0))
-    .replace('{date}',esc(fmtDate(DATA.snapshot_date))).replace('{vdate}',esc(fmtDate(DATA.vacancies_date)));
+  document.getElementById('slSphF').hidden=spheres().length<2;
   render();
 })();
 """
@@ -377,10 +420,13 @@ def build(lang):
     head = head.replace("</head>", "<style>" + CSS + "</style>\n</head>")
     main = MAIN.format(hub=HUB[lang], article=ARTICLE, **t)
     t_js = {k: t[k] for k in ("few", "r_title", "k_iqr", "k_top", "k_usd", "k_n", "from_", "leg_iqr", "leg_top", "leg_med",
-                              "ladder", "ladder_na", "vac_h", "vac_p", "vac_none", "error", "note", "uzs", "locale",
-                              "c_uzs", "c_usd")}
+                              "ladder", "ladder_na", "vac_h", "vac_p", "vac_none", "error", "note", "note_it", "cv", "crm",
+                              "uzs", "locale", "c_uzs", "c_usd")}
     js = JS % {"lang": json.dumps(lang), "t": json.dumps(t_js, ensure_ascii=False),
                "groups": json.dumps({k: v[i] for k, v in GROUPS.items()}, ensure_ascii=False),
+               "spheres": json.dumps({k: v[i] for k, v in SPHERES.items()}, ensure_ascii=False),
+               "sphere_of": json.dumps(SPHERE_OF),
+               "spheres_ru": json.dumps({k: v[0] for k, v in SPHERES.items()}, ensure_ascii=False),
                "exp": json.dumps({k: v[i] for k, v in EXP.items()}, ensure_ascii=False),
                "groups_ru": json.dumps({k: v[0] for k, v in GROUPS.items()}, ensure_ascii=False),
                "exp_ru": json.dumps({k: v[0] for k, v in EXP.items()}, ensure_ascii=False)}
