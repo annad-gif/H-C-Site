@@ -70,7 +70,7 @@ T = {
         few="Мало данных: меньше 30 резюме",
         r_title="{grp} · опыт: {exp} · медиана ожиданий, на руки в месяц",
         k_iqr="рабочая вилка (25–75% резюме)", k_top="просят верхние 10%", k_usd="указывают сумму в долларах",
-        k_n="резюме в срезе, {t}% – Ташкент", from_="от {v}",
+        k_n="резюме в выборке, {t}% – Ташкент", from_="от {v}",
         leg_iqr="25–75%", leg_top="75–90%", leg_med="медиана",
         ladder="По опыту: вилка 25–75% и медиана", ladder_na="мало данных",
         vac_h="Что предлагают работодатели",
@@ -85,9 +85,11 @@ T = {
         f_phone="Телефон или Telegram", f_email="Email", f_send="Получить расчёт",
         art="Подробный обзор: «Зарплаты в IT в Узбекистане: осень 2026» →",
         note=("<b>Методология.</b> Ожидания кандидатов – из резюме, доступных агентству как работодателю на job-сайтах "
-              "Узбекистана: {cv} с указанной зарплатой, обновлённые за последние 90 дней ({total} резюме). "
-              "Суммы – «на руки» в месяц; зарплаты в долларах и других валютах пересчитаны по курсу на дату расчёта "
-              "({rate} сум за $1). Показаны медиана и квантили, а не средние; срезы, где меньше 30 резюме, скрыты. "
+              "Узбекистана: {cv} с указанной зарплатой, обновлённые за последние 90 дней ({total} резюме). Расчёт – "
+              "по выборке самых свежих резюме в каждом сочетании направления и стажа, с поправкой на размер "
+              "сочетания. Суммы – «на руки» в месяц; зарплаты в долларах и других валютах пересчитаны по курсу на "
+              "дату расчёта "
+              "({rate} сум за $1). Показаны медиана и квантили, а не средние; срезы, где в выборке меньше 30 резюме, скрыты. "
               "Вилки в вакансиях – медианы нижней и верхней границ в открытых вакансиях с указанной зарплатой на {vdate}; "
               "суммы «до вычета налога» пересчитаны в «на руки» (−12%). Расчёт от {date}, обновляется 1-го и 15-го числа."),
         cv={"it": "IT-резюме", "sales": "резюме в продажах и клиентском сервисе", "fin": "резюме в финансах и бухгалтерии"},
@@ -105,7 +107,7 @@ T = {
         few="Not enough data: fewer than 30 CVs",
         r_title="{grp} · experience: {exp} · median expectation, net per month",
         k_iqr="typical range (25–75% of CVs)", k_top="top 10% ask for", k_usd="state their salary in USD",
-        k_n="CVs in this slice, {t}% in Tashkent", from_="{v}+",
+        k_n="CVs in the sample, {t}% in Tashkent", from_="{v}+",
         leg_iqr="25–75%", leg_top="75–90%", leg_med="median",
         ladder="By experience: 25–75% range and median", ladder_na="not enough data",
         vac_h="What employers offer",
@@ -120,9 +122,11 @@ T = {
         f_phone="Phone or Telegram", f_email="Email", f_send="Get a benchmark",
         art="Full review (in Russian): “IT salaries in Uzbekistan: autumn 2026” →",
         note=("<b>Methodology.</b> Candidates’ expectations come from CVs available to the agency as an employer on job "
-              "sites in Uzbekistan: {cv} with a stated salary updated within the last 90 days ({total} CVs). Amounts are "
-              "net per month; salaries in USD and other currencies are converted at the rate on the calculation date "
-              "(UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs are hidden. "
+              "sites in Uzbekistan: {cv} with a stated salary updated within the last 90 days ({total} CVs). The "
+              "calculation uses a sample of the most recent CVs for each role group and experience level, weighted "
+              "by its size. Amounts are net per month; salaries in USD and other currencies are converted at the "
+              "rate on the calculation date "
+              "(UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs in the sample are hidden. "
               "Vacancy ranges are medians of the lower and upper bounds in open vacancies with a stated salary as of {vdate}; "
               "gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month."),
         cv={"it": "IT CVs", "sales": "sales and customer service CVs", "fin": "finance and accounting CVs"},
@@ -140,7 +144,7 @@ T = {
         few="Ma’lumot kam: 30 tadan kam rezyume",
         r_title="{grp} · tajriba: {exp} · kutilma medianasi, qo‘lga oylik",
         k_iqr="ishchi oraliq (rezyumelarning 25–75%)", k_top="eng yuqori 10% so‘raydi", k_usd="maoshni dollarda ko‘rsatgan",
-        k_n="kesimdagi rezyumelar, {t}% – Toshkent", from_="{v} dan",
+        k_n="tanlanmadagi rezyumelar, {t}% – Toshkent", from_="{v} dan",
         leg_iqr="25–75%", leg_top="75–90%", leg_med="mediana",
         ladder="Tajriba bo‘yicha: 25–75% oraliq va mediana", ladder_na="ma’lumot kam",
         vac_h="Ish beruvchilar nima taklif qiladi",
@@ -155,10 +159,12 @@ T = {
         f_phone="Telefon yoki Telegram", f_email="Email", f_send="Hisob-kitob olish",
         art="Batafsil sharh (rus tilida): «O‘zbekistonda IT maoshlari: kuz 2026» →",
         note=("<b>Metodologiya.</b> Nomzodlar kutilmalari – agentlikka ish beruvchi sifatida O‘zbekiston job-saytlarida "
-              "mavjud rezyumelardan: so‘nggi 90 kunda yangilangan, maosh ko‘rsatilgan {cv} ({total} ta). "
-              "Summalar – oyiga qo‘lga; dollar va boshqa valyutadagi maoshlar hisob-kitob sanasidagi kurs bo‘yicha "
-              "qayta hisoblangan ($1 uchun {rate} so‘m). O‘rtacha emas, mediana va kvantillar ko‘rsatilgan; 30 tadan kam "
-              "rezyumeli kesimlar yashirilgan. Vakansiyalardagi oraliqlar – {vdate} holatiga maosh ko‘rsatilgan ochiq "
+              "mavjud rezyumelardan: so‘nggi 90 kunda yangilangan, maosh ko‘rsatilgan {cv} ({total} ta). Hisob-kitob "
+              "– har bir yo‘nalish va tajriba kesimida eng yangi rezyumelardan iborat tanlanma bo‘yicha, kesim "
+              "hajmiga tuzatish bilan. Summalar – oyiga qo‘lga; dollar va boshqa valyutadagi maoshlar hisob-kitob "
+              "sanasidagi kurs bo‘yicha "
+              "qayta hisoblangan ($1 uchun {rate} so‘m). O‘rtacha emas, mediana va kvantillar ko‘rsatilgan; tanlanmasida 30 tadan "
+              "kam rezyume bo‘lgan kesimlar yashirilgan. Vakansiyalardagi oraliqlar – {vdate} holatiga maosh ko‘rsatilgan ochiq "
               "vakansiyalardagi quyi va yuqori chegaralar medianasi; soliq chegirilgunga qadar summalar qo‘lga hisoblangan "
               "(−12%). Hisob-kitob sanasi – {date}, har oyning 1 va 15-sanasida yangilanadi."),
         cv={"it": "IT rezyumelar", "sales": "savdo va mijozlarga xizmat ko‘rsatish rezyumelari",
