@@ -5,6 +5,8 @@
 const fs = require("fs");
 const path = require("path");
 const { SITE, articleSlug, articlePath, loadMaterials, esc } = require("./_lib");
+// Рубрики, отрасли и авторы раздела «Аналитика» (site_materials.rubric / industries / author_key)
+const TAX = require("./_taxonomy.json");
 
 // Оболочка и подписи на языке статьи (site_materials.lang); оболочки собирает tools/build_article_shell.py
 const SHELLS = {
@@ -18,20 +20,95 @@ const L10N = {
         cat: { article: "Статья", news: "Новость", video: "Видео", photo: "Фото" },
         ctaH: "Нужна помощь с подбором персонала?",
         ctaP: "Human and Capital – рекрутинговое агентство в Узбекистане. Найдём сотрудников под ваши задачи: от массового подбора до executive search.",
-        ctaA: "Оставить заявку →", ctaUrl: "/recruitment.html#contact", related: "Читайте также", all: "Все материалы →" },
+        ctaA: "Оставить заявку →", ctaUrl: "/recruitment.html#contact", related: "Читайте также", all: "Все материалы →",
+        an: "Аналитика", anUrl: "/analytics.html", anAll: "Вся аналитика →",
+        method: "Методология", period: "Период", sample: "Выборка",
+        cta: {
+          consult: ["Обсудим ваш найм?", "Подберём сотрудников под ваши задачи и поделимся данными рынка по вашей отрасли.", "Обсудить найм →"],
+          download: ["Получите обзор по вашей отрасли", "Подготовим срез зарплат и сроков найма по вашей отрасли и позициям.", "Получить обзор →"],
+          subscribe: ["Новые обзоры – раз в месяц", "Подпишитесь на канал аналитики Human and Capital в Telegram.", "Подписаться →"] },
+        tg: ["Аналитика рынка труда Узбекистана – в нашем Telegram-канале", "Подписаться"] },
   en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
         cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
         ctaH: "Need help hiring in Uzbekistan?",
         ctaP: "Human and Capital is an HR company in Tashkent: recruitment, executive search, outstaffing and HR consulting for local and international companies.",
-        ctaA: "Send a request →", ctaUrl: "/hr-services-uzbekistan.html#contact", related: "Read also", all: "All resources →" },
+        ctaA: "Send a request →", ctaUrl: "/hr-services-uzbekistan.html#contact", related: "Read also", all: "All resources →",
+        an: "Insights", anUrl: "/analytics-en.html", anAll: "All insights →",
+        method: "Methodology", period: "Period", sample: "Sample",
+        cta: {
+          consult: ["Let’s discuss your hiring", "We will find people for your roles and share market data for your industry.", "Discuss hiring →"],
+          download: ["Get a review for your industry", "We will prepare salary and time-to-hire benchmarks for your industry and roles.", "Get the review →"],
+          subscribe: ["New reviews every month", "Follow Human and Capital insights on Telegram.", "Subscribe →"] },
+        tg: ["Uzbekistan labour market insights – on our Telegram channel", "Subscribe"] },
   uz: { locale: "uz-Latn-UZ", og: "uz_UZ", home: "Bosh sahifa", homeUrl: "/index-uz.html", res: "Foydali materiallar", resUrl: "/resources-uz.html",
         cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
         ctaH: "Xodim tanlashda yordam kerakmi?",
         ctaP: "Human and Capital – O‘zbekistondagi rekruting agentligi. Ommaviy tanlovdan executive searchgacha – vazifangizga mos xodimlarni topamiz.",
-        ctaA: "Ariza qoldirish →", ctaUrl: "/recruitment-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →" },
+        ctaA: "Ariza qoldirish →", ctaUrl: "/recruitment-uz.html#contact", related: "Shuningdek o‘qing", all: "Barcha materiallar →",
+        an: "Tahlil", anUrl: "/analytics-uz.html", anAll: "Barcha tahlillar →",
+        method: "Metodologiya", period: "Davr", sample: "Tanlov hajmi",
+        cta: {
+          consult: ["Xodim tanlashni muhokama qilamizmi?", "Vazifalaringizga mos xodimlarni topamiz va sohangiz bo‘yicha bozor ma’lumotlarini ulashamiz.", "Muhokama qilish →"],
+          download: ["Sohangiz bo‘yicha sharh oling", "Sohangiz va lavozimlaringiz bo‘yicha maoshlar va yollash muddatlari kesimini tayyorlaymiz.", "Sharhni olish →"],
+          subscribe: ["Yangi sharhlar – har oy", "Human and Capital tahlil kanaliga Telegramda obuna bo‘ling.", "Obuna bo‘lish →"] },
+        tg: ["O‘zbekiston mehnat bozori tahlili – Telegram kanalimizda", "Obuna bo‘lish"] },
 };
 function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
 const CAT = L10N.ru.cat;
+
+// --- раздел «Аналитика»: материал с рубрикой (site_materials.rubric) ---
+function rubricOf(m) { return m && TAX.rubrics[m.rubric] ? m.rubric : null; }
+const TG_URL = safeTg(TAX.telegram);
+function safeTg(u) { u = String(u || "").trim(); return /^https:\/\/t\.me\/[A-Za-z0-9_+/-]+$/.test(u) ? u : ""; }
+
+// 3–5 карточек «число + подпись» сразу после лида
+function keyFiguresHTML(m) {
+  const list = (Array.isArray(m.key_figures) ? m.key_figures : [])
+    .filter(f => f && String(f.value || "").trim()).slice(0, 5);
+  if (!list.length) return "";
+  return '<div class="ar-kf">' + list.map(f => '<div class="ar-kf-item"><b>' + esc(String(f.value).trim()) + "</b>"
+    + (f.label ? "<span>" + esc(String(f.label).trim()) + "</span>" : "") + "</div>").join("") + "</div>";
+}
+function authorOf(m) { return m && TAX.authors[m.author_key] ? TAX.authors[m.author_key] : null; }
+function authorHTML(m, lang) {
+  const a = authorOf(m);
+  if (!a) return "";
+  const name = a.name[lang] || a.name.ru, role = a.role[lang] || a.role.ru;
+  const ext = /^https?:\/\//.test(a.url) && !a.url.startsWith(SITE);
+  return '<a class="ar-author" href="' + esc(a.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">"
+    + '<img src="' + esc(a.photo) + '" alt="' + esc(name) + '" width="44" height="44" loading="lazy"/>'
+    + "<span><b>" + esc(name) + "</b><i>" + esc(role) + "</i></span></a>";
+}
+function authorLD(m, lang) {
+  const a = authorOf(m);
+  if (!a) return { "@type": "Organization", name: "Human and Capital", url: SITE + "/" };
+  if (a.type !== "Person") return { "@type": "Organization", name: a.name[lang] || a.name.ru, url: SITE + "/" };
+  return { "@type": "Person", name: a.name[lang] || a.name.ru, jobTitle: a.role[lang] || a.role.ru, sameAs: [a.url],
+    worksFor: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital" } };
+}
+function methodHTML(m, L) {
+  const rows = [[L.method, m.methodology], [L.period, m.period], [L.sample, m.sample_size]]
+    .filter(r => String(r[1] || "").trim());
+  if (!rows.length) return "";
+  return '<aside class="ar-method">' + rows.map(r => "<p><b>" + esc(r[0]) + ".</b> " + esc(String(r[1]).trim()) + "</p>").join("") + "</aside>";
+}
+// CTA в конце статьи. Обычный материал — как раньше; аналитика — по полю cta.
+// download (форма скачивания PDF) — вторая очередь; пока ведёт на форму заявки.
+function ctaHTML(m, L) {
+  let h = L.ctaH, p = L.ctaP, a = L.ctaA, url = L.ctaUrl, ext = false;
+  if (rubricOf(m)) {
+    let kind = L.cta[m.cta] ? m.cta : "consult";
+    if (kind === "subscribe" && !TG_URL) kind = "consult";
+    [h, p, a] = L.cta[kind];
+    if (kind === "subscribe") { url = TG_URL; ext = true; }
+  }
+  return '<aside class="ar-cta"><div><h2>' + esc(h) + "</h2><p>" + esc(p) + "</p></div>"
+    + '<a href="' + esc(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(a) + "</a></aside>";
+}
+function tgHTML(m, L) {
+  if (!rubricOf(m) || !TG_URL || m.cta === "subscribe") return "";
+  return '<p class="ar-tg"><span>' + esc(L.tg[0]) + '</span><a href="' + esc(TG_URL) + '" target="_blank" rel="noopener">' + esc(L.tg[1]) + "</a></p>";
+}
 
 // --- очистка HTML тела статьи (его пишут в админке) ---
 const ALLOWED = new Set(["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "b", "strong", "i", "em", "u", "a", "img", "figure", "figcaption"]);
@@ -114,7 +191,8 @@ function relatedHTML(all, m) {
   const root = m.translation_of || m.id;
   const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => (x.translation_of || x.id) !== root);
   // сначала материалы на том же языке, внутри – того же типа
-  const rank = x => (langOf(x) === langOf(m) ? 0 : 2) + (x.cat === m.cat ? 0 : 1);
+  const rub = rubricOf(m);
+  const rank = x => (langOf(x) === langOf(m) ? 0 : 4) + (rub ? (rubricOf(x) === rub ? 0 : rubricOf(x) ? 1 : 2) : (x.cat === m.cat ? 0 : 1));
   const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
   if (!pick.length) return "";
   return '<section class="ar-related"><div class="container"><h2>' + esc(L.related) + '</h2><div class="ar-rel-grid">'
@@ -124,7 +202,7 @@ function relatedHTML(all, m) {
         + (img ? '<img src="' + esc(img) + '" alt="' + esc(r.title) + '" loading="lazy"/>' : "")
         + '</div><div class="ar-rel-body"><h3>' + esc(r.title) + "</h3><p>" + esc(r.description || "") + "</p></div></a>";
     }).join("")
-    + '</div><a class="ar-all" href="' + L.resUrl + '">' + esc(L.all) + '</a></div></section>';
+    + '</div><a class="ar-all" href="' + (rub ? L.anUrl : L.resUrl) + '">' + esc(rub ? L.anAll : L.all) + '</a></div></section>';
 }
 
 // Языковые версии одной статьи: исходник + все материалы с translation_of = его id
@@ -136,8 +214,13 @@ function versionsOf(all, m) {
 }
 const LANG_CODE = { ru: "RU", en: "ENG", uz: "UZB" };
 
-function render(head, main, lang, versions) {
+function render(head, main, lang, versions, section) {
   let shell = SHELLS[lang] || SHELL;
+  if (section === "analytics") {
+    // оболочка подсвечивает «Полезные материалы»; у аналитики подсвечиваем «Аналитика»
+    shell = shell.replace(/(href="\/resources(?:-en|-uz)?\.html") class="active"/, "$1")
+      .replace(/href="(\/analytics(?:-en|-uz)?\.html)">/, 'href="$1" class="active">');
+  }
   // переключатель языка ведёт на перевод этой статьи, если он есть
   for (const [hl, v] of Object.entries(versions || {})) {
     shell = shell.replace(new RegExp('<a href="[^"]*" data-lang="' + LANG_CODE[hl] + '">'),
@@ -151,10 +234,15 @@ function articlePage(all, m) {
   const h = headline(m);
   const bodyHtml = sanitize(m.body);
   const text = plainText(bodyHtml);
-  const desc = clip(m.description && h === m.title ? m.description + ". " + text : text, 158);
+  const desc = clip(m.description && h === m.title ? String(m.description).trim().replace(/[.!?…]+$/, "") + ". " + text : text, 158);
   const img = imageOf(m);
   const lang = langOf(m), L = L10N[lang];
-  const cat = L.cat[m.cat] || L.cat.article;
+  const rub = rubricOf(m);
+  const cat = rub ? TAX.rubrics[rub][lang] : (L.cat[m.cat] || L.cat.article);
+  const sec = rub ? { name: L.an, url: L.anUrl } : { name: L.res, url: L.resUrl };
+  const seoDesc = clip(String(m.seo_description || "").trim() || desc, 160);
+  const ogImg = safeUrl(m.og_image) || img || SITE + "/og-cover.png";
+  const industries = (Array.isArray(m.industries) ? m.industries : []).filter(k => TAX.industries[k]);
   const ld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -162,15 +250,17 @@ function articlePage(all, m) {
         "@type": m.cat === "news" ? "NewsArticle" : "BlogPosting",
         "@id": url + "#article",
         headline: h.slice(0, 110),
-        description: desc,
+        description: seoDesc,
         mainEntityOfPage: url,
         url,
         inLanguage: lang,
         datePublished: m.created_at,
         dateModified: m.updated_at || m.created_at,
-        image: img || SITE + "/og-cover.png",
+        image: ogImg,
         wordCount: text.split(" ").length,
-        author: { "@type": "Organization", name: "Human and Capital", url: SITE + "/" },
+        ...(rub ? { articleSection: cat } : {}),
+        ...(industries.length ? { keywords: industries.map(k => TAX.industries[k][lang]).join(", ") } : {}),
+        author: authorLD(m, lang),
         publisher: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital",
           logo: { "@type": "ImageObject", url: SITE + "/logo.png" } },
       },
@@ -178,7 +268,7 @@ function articlePage(all, m) {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: L.home, item: SITE + L.homeUrl },
-          { "@type": "ListItem", position: 2, name: L.res, item: SITE + L.resUrl },
+          { "@type": "ListItem", position: 2, name: sec.name, item: SITE + sec.url },
           { "@type": "ListItem", position: 3, name: m.title, item: url },
         ],
       },
@@ -189,10 +279,10 @@ function articlePage(all, m) {
     ? Object.entries(versions).map(([hl, v]) => '<link rel="alternate" hreflang="' + hl + '" href="' + esc(SITE + articlePath(v)) + '"/>')
       .concat('<link rel="alternate" hreflang="x-default" href="' + esc(SITE + articlePath(versions.ru || versions[langOf(m)])) + '"/>')
     : [];
-  const title = h + " – Human and Capital";
+  const title = (String(m.seo_title || "").trim() || h) + " – Human and Capital";
   const head = [
     "<title>" + esc(title) + "</title>",
-    '<meta name="description" content="' + esc(desc) + '"/>',
+    '<meta name="description" content="' + esc(seoDesc) + '"/>',
     '<meta name="robots" content="index, follow, max-image-preview:large"/>',
     '<link rel="canonical" href="' + esc(url) + '"/>',
     ...alt,
@@ -200,34 +290,39 @@ function articlePage(all, m) {
     '<meta property="og:site_name" content="Human and Capital"/>',
     '<meta property="og:locale" content="' + L.og + '"/>',
     '<meta property="og:url" content="' + esc(url) + '"/>',
-    '<meta property="og:title" content="' + esc(h) + '"/>',
-    '<meta property="og:description" content="' + esc(desc) + '"/>',
-    '<meta property="og:image" content="' + esc(img || SITE + "/og-cover.png") + '"/>',
+    '<meta property="og:title" content="' + esc(String(m.seo_title || "").trim() || h) + '"/>',
+    '<meta property="og:description" content="' + esc(seoDesc) + '"/>',
+    '<meta property="og:image" content="' + esc(ogImg) + '"/>',
     '<meta property="article:published_time" content="' + esc(m.created_at) + '"/>',
     '<meta property="article:modified_time" content="' + esc(m.updated_at || m.created_at) + '"/>',
+    ...(rub ? ['<meta property="article:section" content="' + esc(cat) + '"/>'] : []),
+    ...industries.map(k => '<meta property="article:tag" content="' + esc(TAX.industries[k][lang]) + '"/>'),
     '<meta name="twitter:card" content="summary_large_image"/>',
-    '<meta name="twitter:title" content="' + esc(h) + '"/>',
-    '<meta name="twitter:description" content="' + esc(desc) + '"/>',
-    '<meta name="twitter:image" content="' + esc(img || SITE + "/og-cover.png") + '"/>',
+    '<meta name="twitter:title" content="' + esc(String(m.seo_title || "").trim() || h) + '"/>',
+    '<meta name="twitter:description" content="' + esc(seoDesc) + '"/>',
+    '<meta name="twitter:image" content="' + esc(ogImg) + '"/>',
     '<script type="application/ld+json">' + JSON.stringify(ld).replace(/</g, "\\u003c") + "</script>",
   ].join("\n");
   const main = '<header class="ar-hero"><div class="container">'
     + '<div class="ar-crumbs"><a href="' + L.homeUrl + '">' + esc(L.home) + '</a><span aria-hidden="true">/</span>'
-    + '<a href="' + L.resUrl + '">' + esc(L.res) + '</a></div>'
-    + '<span class="ar-badge">' + esc(cat) + "</span>"
+    + '<a href="' + sec.url + '">' + esc(sec.name) + '</a></div>'
+    + (rub ? '<a class="ar-badge" href="' + sec.url + "?rubric=" + rub + '">' + esc(cat) + "</a>" : '<span class="ar-badge">' + esc(cat) + "</span>")
     + "<h1>" + esc(m.title) + "</h1>"
     + (m.description ? '<p class="ar-lead">' + esc(m.description) + "</p>" : "")
-    + '<time class="ar-date" datetime="' + esc(String(m.created_at || "").slice(0, 10)) + '">' + esc(ruDate(m.created_at, L.locale)) + "</time>"
+    + '<div class="ar-byline">' + authorHTML(m, lang)
+    + '<time class="ar-date" datetime="' + esc(String(m.created_at || "").slice(0, 10)) + '">' + esc(ruDate(m.created_at, L.locale)) + "</time></div>"
     + "</div></header>"
     + '<main class="ar-main"><div class="container"><article>'
+    + keyFiguresHTML(m)
     + mediaHTML(m)
-    + '<div class="ar-text">' + bodyHtml + "</div></article>"
-    + '<aside class="ar-cta"><div><h2>' + esc(L.ctaH) + "</h2>"
-    + "<p>" + esc(L.ctaP) + "</p></div>"
-    + '<a href="' + L.ctaUrl + '">' + esc(L.ctaA) + "</a></aside>"
+    + '<div class="ar-text">' + bodyHtml + "</div>"
+    + methodHTML(m, L)
+    + tgHTML(m, L)
+    + "</article>"
+    + ctaHTML(m, L)
     + "</div></main>"
     + relatedHTML(all, m);
-  return render(head, main, lang, versions);
+  return render(head, main, lang, versions, rub ? "analytics" : "resources");
 }
 
 function notFoundPage() {

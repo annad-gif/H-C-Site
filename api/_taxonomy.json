@@ -1,0 +1,50 @@
+{
+  "_comment": "Справочники раздела «Аналитика» (site_materials.rubric / industries / author_key). Читают api/article.js и tools/build_analytics.py; копия для браузера — в admin.html (TAXONOMY), менять синхронно. ТЗ: docs/analytics/spec-analytics-section.md §1.",
+  "rubrics": {
+    "salary":     { "ru": "Зарплатный обзор", "en": "Salary review",   "uz": "Maosh sharhi" },
+    "pulse":      { "ru": "Пульс рынка",      "en": "Market pulse",    "uz": "Bozor pulsi" },
+    "practice":   { "ru": "Практика найма",   "en": "Hiring practice", "uz": "Yollash amaliyoti" },
+    "case":       { "ru": "Кейсы",            "en": "Case studies",    "uz": "Keyslar" },
+    "regulation": { "ru": "HR-регулирование", "en": "HR regulation",   "uz": "HR qonunchiligi" },
+    "annual":     { "ru": "Годовой отчёт",    "en": "Annual report",   "uz": "Yillik hisobot" }
+  },
+  "industries": {
+    "general":       { "ru": "Все отрасли",                 "en": "All industries",           "uz": "Barcha sohalar" },
+    "it":            { "ru": "IT",                          "en": "IT",                       "uz": "IT" },
+    "finance":       { "ru": "Финансы и банки",             "en": "Finance & banking",        "uz": "Moliya va banklar" },
+    "retail":        { "ru": "Ритейл и FMCG",               "en": "Retail & FMCG",            "uz": "Chakana savdo va FMCG" },
+    "manufacturing": { "ru": "Производство",                "en": "Manufacturing",            "uz": "Ishlab chiqarish" },
+    "construction":  { "ru": "Строительство и девелопмент", "en": "Construction & real estate", "uz": "Qurilish va ko‘chmas mulk" },
+    "logistics":     { "ru": "Логистика",                   "en": "Logistics",                "uz": "Logistika" },
+    "pharma":        { "ru": "Фарма и медицина",            "en": "Pharma & healthcare",      "uz": "Farmatsevtika va tibbiyot" },
+    "telecom":       { "ru": "Телеком",                     "en": "Telecom",                  "uz": "Telekom" },
+    "horeca":        { "ru": "HoReCa",                      "en": "HoReCa",                   "uz": "HoReCa" },
+    "energy":        { "ru": "Энергетика и горнодобыча",    "en": "Energy & mining",          "uz": "Energetika va kon sanoati" },
+    "services":      { "ru": "B2B-услуги",                  "en": "B2B services",             "uz": "B2B xizmatlar" },
+    "public":        { "ru": "Госсектор и международные организации", "en": "Public sector & NGOs", "uz": "Davlat sektori va xalqaro tashkilotlar" }
+  },
+  "authors": {
+    "akmal": {
+      "type": "Person",
+      "name": { "ru": "Акмаль Саипов", "en": "Akmal Saipov", "uz": "Akmal Saipov" },
+      "role": { "ru": "Коммерческий директор и соучредитель", "en": "Commercial Director & Co-founder", "uz": "Tijorat direktori va hammuassis" },
+      "photo": "/team-akmal-saipov.png",
+      "url": "https://www.linkedin.com/in/akmal-saipov-38b144153/"
+    },
+    "anna": {
+      "type": "Person",
+      "name": { "ru": "Анна Джу", "en": "Anna Ju", "uz": "Anna Ju" },
+      "role": { "ru": "Генеральный директор и соучредитель", "en": "CEO & Co-founder", "uz": "Bosh direktor va hammuassis" },
+      "photo": "/team-anna-dzhu.png",
+      "url": "https://www.linkedin.com/in/anna-dju-122983211/"
+    },
+    "team": {
+      "type": "Organization",
+      "name": { "ru": "Аналитика Human and Capital", "en": "Human and Capital Research", "uz": "Human and Capital tahlili" },
+      "role": { "ru": "Рекрутинговое агентство в Ташкенте", "en": "Recruitment agency in Tashkent", "uz": "Toshkentdagi rekruting agentligi" },
+      "photo": "/apple-touch-icon.png",
+      "url": "https://humancapital.uz/"
+    }
+  },
+  "telegram": ""
+}

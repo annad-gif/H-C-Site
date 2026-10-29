@@ -908,6 +908,14 @@
 .adm-mini.ghost{background:#f3f2ee;color:#0e0e0d;border:1px solid #e5e3dd}
 .adm-mini:hover{opacity:.9}
 .mat-hint{font-size:12px;color:#8a8781}
+.mat-an{border:1px solid #e5e3dd;border-radius:14px;padding:4px 16px 2px;margin:4px 0 16px;background:#fcfbf8}
+.mat-an summary{cursor:pointer;font-weight:600;font-size:14px;padding:12px 0}
+.mat-an .msub{margin:0 0 12px}
+.mat-kf{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-bottom:8px}
+.mat-chk{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}
+.mat-chk label{display:flex !important;align-items:center;gap:6px;font-weight:400 !important;margin:0 !important;cursor:pointer}
+.mat-chk input{width:auto !important;padding:0 !important}
+.mat-cnt{font-weight:400;color:#8a8781}
 </style>
 <body class="adm">
 
@@ -983,6 +991,12 @@ const AUTH_CONFIG = { useLiveAuth:true };
 const CAT_RU = {article:'Статья', news:'Новость', video:'Видео', photo:'Фото'};
 const CAT_EN = {'Статья':'article','Новость':'news','Видео':'video','Фото':'photo'};
 const MAT_LANG = {ru:'Русский', en:'English', uz:'O‘zbekcha'}; // site_materials.lang
+// Раздел «Аналитика»: копия api/_taxonomy.json (подписи RU) – менять синхронно
+const TAXONOMY = {"rubrics": {"salary": "Зарплатный обзор", "pulse": "Пульс рынка", "practice": "Практика найма", "case": "Кейсы", "regulation": "HR-регулирование", "annual": "Годовой отчёт"}, "industries": {"general": "Все отрасли", "it": "IT", "finance": "Финансы и банки", "retail": "Ритейл и FMCG", "manufacturing": "Производство", "construction": "Строительство и девелопмент", "logistics": "Логистика", "pharma": "Фарма и медицина", "telecom": "Телеком", "horeca": "HoReCa", "energy": "Энергетика и горнодобыча", "services": "B2B-услуги", "public": "Госсектор и международные организации"}, "authors": {"akmal": "Акмаль Саипов", "anna": "Анна Джу", "team": "Аналитика Human and Capital"}};
+const AN_STRICT = ['salary','pulse','annual']; // рубрики, где методология, период и выборка обязательны
+// В site_materials есть колонки «Аналитики» (миграция 2026-10-29_site_materials_analytics.sql в ATS).
+// До миграции блок «Аналитика» в редакторе скрыт и новые поля не отправляются.
+let MAT_ANALYTICS = false;
 function fmtDate(ts){ try{ return new Date(ts).toLocaleDateString('ru-RU'); }catch(_){ return ''; } }
 function numOnly(s){ const n=String(s||'').replace(/[^0-9]/g,''); return n?parseInt(n,10):0; }
 const ROLES = { super_admin:'Главный администратор', admin:'Администратор' };
@@ -1069,7 +1083,12 @@ async function loadAllData(){
       sb.from('vacancies').select('id,title,description,location,type,budget,requirements,offer,status,show_on_site').order('created_at',{ascending:false}),
       sb.from('candidates').select('id,position,salary,public_field,public_city,public_experience,public_results,public_summary,public_languages,public_skills,is_public,created_at').order('created_at',{ascending:false})
     ]);
-    if(mat.data) MAT=mat.data.map(m=>({ id:m.id, lang:m.lang||'ru', cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', media_url:m.media_url||'', media_type:m.media_type||'', disabled:!m.published }));
+    if(mat.data){
+      MAT_ANALYTICS = mat.data.some(m=>'rubric' in m);
+      MAT=mat.data.map(m=>({ id:m.id, lang:m.lang||'ru', cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', media_url:m.media_url||'', media_type:m.media_type||'', disabled:!m.published,
+        translation_of:m.translation_of||'', rubric:m.rubric||'', industries:m.industries||[], author_key:m.author_key||'', key_figures:Array.isArray(m.key_figures)?m.key_figures:[],
+        methodology:m.methodology||'', period:m.period||'', sample_size:m.sample_size||'', cta:m.cta||'', seo_title:m.seo_title||'', seo_description:m.seo_description||'', og_image:m.og_image||'' }));
+    }
     if(seo.data) SEO=seo.data.map(x=>({ id:x.id, page:x.page||'', url:x.url||'', title:x.title||'', desc:x.description||'', keywords:x.keywords||'', indexed:!!x.indexed }));
     if(adm.data) EMP=adm.data.map(a=>({ id:a.id, name:a.name||a.email, email:a.email, role:a.role, status:a.status, added:fmtDate(a.created_at) }));
     if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'–'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
@@ -1279,11 +1298,11 @@ function renderMaterials(){
   const c_=can('materials');
   const rows=MAT.map(m=>'<tr>'
     +'<td><b>'+esc(m.title)+'</b><div class="adm-sub">'+esc(m.id)+'</div></td>'
-    +'<td><span class="badge badge-gold">'+esc(m.cat)+'</span></td>'
+    +'<td><span class="badge badge-gold">'+esc(m.cat)+'</span>'+(m.rubric&&TAXONOMY.rubrics[m.rubric]?'<div class="adm-sub">Аналитика · '+esc(TAXONOMY.rubrics[m.rubric])+'</div>':'')+'</td>'
     +'<td>'+esc(MAT_LANG[m.lang||'ru']||m.lang)+'</td>'
     +'<td>'+swCell('materials',m,'Опубликовано','Отключено',c_)+'</td>'
     +'<td>'+editActions('materials',m.id,c_)+'</td></tr>').join('');
-  main.innerHTML = head('Материалы','Создавайте и редактируйте статьи, новости, видео и фото. Изменения отражаются на странице «Полезные материалы».',
+  main.innerHTML = head('Материалы','Создавайте и редактируйте статьи, новости, видео и фото. Изменения отражаются на странице «Полезные материалы», материалы с рубрикой – ещё и в разделе «Аналитика».',
       c_?'<button class="adm-btn" data-add="materials"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить материал</button>':'')
     + '<div class="adm-card"><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Заголовок</th><th>Тип</th><th>Язык</th><th>На сайте</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
@@ -1352,6 +1371,9 @@ function matModal(m){
     +'<form id="matForm" data-id="'+(isEdit?m.id:'')+'">'
     + fg('Тип', '<select id="mCat">'+cats.map(x=>'<option'+(isEdit&&m.cat===x?' selected':'')+'>'+x+'</option>').join('')+'</select>')
     + fg('Язык материала', '<select id="mLang">'+Object.keys(MAT_LANG).map(k=>'<option value="'+k+'"'+((isEdit?(m.lang||'ru'):'ru')===k?' selected':'')+'>'+MAT_LANG[k]+'</option>').join('')+'</select>')
+    + fg('Перевод материала', '<select id="mTr"><option value="">— это оригинал (не перевод) —</option>'
+        + MAT.filter(x=>!x.translation_of && (!isEdit || x.id!==m.id)).map(x=>'<option value="'+esc(x.id)+'"'+(isEdit&&m.translation_of===x.id?' selected':'')+'>'
+        + esc(x.title)+' ('+esc((x.lang||'ru').toUpperCase())+')</option>').join('')+'</select>')
     + fg('Заголовок', inp('mTitle', isEdit?m.title:'', 'Заголовок материала'))
     + fg('Краткое описание (для карточки)', ta('mDesc', isEdit?m.desc:'', '1–2 предложения', 60))
     + '<div class="adm-fg"><label>Обложка (главная картинка)</label>'
@@ -1370,9 +1392,49 @@ function matModal(m){
     +   '<span class="mat-hint" id="mInlineHint"></span>'
     +   '<input type="file" id="mInlineFile" accept="image/*" hidden>'
     + '</div>'
+    + (MAT_ANALYTICS ? matAnalyticsHTML(isEdit?m:null) : '')
     + '<button type="submit" class="adm-cta">'+(isEdit?'Сохранить':'Опубликовать')+'</button></form>';
   openModal();
   wireMatEditor();
+}
+
+// Блок «Аналитика» в редакторе материала (ТЗ: docs/analytics/spec-analytics-section.md, §5)
+function matAnalyticsHTML(m){
+  const v=k=>m?(m[k]||''):'';
+  const opt=(obj,cur,empty)=>(empty!=null?'<option value="">'+empty+'</option>':'')+Object.keys(obj).map(k=>'<option value="'+k+'"'+(cur===k?' selected':'')+'>'+esc(obj[k])+'</option>').join('');
+  const inds=(m&&m.industries)||[];
+  const kf=(m&&m.key_figures)||[];
+  let kfRows='';
+  for(let i=0;i<5;i++){ const f=kf[i]||{}; kfRows+='<div class="mat-kf"><input type="text" id="mKfV'+i+'" value="'+esc(f.value||'')+'" placeholder="45 дней"><input type="text" id="mKfL'+i+'" value="'+esc(f.label||'')+'" placeholder="средний срок закрытия позиции руководителя"></div>'; }
+  return '<details class="mat-an"'+(v('rubric')?' open':'')+'><summary>Аналитика: рубрика, ключевые цифры, методология, SEO</summary>'
+    +'<p class="msub">Материал с рубрикой появляется в разделе «Аналитика». Без рубрики – обычный «Полезный материал», поля ниже можно не заполнять.</p>'
+    + fg('Рубрика', '<select id="mRubric">'+opt(TAXONOMY.rubrics, v('rubric'), '— нет (не аналитика) —')+'</select>')
+    + fg('Отрасли', '<div class="mat-chk">'+Object.keys(TAXONOMY.industries).map(k=>'<label><input type="checkbox" class="mInd" value="'+k+'"'+(inds.includes(k)?' checked':'')+'>'+esc(TAXONOMY.industries[k])+'</label>').join('')+'</div>')
+    + fg('Автор', '<select id="mAuthor">'+opt(TAXONOMY.authors, v('author_key'), '— не указан —')+'</select>')
+    + '<div class="adm-fg"><label>Ключевые цифры (до 5: число и подпись; показываются сразу после лида)</label>'+kfRows+'</div>'
+    + fg('Методология (источник данных и метод)', ta('mMethod', v('methodology'), 'Ожидания по зарплате кандидатов, откликнувшихся на вакансии Human and Capital на hh.uz…', 60))
+    + fg('Период', inp('mPeriod', v('period'), 'октябрь – ноябрь 2026'))
+    + fg('Выборка', inp('mSample', v('sample_size'), 'n = 312 кандидатов'))
+    + fg('Призыв в конце статьи', '<select id="mCta"><option value="">Обсудить найм (по умолчанию)</option><option value="subscribe"'+(v('cta')==='subscribe'?' selected':'')+'>Подписаться на Telegram-канал</option></select>')
+    + fg('SEO title <span class="mat-cnt" id="mSeoTC"></span>', inp('mSeoT', v('seo_title'), 'По умолчанию – заголовок материала; до 60 символов'))
+    + fg('SEO description <span class="mat-cnt" id="mSeoDC"></span>', ta('mSeoD', v('seo_description'), 'По умолчанию – начало текста; до 160 символов', 50))
+    + fg('OG-картинка для соцсетей (URL)', inp('mOg', v('og_image'), 'По умолчанию – обложка'))
+    +'</details>';
+}
+function matAnalyticsData(){
+  if(!MAT_ANALYTICS || !document.getElementById('mRubric')) return {};
+  const kf=[]; for(let i=0;i<5;i++){ const a=val('mKfV'+i), b=val('mKfL'+i); if(a) kf.push({value:a,label:b}); }
+  return { rubric:val('mRubric'), industries:Array.from(document.querySelectorAll('.mInd:checked')).map(x=>x.value),
+    author_key:val('mAuthor'), key_figures:kf, methodology:val('mMethod'), period:val('mPeriod'), sample_size:val('mSample'),
+    cta:val('mCta'), seo_title:val('mSeoT'), seo_description:val('mSeoD'), og_image:val('mOg') };
+}
+// поля для site_materials.insert/update (перевод – всегда; «Аналитика» – только после миграции)
+function matRow(item){
+  const r={ translation_of:item.translation_of||null };
+  if(MAT_ANALYTICS) Object.assign(r, { rubric:item.rubric||null, industries:item.industries||[], author_key:item.author_key||null,
+    key_figures:(item.key_figures&&item.key_figures.length)?item.key_figures:null, methodology:item.methodology||null, period:item.period||null,
+    sample_size:item.sample_size||null, cta:item.cta||null, seo_title:item.seo_title||null, seo_description:item.seo_description||null, og_image:item.og_image||null });
+  return r;
 }
 
 function wireMatEditor(){
@@ -1430,10 +1492,17 @@ function wireMatEditor(){
     document.getElementById('mCoverDel').hidden=true;
   });
 
+  [['mSeoT','mSeoTC',60],['mSeoD','mSeoDC',160]].forEach(function(x){ const el=document.getElementById(x[0]), c=document.getElementById(x[1]); if(!el||!c) return;
+    const upd=()=>{ c.textContent=el.value.length+' / '+x[2]; c.style.color=el.value.length>x[2]?'#c0392b':''; }; el.addEventListener('input',upd); upd(); });
+
   document.getElementById('matForm').addEventListener('submit',function(ev){ ev.preventDefault();
     const id=ev.target.dataset.id;
     const body=editor.innerHTML.trim();
-    const data={ cat:val('mCat'), lang:val('mLang')||'ru', title:val('mTitle'), desc:val('mDesc'), body:body, media_url:_matCover.url||'', media_type:_matCover.url?(_matCover.type||'image'):'' };
+    const an=matAnalyticsData();
+    if(an.rubric && AN_STRICT.includes(an.rubric) && !(an.methodology && an.period && an.sample_size)){
+      toast('Для рубрики «'+TAXONOMY.rubrics[an.rubric]+'» заполните методологию, период и выборку.'); return; }
+    const data=Object.assign({ cat:val('mCat'), lang:val('mLang')||'ru', title:val('mTitle'), desc:val('mDesc'), body:body, media_url:_matCover.url||'', media_type:_matCover.url?(_matCover.type||'image'):'',
+      translation_of:val('mTr') }, an);
     if(id){ const x=MAT.find(o=>o.id===id); Object.assign(x,data); pushCRM('material.update',x); toast('Материал сохранён.'); }
     else { const x=Object.assign({id:'M-'+(++uid),disabled:false},data); MAT.unshift(x); pushCRM('material.create',x); toast('Материал опубликован.'); }
     closeModal(); renderMaterials();
@@ -1625,10 +1694,10 @@ function val(id){ const el=document.getElementById(id); return el?el.value.trim(
 async function pushCRM(action,item){
   try{
     if(action==='material.create'){
-      const r=await sb.from('site_materials').insert({ cat:CAT_EN[item.cat]||'article', lang:item.lang||'ru', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, published:!item.disabled, created_by:(current&&current.email)||null }).select('id').single();
+      const r=await sb.from('site_materials').insert(Object.assign({ cat:CAT_EN[item.cat]||'article', lang:item.lang||'ru', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, published:!item.disabled, created_by:(current&&current.email)||null }, matRow(item))).select('id').single();
       if(r.error) throw r.error; item.id=r.data.id; renderMaterials();
     } else if(action==='material.update'){
-      const r=await sb.from('site_materials').update({ cat:CAT_EN[item.cat]||'article', lang:item.lang||'ru', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, updated_at:new Date().toISOString() }).eq('id',item.id); if(r.error) throw r.error;
+      const r=await sb.from('site_materials').update(Object.assign({ cat:CAT_EN[item.cat]||'article', lang:item.lang||'ru', title:item.title, description:item.desc, body:item.body, media_url:item.media_url||null, media_type:item.media_type||null, updated_at:new Date().toISOString() }, matRow(item))).eq('id',item.id); if(r.error) throw r.error;
     } else if(action==='materials.toggle'){
       const r=await sb.from('site_materials').update({ published:!item.disabled }).eq('id',item.id); if(r.error) throw r.error;
     } else if(action==='materials.delete'){

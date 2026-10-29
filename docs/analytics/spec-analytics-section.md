@@ -122,7 +122,7 @@ create index on site_materials (rubric) where rubric is not null;
 const AUTHORS = {
   akmal: { ru: "Акмаль Саипов", en: "Akmal Saipov", role: { ru: "Сооснователь", en: "Co-founder" },
            photo: "/team-akmal-saipov.png", url: "https://www.linkedin.com/in/akmal-saipov-38b144153/" },
-  anna:  { ru: "Анна Джу", en: "Anna Dju", role: { ru: "Сооснователь", en: "Co-founder" },
+  anna:  { ru: "Анна Джу", en: "Anna Ju", role: { ru: "Генеральный директор и соучредитель", en: "CEO & Co-founder" },
            photo: "/team-anna-dzhu.png", url: "https://www.linkedin.com/in/anna-dju-122983211/" },
   team:  { ru: "Аналитический центр Human and Capital", en: "Human and Capital Research", … },
 };
@@ -269,6 +269,20 @@ Supabase Storage проекта ATS, бакет `reports`, публичный. �
 - [ ] 41 существующий материал открывается и выглядит как раньше.
 
 ---
+
+## 9а. Статус реализации (первая очередь, 29.10.2026)
+
+Сделано в ветке `analytics/section-v1`:
+- справочники – `api/_taxonomy.json` (рубрики, отрасли, авторы, ссылка на Telegram; копия подписей – в `admin.html`);
+- `analytics*.html` собирает `tools/build_analytics.py` из оболочки `resources*.html`; список грузится из `site_materials` в браузере и фильтруется по `rubric` (поэтому страница работает и до миграции – просто пустая);
+- `api/article.js`: рубрика, автор (schema.org `Person`), ключевые цифры, методология, CTA по рубрике, SEO-поля, подсветка «Аналитики» в меню; обычные статьи не меняются;
+- меню «Аналитика / Insights / Tahlil» – во всех 30 страницах и в оболочках статей (`tools/build_article_shell.py`);
+- `/analytics`, `/analytics/en`, `/analytics/uz`, `/insights` – в `vercel.json`; страница – в sitemap;
+- админка: блок «Аналитика» в редакторе материала + выбор «перевод какого материала»; появляется только когда в базе есть колонка `rubric`.
+
+Отличия от ТЗ: подписка на email и CTA `download` – во второй очереди вместе с формой отчёта; авторы – «Акмаль Саипов» и «Анна Джу» (EN: Anna Ju), должности как на главной.
+
+Миграция: `Recruitpro/db/migrations/2026-10-29_site_materials_analytics.sql`.
 
 ## 10. Порядок работ и оценка
 

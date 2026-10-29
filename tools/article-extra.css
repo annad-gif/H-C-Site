@@ -53,8 +53,33 @@
 .ar-404 p{color:var(--grey-500);margin-bottom:24px;}
 .ar-404 a{color:var(--mustard-dim);font-weight:600;}
 
+/* ---------- раздел «Аналитика»: автор, ключевые цифры, методология, Telegram ---------- */
+a.ar-badge{text-decoration:none;transition:background .2s;}
+a.ar-badge:hover{background:rgba(198,154,46,.28);}
+.ar-byline{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:22px;}
+.ar-byline .ar-date{margin:0;}
+.ar-author{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--white);}
+.ar-author img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--black-soft);flex:0 0 auto;}
+.ar-author span{display:flex;flex-direction:column;line-height:1.3;}
+.ar-author b{font-size:15px;font-weight:600;}
+.ar-author i{font-style:normal;font-size:13px;color:var(--grey-300);}
+.ar-author:hover b{color:var(--mustard-light);}
+.ar-kf{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:0 0 36px;}
+.ar-kf-item{padding:20px 20px 18px;border-radius:16px;background:var(--grey-50);border:1px solid var(--grey-100);}
+.ar-kf-item b{display:block;font-family:var(--ff-display);font-weight:700;font-size:clamp(24px,3vw,32px);line-height:1.1;color:var(--mustard-dim);margin-bottom:8px;overflow-wrap:anywhere;}
+.ar-kf-item span{display:block;font-size:14px;line-height:1.45;color:var(--grey-700);}
+.ar-method{margin:36px 0 0;padding:18px 22px;border-radius:14px;background:var(--grey-50);border:1px solid var(--grey-100);font-size:14px;line-height:1.6;color:var(--grey-700);}
+.ar-method p{margin:0;}
+.ar-method p + p{margin-top:6px;}
+.ar-method b{color:var(--black);}
+.ar-tg{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin:20px 0 0;padding:16px 20px;border-radius:14px;border:1px solid var(--grey-100);font-size:15px;color:var(--grey-700);}
+.ar-tg a{display:inline-flex;align-items:center;padding:10px 18px;border-radius:10px;background:var(--black);color:var(--white);font-weight:600;font-size:14px;text-decoration:none;}
+.ar-tg a:hover{background:var(--mustard);color:var(--black);}
+
 @media (max-width:860px){
   .ar-rel-grid{grid-template-columns:1fr;}
+  .ar-kf{grid-template-columns:1fr 1fr;gap:10px;}
+  .ar-kf-item{padding:16px 14px 14px;}
   .ar-hero{padding:110px 0 40px;}
   .ar-text{font-size:16px;}
   .ar-cta{padding:26px 22px;}

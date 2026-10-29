@@ -121,6 +121,26 @@
       "permanent": true
     },
     {
+      "source": "/analytics",
+      "destination": "/analytics.html",
+      "permanent": true
+    },
+    {
+      "source": "/analytics/en",
+      "destination": "/analytics-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/analytics/uz",
+      "destination": "/analytics-uz.html",
+      "permanent": true
+    },
+    {
+      "source": "/insights",
+      "destination": "/analytics-en.html",
+      "permanent": true
+    },
+    {
       "source": "/resources",
       "destination": "/resources.html",
       "permanent": true
