@@ -1049,7 +1049,7 @@ function mapDbMaterial(r){
   const vid = (r.media_type==='video') ? (r.media_url||null) : null;
   return { id:r.id, group:r.translation_of||r.id, lang:r.lang||'ru', cat:r.cat||'article', date:(r.created_at||'').slice(0,10),
     title:r.title||'', desc:r.description||'', body:r.body||'',
-    image:img, video:vid, disabled:!r.published };
+    image:img, video:vid, disabled:!r.published, aud:r.audience||'' };
 }
 async function loadMaterials(){
   if(!sbMat) return [];
@@ -1160,7 +1160,9 @@ const grid=document.getElementById('rsGrid'), empty=document.getElementById('rsE
   searchEl=document.getElementById('rsSearch'), chipsEl=document.getElementById('rsChips'),
   totalEl=document.getElementById('rsTotal'), shownEl=document.getElementById('rsShown'),
   modal=document.getElementById('rsModal'), modalBody=document.getElementById('rsModalBody');
-let ALL=[], activeCat=I18N.all, query='', uid=1000;
+// вкладки «для кого» (site_materials.audience); пусто = «Все»
+const AUD = {"employers":"Ish beruvchilarga","recruiters":"Rekruterlar va HR uchun","candidates":"Nomzodlarga"};
+let ALL=[], activeAud='', query='', uid=1000;
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 // адрес статьи /articles/<slug> – та же функция в api/_lib.js (articleSlug), менять синхронно
@@ -1283,23 +1285,27 @@ function pushCRM(action, item){
 
 function applyFilters(){ const q=query.trim().toLowerCase();
   return ALL.filter(m=>{ if(!document.body.classList.contains('admin') && m.disabled) return false;
-    if(activeCat!==I18N.all && (I18N.cat[m.cat]||m.cat)!==activeCat) return false; if(!q) return true;
+    if(activeAud && m.aud!==activeAud) return false; if(!q) return true;
     const hay=[m.title,m.desc,m.body,(I18N.cat[m.cat]||'')].join(' ').toLowerCase(); return hay.includes(q); }); }
 function render(){ const list=applyFilters(); grid.innerHTML=list.map(cardHTML).join('');
   empty.style.display=list.length?'none':'block';
   const visibleTotal = document.body.classList.contains('admin') ? ALL.length : ALL.filter(m=>!m.disabled).length;
   shownEl.innerHTML=I18N.shown.replace('{n}',list.length).replace('{m}',visibleTotal);
   totalEl.textContent=I18N.total.replace('{n}',visibleTotal); }
-function buildChips(){ const cats=[I18N.all, ...Object.values(I18N.cat)];
-  chipsEl.innerHTML=cats.map(c=>'<button class="rs-chip'+(c===activeCat?' active':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</button>').join('');
-  chipsEl.querySelectorAll('.rs-chip').forEach(ch=>ch.addEventListener('click',()=>{ activeCat=ch.dataset.cat;
-    chipsEl.querySelectorAll('.rs-chip').forEach(x=>x.classList.toggle('active',x===ch)); render(); })); }
+function buildChips(){ const keys=[''].concat(Object.keys(AUD).filter(k=>ALL.some(m=>m.aud===k&&!m.disabled)));
+  if(activeAud && !keys.includes(activeAud)) activeAud='';
+  chipsEl.innerHTML=keys.map(k=>'<button class="rs-chip'+(k===activeAud?' active':'')+'" data-aud="'+k+'">'+esc(k?AUD[k]:I18N.all)+'</button>').join('');
+  chipsEl.querySelectorAll('.rs-chip').forEach(ch=>ch.addEventListener('click',()=>{ activeAud=ch.dataset.aud;
+    chipsEl.querySelectorAll('.rs-chip').forEach(x=>x.classList.toggle('active',x===ch));
+    // вкладка в адресе (?for=employers) – ссылкой на подборку можно делиться
+    const p=new URLSearchParams(location.search); if(activeAud) p.set('for',activeAud); else p.delete('for');
+    history.replaceState(null,'',location.pathname+(p.toString()?'?'+p:'')+location.hash); render(); })); }
 searchEl.addEventListener('input',e=>{ query=e.target.value; render(); });
 
 // view-only: материалы публикуются через админку (admin.html)
 
 (async function init(){ grid.innerHTML=Array(10).fill('<div class="tp-skel" style="height:300px"></div>').join('');
-  ALL=await loadMaterials(); buildChips(); render(); })();
+  ALL=await loadMaterials(); activeAud=new URLSearchParams(location.search).get('for')||''; buildChips(); render(); })();
 
 try{ const d=document.getElementById('recLottieData'), el=document.getElementById('recLottie');
   if(d&&el&&window.lottie){ lottie.loadAnimation({container:el,renderer:'svg',loop:true,autoplay:true,path:d.dataset.src}); } }catch(e){ console.error(e); }
