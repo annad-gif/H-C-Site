@@ -353,6 +353,7 @@ module.exports = async function handler(req, res) {
   if (!m) {
     res.statusCode = 404;
     res.setHeader("Cache-Control", "public, s-maxage=60");
+    res.setHeader("Vercel-Cache-Tag", "materials");
     return res.end(notFoundPage());
   }
   if (slug !== articleSlug(m)) {
@@ -360,9 +361,11 @@ module.exports = async function handler(req, res) {
     res.statusCode = 301;
     res.setHeader("Location", articlePath(m));
     res.setHeader("Cache-Control", "public, s-maxage=300");
+    res.setHeader("Vercel-Cache-Tag", "materials");
     return res.end();
   }
   res.statusCode = 200;
   res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
+  res.setHeader("Vercel-Cache-Tag", "materials"); // сброс при сохранении в админке – api/revalidate.js
   return res.end(articlePage(all, m));
 };

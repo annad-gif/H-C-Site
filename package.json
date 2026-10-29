@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "humancapital.uz – статический сайт + функции api/ на Vercel. Зависимости нужны только функциям.",
+  "dependencies": {
+    "@vercel/functions": "3.10.1"
+  }
+}

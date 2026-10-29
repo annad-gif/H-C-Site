@@ -1697,6 +1697,18 @@ function openModal(){ document.getElementById('admModal').classList.add('open');
 function closeModal(){ document.getElementById('admModal').classList.remove('open'); document.body.style.overflow=''; }
 function val(id){ const el=document.getElementById(id); return el?el.value.trim():''; }
 
+/* Сброс кэша сайта после правки материала (api/revalidate.js): списки и статьи обновляются сразу, а не через ~5 минут.
+   Затем «прогреваем» список, чтобы первый посетитель не ждал сборки. Ошибка сброса не мешает сохранению. */
+async function refreshSiteCache(){
+  try{
+    const s=await sb.auth.getSession(); const token=s&&s.data&&s.data.session&&s.data.session.access_token;
+    if(!token) return;
+    const r=await fetch('/api/revalidate',{method:'POST',headers:{Authorization:'Bearer '+token}});
+    if(!r.ok) throw new Error('revalidate '+r.status);
+    fetch('/api/materials').catch(()=>{});
+  }catch(e){ console.warn('Кэш сайта не сброшен, изменения появятся в течение ~5 минут:', e); }
+}
+
 /* ===== Реальное сохранение в Supabase ===== */
 async function pushCRM(action,item){
   try{
@@ -1738,6 +1750,7 @@ async function pushCRM(action,item){
       await loadAllData(); go('candidates'); return;
     }
     // customer.*, leads.*, apps.*, seo.tool, seo.check – демонстрационные разделы (для них нет таблиц), не сохраняются
+    if(/^materials?\./.test(action)) refreshSiteCache();
   }catch(e){ console.error('save',action,e); toast('Ошибка сохранения: '+(e.message||e)); await loadAllData(); }
 }
 </script>

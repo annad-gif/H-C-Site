@@ -29,6 +29,7 @@ module.exports = async function handler(req, res) {
       audience: m.audience || null, text: plain(m.body),
     }));
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
+    res.setHeader("Vercel-Cache-Tag", "materials"); // сброс – api/revalidate.js
     res.statusCode = 200;
     return res.end(JSON.stringify(list));
   } catch (e) {

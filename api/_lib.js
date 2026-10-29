@@ -26,7 +26,8 @@ function vacancyPath(v) { return "/vacancies/" + vacancySlug(v); }
 // --- загрузка материалов (кэш на время жизни инстанса функции) ---
 let cache = { at: 0, data: null };
 async function loadMaterials() {
-  if (cache.data && Date.now() - cache.at < 60 * 1000) return cache.data;
+  // 5 с, не больше: после сброса кэша CDN (api/revalidate.js) тёплый инстанс не должен отдавать старое
+  if (cache.data && Date.now() - cache.at < 5 * 1000) return cache.data;
   const url = SB_URL + "/rest/v1/site_materials?select=*&published=eq.true&order=sort.asc,created_at.desc";
   const r = await fetch(url, { headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY } });
   if (!r.ok) throw new Error("site_materials " + r.status + ": " + (await r.text()).slice(0, 200));
