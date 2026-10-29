@@ -1077,8 +1077,6 @@
 const PAGE_LANG = "uz";
 const T = {"feat": "Asosiy sharh", "feat_a": "Sharhni o‘qish →", "all": "Barchasi", "all_ind": "Barcha sohalar", "shown": "<b>{n}</b> / {m} ko‘rsatilmoqda", "empty_none": "Birinchi sharhlar tez orada shu yerda paydo bo‘ladi.", "empty_filter": "Tanlangan filtrlar bo‘yicha hozircha materiallar yo‘q.", "locale": "uz-Latn-UZ"};
 const TAX = {"rubrics": {"salary": {"ru": "Зарплатный обзор", "en": "Salary review", "uz": "Maosh sharhi"}, "pulse": {"ru": "Пульс рынка", "en": "Market pulse", "uz": "Bozor pulsi"}, "case": {"ru": "Кейсы", "en": "Case studies", "uz": "Keyslar"}, "regulation": {"ru": "HR-регулирование", "en": "HR regulation", "uz": "HR qonunchiligi"}, "annual": {"ru": "Годовой отчёт", "en": "Annual report", "uz": "Yillik hisobot"}}, "industries": {"general": {"ru": "Все отрасли", "en": "All industries", "uz": "Barcha sohalar"}, "it": {"ru": "IT", "en": "IT", "uz": "IT"}, "finance": {"ru": "Финансы и банки", "en": "Finance & banking", "uz": "Moliya va banklar"}, "retail": {"ru": "Ритейл и FMCG", "en": "Retail & FMCG", "uz": "Chakana savdo va FMCG"}, "manufacturing": {"ru": "Производство", "en": "Manufacturing", "uz": "Ishlab chiqarish"}, "construction": {"ru": "Строительство и девелопмент", "en": "Construction & real estate", "uz": "Qurilish va ko‘chmas mulk"}, "logistics": {"ru": "Логистика", "en": "Logistics", "uz": "Logistika"}, "pharma": {"ru": "Фарма и медицина", "en": "Pharma & healthcare", "uz": "Farmatsevtika va tibbiyot"}, "telecom": {"ru": "Телеком", "en": "Telecom", "uz": "Telekom"}, "horeca": {"ru": "HoReCa", "en": "HoReCa", "uz": "HoReCa"}, "energy": {"ru": "Энергетика и горнодобыча", "en": "Energy & mining", "uz": "Energetika va kon sanoati"}, "services": {"ru": "B2B-услуги", "en": "B2B services", "uz": "B2B xizmatlar"}, "public": {"ru": "Госсектор и международные организации", "en": "Public sector & NGOs", "uz": "Davlat sektori va xalqaro tashkilotlar"}}, "telegram": "", "authors": {"akmal": {"name": {"ru": "Акмаль Саипов", "en": "Akmal Saipov", "uz": "Akmal Saipov"}}, "anna": {"name": {"ru": "Анна Джу", "en": "Anna Ju", "uz": "Anna Ju"}}, "team": {"name": {"ru": "Аналитика Human and Capital", "en": "Human and Capital Research", "uz": "Human and Capital tahlili"}}}};
-const SB_URL = 'https://byerqfuuprmmykncjqms.supabase.co';
-const SB_KEY = 'sb_publishable_JBo7zlA02IyeaJLuTdZX5A_YEatYU6_';
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function lbl(o){ return o ? (o[PAGE_LANG] || o.ru) : ''; }
 // адрес статьи /articles/<slug> – та же функция в api/_lib.js (articleSlug), менять синхронно
@@ -1101,9 +1099,9 @@ const grid=document.getElementById('anGrid'), chipsEl=document.getElementById('a
 let ALL=[], rubric='', industry='';
 
 async function load(){
-  const r=await fetch(SB_URL+'/rest/v1/site_materials?select=*&published=eq.true&order=sort.asc,created_at.desc',
-    {headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_KEY}});
-  if(!r.ok) throw new Error('site_materials '+r.status);
+  // лёгкий список с CDN сайта (api/materials.js) – без полного HTML статей
+  const r=await fetch('/api/materials');
+  if(!r.ok) throw new Error('materials '+r.status);
   const rows=(await r.json()).filter(m=>TAX.rubrics[m.rubric]);
   // из языковых версий одного материала – на языке страницы, иначе оригинал (как в resources.html)
   const pick={}, score=x=>x.lang===PAGE_LANG?0:(x.translation_of?2:1);

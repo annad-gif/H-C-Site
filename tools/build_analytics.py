@@ -150,8 +150,6 @@ JS = r"""
 const PAGE_LANG = %(lang)s;
 const T = %(t)s;
 const TAX = %(tax)s;
-const SB_URL = 'https://byerqfuuprmmykncjqms.supabase.co';
-const SB_KEY = 'sb_publishable_JBo7zlA02IyeaJLuTdZX5A_YEatYU6_';
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function lbl(o){ return o ? (o[PAGE_LANG] || o.ru) : ''; }
 // адрес статьи /articles/<slug> – та же функция в api/_lib.js (articleSlug), менять синхронно
@@ -174,9 +172,9 @@ const grid=document.getElementById('anGrid'), chipsEl=document.getElementById('a
 let ALL=[], rubric='', industry='';
 
 async function load(){
-  const r=await fetch(SB_URL+'/rest/v1/site_materials?select=*&published=eq.true&order=sort.asc,created_at.desc',
-    {headers:{apikey:SB_KEY, Authorization:'Bearer '+SB_KEY}});
-  if(!r.ok) throw new Error('site_materials '+r.status);
+  // лёгкий список с CDN сайта (api/materials.js) – без полного HTML статей
+  const r=await fetch('/api/materials');
+  if(!r.ok) throw new Error('materials '+r.status);
   const rows=(await r.json()).filter(m=>TAX.rubrics[m.rubric]);
   // из языковых версий одного материала – на языке страницы, иначе оригинал (как в resources.html)
   const pick={}, score=x=>x.lang===PAGE_LANG?0:(x.translation_of?2:1);
