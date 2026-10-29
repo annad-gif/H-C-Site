@@ -1422,8 +1422,9 @@ function matAnalyticsHTML(m){
     + fg('Методология (источник данных и метод)', ta('mMethod', v('methodology'), 'Ожидания по зарплате кандидатов, откликнувшихся на вакансии Human and Capital на hh.uz…', 60))
     + fg('Период', inp('mPeriod', v('period'), 'октябрь – ноябрь 2026'))
     + fg('Выборка', inp('mSample', v('sample_size'), 'n = 312 кандидатов'))
-    + fg('Призыв в конце статьи', '<select id="mCta"><option value="">Обсудить найм (по умолчанию)</option><option value="subscribe"'+(v('cta')==='subscribe'?' selected':'')+'>Подписаться на Telegram-канал</option><option value="download"'+(v('cta')==='download'?' selected':'')+'>Скачать отчёт (форма)</option></select>')
-    + fg('PDF для скачивания (ссылка; нужна для «Скачать отчёт»)', inp('mPdf', v('gated_pdf_url'), 'https://humancapital.uz/reports/slug-x7k2m9.pdf'))
+    + fg('Призыв в конце статьи', '<select id="mCta"><option value="">Обсудить найм (по умолчанию)</option><option value="subscribe"'+(v('cta')==='subscribe'?' selected':'')+'>Подписаться на Telegram-канал</option><option value="download"'+(v('cta')==='download'?' selected':'')+'>Запросить отчёт (форма, PDF присылает менеджер)</option></select>')
+    + fg('PDF отчёта для менеджера (необязательно; на сайте не показывается)', inp('mPdf', v('gated_pdf_url'), 'Ссылка на файл с доступом только для сотрудников, напр. Google Drive'))
+    + '<p class="msub" style="margin-top:-6px">Заявки с формы приходят в Staffly как «Запрос отчёта (PDF)» – менеджер отправляет файл на почту. Поле читается через открытый API сайта: не указывайте здесь публичную ссылку на PDF.</p>'
     + fg('SEO title <span class="mat-cnt" id="mSeoTC"></span>', inp('mSeoT', v('seo_title'), 'По умолчанию – заголовок материала; до 60 символов'))
     + fg('SEO description <span class="mat-cnt" id="mSeoDC"></span>', ta('mSeoD', v('seo_description'), 'По умолчанию – начало текста; до 160 символов', 50))
     + fg('OG-картинка для соцсетей (URL)', inp('mOg', v('og_image'), 'По умолчанию – обложка'))
@@ -1510,10 +1511,6 @@ function wireMatEditor(){
     const an=matAnalyticsData();
     if(an.rubric && AN_STRICT.includes(an.rubric) && !(an.methodology && an.period && an.sample_size)){
       toast('Для рубрики «'+TAXONOMY.rubrics[an.rubric]+'» заполните методологию, период и выборку.'); return; }
-    // «Скачать отчёт» без PDF статья показала бы форму, после которой нечего скачать
-    if(an.cta==='download' && !/^(https:\/\/|\/)\S+$/.test(an.gated_pdf_url||'')){
-      const d=document.querySelector('.mat-an'); if(d) d.open=true; const f=document.getElementById('mPdf'); if(f) f.focus();
-      toast('Для призыва «Скачать отчёт» укажите ссылку на PDF (https://… или /reports/…).'); return; }
     const data=Object.assign({ cat:val('mCat'), lang:val('mLang')||'ru', title:val('mTitle'), desc:val('mDesc'), body:body, media_url:_matCover.url||'', media_type:_matCover.url?(_matCover.type||'image'):'',
       translation_of:val('mTr'), audience:val('mAud') }, an);
     if(id){ const x=MAT.find(o=>o.id===id); Object.assign(x,data); pushCRM('material.update',x); toast('Материал сохранён.'); }

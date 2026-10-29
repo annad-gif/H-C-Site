@@ -28,10 +28,10 @@ const L10N = {
           download: ["Получите обзор по вашей отрасли", "Подготовим срез зарплат и сроков найма по вашей отрасли и позициям.", "Получить обзор →"],
           subscribe: ["Новые обзоры – раз в месяц", "Подпишитесь на канал аналитики Human and Capital в Telegram.", "Подписаться →"] },
         tg: ["Аналитика рынка труда Узбекистана – в нашем Telegram-канале", "Подписаться"],
-        rf: { h: "Полная версия отчёта – в PDF", p: "Подробные таблицы по всем срезам и выводы для работодателя. Заполните форму – PDF откроется сразу.",
+        rf: { h: "Полная версия отчёта – в PDF", p: "Подробные таблицы по всем срезам и выводы для работодателя. Оставьте контакты – пришлём отчёт на почту.",
               name: "Имя", company: "Компания", role: "Должность", email: "Рабочий email", phone: "Телефон",
-              opt: "необязательно", phoneHint: "для приглашения на презентацию отчёта", send: "Получить отчёт →",
-              done: "Спасибо! Отчёт готов.", doneP: "Ссылка работает и при следующих визитах с этого устройства.", dl: "Скачать PDF" } },
+              opt: "необязательно", phoneHint: "для приглашения на презентацию отчёта", send: "Запросить отчёт →",
+              done: "Спасибо! Запрос принят.", doneP: "Пришлём отчёт на почту в течение рабочего дня, менеджер свяжется с вами." } },
   en: { locale: "en-GB", og: "en_US", home: "Home", homeUrl: "/index-en.html", res: "Resources", resUrl: "/resources-en.html",
         cat: { article: "Article", news: "News", video: "Video", photo: "Photo" },
         ctaH: "Need help hiring in Uzbekistan?",
@@ -44,10 +44,10 @@ const L10N = {
           download: ["Get a review for your industry", "We will prepare salary and time-to-hire benchmarks for your industry and roles.", "Get the review →"],
           subscribe: ["New reviews every month", "Follow Human and Capital insights on Telegram.", "Subscribe →"] },
         tg: ["Uzbekistan labour market insights – on our Telegram channel", "Subscribe"],
-        rf: { h: "Get the full report (PDF)", p: "Detailed tables for every breakdown and takeaways for employers. Fill in the form and the PDF opens right away.",
+        rf: { h: "Get the full report (PDF)", p: "Detailed tables for every breakdown and takeaways for employers. Leave your contacts and we will email you the report.",
               name: "Name", company: "Company", role: "Job title", email: "Work email", phone: "Phone",
-              opt: "optional", phoneHint: "to invite you to the report presentation", send: "Get the report →",
-              done: "Thank you! Your report is ready.", doneP: "The link will also work on your next visits from this device.", dl: "Download PDF" } },
+              opt: "optional", phoneHint: "to invite you to the report presentation", send: "Request the report →",
+              done: "Thank you! Your request has been received.", doneP: "We will email you the report within one business day, and our manager will get in touch." } },
   uz: { locale: "uz-Latn-UZ", og: "uz_UZ", home: "Bosh sahifa", homeUrl: "/index-uz.html", res: "Foydali materiallar", resUrl: "/resources-uz.html",
         cat: { article: "Maqola", news: "Yangilik", video: "Video", photo: "Foto" },
         ctaH: "Xodim tanlashda yordam kerakmi?",
@@ -60,10 +60,10 @@ const L10N = {
           download: ["Sohangiz bo‘yicha sharh oling", "Sohangiz va lavozimlaringiz bo‘yicha maoshlar va yollash muddatlari kesimini tayyorlaymiz.", "Sharhni olish →"],
           subscribe: ["Yangi sharhlar – har oy", "Human and Capital tahlil kanaliga Telegramda obuna bo‘ling.", "Obuna bo‘lish →"] },
         tg: ["O‘zbekiston mehnat bozori tahlili – Telegram kanalimizda", "Obuna bo‘lish"],
-        rf: { h: "Hisobotning to‘liq versiyasi – PDF", p: "Barcha kesimlar bo‘yicha batafsil jadvallar va ish beruvchi uchun xulosalar. Formani to‘ldiring – PDF darhol ochiladi.",
+        rf: { h: "Hisobotning to‘liq versiyasi – PDF", p: "Barcha kesimlar bo‘yicha batafsil jadvallar va ish beruvchi uchun xulosalar. Kontaktlaringizni qoldiring – hisobotni pochtangizga yuboramiz.",
               name: "Ism", company: "Kompaniya", role: "Lavozim", email: "Ish email", phone: "Telefon",
-              opt: "ixtiyoriy", phoneHint: "hisobot taqdimotiga taklif qilish uchun", send: "Hisobotni olish →",
-              done: "Rahmat! Hisobot tayyor.", doneP: "Havola shu qurilmadan keyingi tashriflarda ham ishlaydi.", dl: "PDF yuklab olish" } },
+              opt: "ixtiyoriy", phoneHint: "hisobot taqdimotiga taklif qilish uchun", send: "Hisobotni so‘rash →",
+              done: "Rahmat! So‘rovingiz qabul qilindi.", doneP: "Hisobotni bir ish kuni ichida pochtangizga yuboramiz, menejerimiz siz bilan bog‘lanadi." } },
 };
 function langOf(m) { return L10N[m && m.lang] ? m.lang : "ru"; }
 const CAT = L10N.ru.cat;
@@ -109,30 +109,28 @@ function methodHTML(m, L) {
   if (!rows.length) return "";
   return '<aside class="ar-method">' + rows.map(r => "<p><b>" + esc(r[0]) + ".</b> " + esc(String(r[1]).trim()) + "</p>").join("") + "</aside>";
 }
-// Форма скачивания отчёта (ТЗ §4): cta = 'download' и задан gated_pdf_url.
-// Отправку, согласие на ПДн, honeypot и показ кнопки «Скачать PDF» делает hc-crm.js (initReport).
-function reportPdf(m) { return m && m.cta === "download" ? safeUrl(m.gated_pdf_url) : null; }
+// Форма запроса отчёта (ТЗ §4, с 30.10.2026 – PDF только по запросу): cta = 'download'.
+// PDF на сайте не публикуется: менеджер отправляет его на почту из CRM (gated_pdf_url – внутренняя ссылка
+// для админки, в HTML не выводится). Отправку, согласие на ПДн и honeypot делает hc-crm.js (initReport).
 function reportHTML(m, L) {
-  const R = L.rf, pdf = reportPdf(m);
+  const R = L.rf;
   // opt – необязательное поле: [пометка, подсказка под полем]
   const field = (id, label, type, auto, opt) => '<label class="ar-rf-f" for="' + id + '"><span>' + esc(label)
     + (opt ? " <i>(" + esc(opt[0]) + ")</i>" : "") + '</span><input id="' + id + '" type="' + type + '" autocomplete="' + auto + '"'
     + (opt ? "" : " required") + ' maxlength="' + (type === "tel" ? 40 : 200) + '"/>' + (opt ? "<small>" + esc(opt[1]) + "</small>" : "") + "</label>";
   return '<aside class="ar-cta ar-report" id="report"><div class="ar-rf-head"><h2>' + esc(R.h) + "</h2><p>" + esc(R.p) + "</p></div>"
     + '<form class="ar-rf" id="hcReportForm" method="post" action="#report" novalidate data-id="' + esc(m.id) + '" data-report="' + esc(m.title)
-    + '" data-rubric="' + esc(rubricOf(m) || "") + '" data-pdf="' + esc(pdf) + '"><div class="ar-rf-grid">'
+    + '" data-rubric="' + esc(rubricOf(m) || "") + '"><div class="ar-rf-grid">'
     + field("rfName", R.name, "text", "name") + field("rfCompany", R.company, "text", "organization")
     + field("rfRole", R.role, "text", "organization-title") + field("rfEmail", R.email, "email", "email")
     + field("rfPhone", R.phone, "tel", "tel", [R.opt, R.phoneHint])
     + '</div><button type="submit">' + esc(R.send) + "</button></form>"
-    + '<div class="ar-rf-done" hidden><div><b>' + esc(R.done) + "</b><p>" + esc(R.doneP) + "</p></div>"
-    + '<a href="' + esc(pdf) + '" target="_blank" rel="noopener">' + esc(R.dl) + "</a></div></aside>"
+    + '<div class="ar-rf-done" hidden role="status"><div><b>' + esc(R.done) + "</b><p>" + esc(R.doneP) + "</p></div></div></aside>"
     + '<script src="/hc-crm.js" defer></script>';
 }
 // CTA в конце статьи. Обычный материал — как раньше; аналитика — по полю cta.
-// download без PDF ведёт на форму заявки.
 function ctaHTML(m, L) {
-  if (reportPdf(m)) return reportHTML(m, L);
+  if (m && m.cta === "download") return reportHTML(m, L);
   let h = L.ctaH, p = L.ctaP, a = L.ctaA, url = L.ctaUrl, ext = false;
   if (rubricOf(m)) {
     let kind = L.cta[m.cta] ? m.cta : "consult";

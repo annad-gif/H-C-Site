@@ -3,8 +3,10 @@
 Данные – агрегаты из tools/reports/it-salaries-2026-autumn.json (выгрузка из ATS, без ПДн).
 Сборка: HTML (A4, шрифты Unbounded/Inter как на сайте) → PDF через headless Chrome:
     python3 tools/build_report.py
-PDF кладётся в reports/ по неугадываемому пути (ТЗ раздела «Аналитика», §4.3 – «мягкий» гейт);
-ссылку на него ставят у статьи в админке: «PDF для скачивания» + призыв «Скачать отчёт (форма)».
+PDF НЕ публикуется на сайте (решение 30.10.2026: отчёт только по запросу – форма в статье создаёт
+в Staffly сделку «Запрос отчёта (PDF)», менеджер отправляет файл на почту). Поэтому PDF пишется
+вне репозитория – по умолчанию в ~/Downloads, путь можно передать аргументом:
+    python3 tools/build_report.py ~/Desktop/report.pdf
 HTML для проверки вёрстки остаётся рядом с PDF во временной папке (путь печатается).
 
 Правила данных: срезы n < 30 не показываем; медианы и квантили; суммы – ожидания кандидатов на руки;
@@ -19,7 +21,8 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = json.load(open(os.path.join(ROOT, "tools", "reports", "it-salaries-2026-autumn.json"), encoding="utf-8"))
-OUT = os.path.join(ROOT, "reports", "zarplaty-v-it-osen-2026-2lobnxke0g.pdf")
+OUT = os.path.abspath(os.path.expanduser(sys.argv[1] if len(sys.argv) > 1 else
+                                          "~/Downloads/Зарплаты в IT в Узбекистане – осень 2026 (Human and Capital).pdf"))
 ARTICLE = "https://humancapital.uz/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 MIN_N = 30
@@ -446,4 +449,4 @@ subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-foot
                 "--virtual-time-budget=15000", "--print-to-pdf=" + OUT, "file://" + src],
                check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 print("html:", src)
-print("pdf: ", os.path.relpath(OUT, ROOT), f"({os.path.getsize(OUT) // 1024} КБ)")
+print("pdf: ", OUT, f"({os.path.getsize(OUT) // 1024} КБ)")

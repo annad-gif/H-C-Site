@@ -139,9 +139,10 @@
     } catch (e) { console.error("submitLead", e); toast(L.fail, false); return { ok: false, reason: "fail" }; }
   }
 
-  // === СКАЧИВАНИЕ ОТЧЁТА → Staffly (ТЗ раздела «Аналитика», §4) ===
+  // === ЗАПРОС ОТЧЁТА → Staffly (ТЗ раздела «Аналитика», §4) ===
   // Форма #hcReportForm – в статье с cta = 'download' (api/article.js → reportHTML).
-  // После отправки форма сменяется кнопкой «Скачать PDF»; на этом устройстве – сразу кнопка (localStorage).
+  // PDF только по запросу: на сайте его нет, менеджер получает сделку «Запрос отчёта (PDF): …»,
+  // отправляет отчёт на почту и связывается. После отправки форма сменяется благодарностью.
   var REPORT_MSG = {
     ru: { name: "Укажите имя", company: "Укажите компанию", role: "Укажите должность", email: "Укажите email",
       email_bad: "Проверьте email – похоже, в нём опечатка", too_long: "Слишком длинный текст в одном из полей",
@@ -167,7 +168,6 @@
     var parts = Object.keys(utm).map(function (k) { return k + "=" + utm[k]; });
     return parts.length ? " | " + parts.join(", ") : "";
   }
-  function reportKey(form) { return "hc_report:" + (form.dataset.id || form.dataset.pdf || ""); }
   function reportDone(form) {
     var box = form.parentNode.querySelector(".ar-rf-done");
     if (!box) return;
@@ -199,12 +199,12 @@
       var c = await sb();
       var r = await c.staffly.rpc("submit_lead", {
         p_name: name, p_email: email, p_phone: phone || null,
-        p_message: "Компания: " + company + "\nДолжность: " + role + "\nОтчёт: " + title, p_service: null,
-        p_source: "Отчёт: " + title + " | " + location.pathname + utmSuffix(), p_locale: locale(), p_consent: true
+        p_message: "ЗАПРОС ОТЧЁТА (PDF): «" + title + "»\nЧто сделать: отправить PDF на email клиента в течение рабочего дня и связаться"
+          + "\nКомпания: " + company + "\nДолжность: " + role, p_service: null,
+        p_source: "Запрос отчёта (PDF): " + title + " | " + location.pathname + utmSuffix(), p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
-      try { localStorage.setItem(reportKey(form), "1"); } catch (e) {}
-      goal("report_download", { report: title, rubric: form.dataset.rubric || "" });
+      goal("report_request", { report: title, rubric: form.dataset.rubric || "" });
       reportDone(form);
       return { ok: true };
     } catch (e) {
@@ -217,9 +217,6 @@
   }
   async function submitReport(form) { var r = await reportAttempt(form); report("report", r); return r; }
   function initReport(form) {
-    var seen = false;
-    try { seen = localStorage.getItem(reportKey(form)) === "1"; } catch (e) {}
-    if (seen) { reportDone(form); return; }
     injectConsent(form, "hcReportConsent");
     honeypot(form);
     form.addEventListener("submit", function (ev) { ev.preventDefault(); submitReport(form); });

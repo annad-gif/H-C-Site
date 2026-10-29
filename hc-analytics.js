@@ -10,7 +10,7 @@
      vacancy_apply_dup – повторный отклик (этот email уже откликался на вакансию)
      form_error     – попытка отправки не прошла; form: contact / vacancy / general / report;
                       reason: consent / name / contact / company / role / email / email_bad / file_* / closed / network / fail
-     report_download – отправлена форма скачивания отчёта (hc-crm.js → submitReport); report, rubric
+     report_request – отправлен запрос PDF-отчёта (hc-crm.js → submitReport); report, rubric
      click_phone / click_email / click_telegram / click_whatsapp – клики по контактам
 
    UTM: utm_* из адреса сохраняются в sessionStorage (hc_utm) – hc-crm.js добавляет их
