@@ -81,22 +81,27 @@ function keyFiguresHTML(m) {
   return '<div class="ar-kf">' + list.map(f => '<div class="ar-kf-item"><b>' + esc(String(f.value).trim()) + "</b>"
     + (f.label ? "<span>" + esc(String(f.label).trim()) + "</span>" : "") + "</div>").join("") + "</div>";
 }
-function authorOf(m) { return m && TAX.authors[m.author_key] ? TAX.authors[m.author_key] : null; }
+// author_key – один ключ или несколько через запятую («akmal,anna»), в порядке показа
+function authorsOf(m) {
+  return String((m && m.author_key) || "").split(",").map(k => k.trim())
+    .filter((k, i, all) => TAX.authors[k] && all.indexOf(k) === i).map(k => TAX.authors[k]);
+}
 function authorHTML(m, lang) {
-  const a = authorOf(m);
-  if (!a) return "";
-  const name = a.name[lang] || a.name.ru, role = a.role[lang] || a.role.ru;
-  const ext = /^https?:\/\//.test(a.url) && !a.url.startsWith(SITE);
-  return '<a class="ar-author" href="' + esc(a.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">"
-    + '<img src="' + esc(a.photo) + '" alt="' + esc(name) + '" width="44" height="44" loading="lazy"/>'
-    + "<span><b>" + esc(name) + "</b><i>" + esc(role) + "</i></span></a>";
+  return authorsOf(m).map(a => {
+    const name = a.name[lang] || a.name.ru, role = a.role[lang] || a.role.ru;
+    const ext = /^https?:\/\//.test(a.url) && !a.url.startsWith(SITE);
+    return '<a class="ar-author" href="' + esc(a.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">"
+      + '<img src="' + esc(a.photo) + '" alt="' + esc(name) + '" width="44" height="44" loading="lazy"/>'
+      + "<span><b>" + esc(name) + "</b><i>" + esc(role) + "</i></span></a>";
+  }).join("");
 }
 function authorLD(m, lang) {
-  const a = authorOf(m);
-  if (!a) return { "@type": "Organization", name: "Human and Capital", url: SITE + "/" };
-  if (a.type !== "Person") return { "@type": "Organization", name: a.name[lang] || a.name.ru, url: SITE + "/" };
-  return { "@type": "Person", name: a.name[lang] || a.name.ru, jobTitle: a.role[lang] || a.role.ru, sameAs: [a.url],
-    worksFor: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital" } };
+  const list = authorsOf(m).map(a => a.type !== "Person"
+    ? { "@type": "Organization", name: a.name[lang] || a.name.ru, url: SITE + "/" }
+    : { "@type": "Person", name: a.name[lang] || a.name.ru, jobTitle: a.role[lang] || a.role.ru, sameAs: [a.url],
+        worksFor: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital" } });
+  if (!list.length) return { "@type": "Organization", name: "Human and Capital", url: SITE + "/" };
+  return list.length === 1 ? list[0] : list;
 }
 function methodHTML(m, L) {
   const rows = [[L.method, m.methodology], [L.period, m.period], [L.sample, m.sample_size]]

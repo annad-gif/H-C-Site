@@ -1409,6 +1409,7 @@ function matAnalyticsHTML(m){
   const v=k=>m?(m[k]||''):'';
   const opt=(obj,cur,empty)=>(empty!=null?'<option value="">'+empty+'</option>':'')+Object.keys(obj).map(k=>'<option value="'+k+'"'+(cur===k?' selected':'')+'>'+esc(obj[k])+'</option>').join('');
   const inds=(m&&m.industries)||[];
+  const auth=String(v('author_key')).split(',').map(x=>x.trim()).filter(Boolean); // «akmal,anna»
   const kf=(m&&m.key_figures)||[];
   let kfRows='';
   for(let i=0;i<5;i++){ const f=kf[i]||{}; kfRows+='<div class="mat-kf"><input type="text" id="mKfV'+i+'" value="'+esc(f.value||'')+'" placeholder="45 дней"><input type="text" id="mKfL'+i+'" value="'+esc(f.label||'')+'" placeholder="средний срок закрытия позиции руководителя"></div>'; }
@@ -1416,7 +1417,7 @@ function matAnalyticsHTML(m){
     +'<p class="msub">Материал с рубрикой появляется в разделе «Аналитика». Без рубрики – обычный «Полезный материал», поля ниже можно не заполнять.</p>'
     + fg('Рубрика', '<select id="mRubric">'+opt(TAXONOMY.rubrics, v('rubric'), '— нет (не аналитика) —')+'</select>')
     + fg('Отрасли', '<div class="mat-chk">'+Object.keys(TAXONOMY.industries).map(k=>'<label><input type="checkbox" class="mInd" value="'+k+'"'+(inds.includes(k)?' checked':'')+'>'+esc(TAXONOMY.industries[k])+'</label>').join('')+'</div>')
-    + fg('Автор', '<select id="mAuthor">'+opt(TAXONOMY.authors, v('author_key'), '— не указан —')+'</select>')
+    + fg('Авторы (можно несколько – в статье в этом порядке)', '<div class="mat-chk">'+Object.keys(TAXONOMY.authors).map(k=>'<label><input type="checkbox" class="mAuth" value="'+k+'"'+(auth.includes(k)?' checked':'')+'>'+esc(TAXONOMY.authors[k])+'</label>').join('')+'</div>')
     + '<div class="adm-fg"><label>Ключевые цифры (до 5: число и подпись; показываются сразу после лида)</label>'+kfRows+'</div>'
     + fg('Методология (источник данных и метод)', ta('mMethod', v('methodology'), 'Ожидания по зарплате кандидатов, откликнувшихся на вакансии Human and Capital на hh.uz…', 60))
     + fg('Период', inp('mPeriod', v('period'), 'октябрь – ноябрь 2026'))
@@ -1432,7 +1433,7 @@ function matAnalyticsData(){
   if(!MAT_ANALYTICS || !document.getElementById('mRubric')) return {};
   const kf=[]; for(let i=0;i<5;i++){ const a=val('mKfV'+i), b=val('mKfL'+i); if(a) kf.push({value:a,label:b}); }
   return { rubric:val('mRubric'), industries:Array.from(document.querySelectorAll('.mInd:checked')).map(x=>x.value),
-    author_key:val('mAuthor'), key_figures:kf, methodology:val('mMethod'), period:val('mPeriod'), sample_size:val('mSample'),
+    author_key:Array.from(document.querySelectorAll('.mAuth:checked')).map(x=>x.value).join(','), key_figures:kf, methodology:val('mMethod'), period:val('mPeriod'), sample_size:val('mSample'),
     cta:val('mCta'), gated_pdf_url:val('mPdf'), seo_title:val('mSeoT'), seo_description:val('mSeoD'), og_image:val('mOg') };
 }
 // поля для site_materials.insert/update (перевод – всегда; «Аналитика» – только после миграции)

@@ -164,7 +164,7 @@ const UZ_MONTHS=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','
 function fmtDate(iso){ if(PAGE_LANG==='uz'){ const d=new Date(new Date(iso).getTime()+5*3600000); if(!isNaN(d)) return d.getUTCDate()+'-'+UZ_MONTHS[d.getUTCMonth()]+', '+d.getUTCFullYear(); }
   try{ return new Intl.DateTimeFormat(T.locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Tashkent'}).format(new Date(iso)).replace(/\s*г\.$/,''); }catch(e){ return String(iso||'').slice(0,10); } }
 function imgOf(m){ return (m.media_type==='image'||m.media_type==='photo') && /^(https?:\/\/|\/)/.test(m.media_url||'') ? m.media_url : ''; }
-function authorName(m){ const a=TAX.authors[m.author_key]; return a ? lbl(a.name) : ''; }
+function authorName(m){ return String(m.author_key||'').split(',').map(k=>TAX.authors[k.trim()]).filter(Boolean).map(a=>lbl(a.name)).join(', '); }
 
 const grid=document.getElementById('anGrid'), chipsEl=document.getElementById('anChips'),
   indWrap=document.getElementById('anIndWrap'), indSel=document.getElementById('anInd'),
