@@ -28,6 +28,9 @@
 .ar-text strong,.ar-text b{color:var(--black);}
 .ar-text a{color:var(--mustard-dim);text-decoration:underline;}
 .ar-text img{max-width:100%;height:auto;border-radius:12px;display:block;margin:1.4em 0;}
+.ar-text figure{margin:1.8em 0;}
+.ar-text figure img{margin:0;border:1px solid var(--grey-100);}
+.ar-text figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--grey-500);}
 .ar-text blockquote{border-left:3px solid var(--mustard);padding:.4em 1.1em;margin:1.4em 0;background:var(--grey-50);border-radius:0 10px 10px 0;}
 
 .ar-cta{margin:48px 0 8px;padding:32px 34px;border-radius:20px;background:var(--black);color:var(--white);display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
@@ -64,10 +67,10 @@ a.ar-badge:hover{background:rgba(198,154,46,.28);}
 .ar-author b{font-size:15px;font-weight:600;}
 .ar-author i{font-style:normal;font-size:13px;color:var(--grey-300);}
 .ar-author:hover b{color:var(--mustard-light);}
-.ar-kf{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:0 0 36px;}
-.ar-kf-item{padding:20px 20px 18px;border-radius:16px;background:var(--grey-50);border:1px solid var(--grey-100);}
-.ar-kf-item b{display:block;font-family:var(--ff-display);font-weight:700;font-size:clamp(24px,3vw,32px);line-height:1.1;color:var(--mustard-dim);margin-bottom:8px;overflow-wrap:anywhere;}
-.ar-kf-item span{display:block;font-size:14px;line-height:1.45;color:var(--grey-700);}
+.ar-kf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:0 0 36px;}
+.ar-kf-item{padding:18px 16px 16px;border-radius:16px;background:var(--grey-50);border:1px solid var(--grey-100);}
+.ar-kf-item b{display:block;font-family:var(--ff-display);font-weight:700;font-size:clamp(19px,2.1vw,22px);line-height:1.15;color:var(--mustard-dim);margin-bottom:8px;white-space:nowrap;}
+.ar-kf-item span{display:block;font-size:13.5px;line-height:1.45;color:var(--grey-700);}
 .ar-method{margin:36px 0 0;padding:18px 22px;border-radius:14px;background:var(--grey-50);border:1px solid var(--grey-100);font-size:14px;line-height:1.6;color:var(--grey-700);}
 .ar-method p{margin:0;}
 .ar-method p + p{margin-top:6px;}
