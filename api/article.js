@@ -227,10 +227,11 @@ function relatedHTML(all, m) {
   const L = L10N[langOf(m)];
   const i = all.findIndex(x => x.id === m.id);
   const root = m.translation_of || m.id;
-  const others = all.slice(i + 1).concat(all.slice(0, i)).filter(x => (x.translation_of || x.id) !== root);
-  // сначала материалы на том же языке, внутри – того же типа
+  // только материалы на языке статьи; сначала той же рубрики (или того же типа)
+  const others = all.slice(i + 1).concat(all.slice(0, i))
+    .filter(x => (x.translation_of || x.id) !== root && langOf(x) === langOf(m));
   const rub = rubricOf(m);
-  const rank = x => (langOf(x) === langOf(m) ? 0 : 4) + (rub ? (rubricOf(x) === rub ? 0 : rubricOf(x) ? 1 : 2) : (x.cat === m.cat ? 0 : 1));
+  const rank = x => rub ? (rubricOf(x) === rub ? 0 : rubricOf(x) ? 1 : 2) : (x.cat === m.cat ? 0 : 1);
   const pick = others.map((x, k) => [x, k]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(a => a[0]).slice(0, 3);
   if (!pick.length) return "";
   return '<section class="ar-related"><div class="container"><h2>' + esc(L.related) + '</h2><div class="ar-rel-grid">'

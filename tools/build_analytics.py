@@ -40,7 +40,7 @@ T = {
         lead="Salaries, talent demand and time to hire – based on Human and Capital recruitment data and open statistics. Every piece states its methodology and sample size.",
         feat="Featured review", feat_a="Read the review →", all="All", all_ind="All industries", ind_label="Industry",
         shown="Showing <b>{n}</b> of {m}", count="Materials: {n}", loading="Loading…",
-        empty_none="The first reviews will appear here soon.", empty_filter="No materials for the selected filters yet.",
+        empty_none="English versions of our reviews are coming soon.", empty_filter="No materials for the selected filters yet.",
         tg="Follow on Telegram", read="Read",
         cta_h="Need data for your industry or role?",
         cta_p="We will prepare salary and time-to-hire benchmarks for your task and help you fill the role.",
@@ -53,7 +53,7 @@ T = {
         lead="Maoshlar, mutaxassislarga talab va yollash muddatlari – Human and Capital loyihalari va ochiq statistika asosida. Har bir materialda metodologiya va tanlov hajmi ko‘rsatiladi.",
         feat="Asosiy sharh", feat_a="Sharhni o‘qish →", all="Barchasi", all_ind="Barcha sohalar", ind_label="Soha",
         shown="<b>{n}</b> / {m} ko‘rsatilmoqda", count="Materiallar: {n}", loading="Yuklanmoqda…",
-        empty_none="Birinchi sharhlar tez orada shu yerda paydo bo‘ladi.", empty_filter="Tanlangan filtrlar bo‘yicha hozircha materiallar yo‘q.",
+        empty_none="Sharhlarning o‘zbekcha versiyalari tez orada paydo bo‘ladi.", empty_filter="Tanlangan filtrlar bo‘yicha hozircha materiallar yo‘q.",
         tg="Telegramda obuna bo‘lish", read="O‘qish",
         cta_h="Sohangiz yoki lavozimingiz bo‘yicha ma’lumot kerakmi?",
         cta_p="Vazifangiz uchun maoshlar va yollash muddatlari kesimini tayyorlaymiz va vakansiyani yopishga yordam beramiz.",
@@ -102,6 +102,7 @@ CSS = """
 .an-body h3{font-family:var(--ff-display);font-weight:600;font-size:17px;line-height:1.32;color:var(--black);}
 .an-body p{font-size:13.5px;line-height:1.55;color:var(--grey-700);}
 .an-empty{padding:48px 20px;text-align:center;color:var(--grey-500);font-size:15px;background:var(--white);border:1px dashed var(--grey-100);border-radius:18px;}
+.an-empty a{color:var(--mustard-dim);font-weight:600;white-space:nowrap;}
 .an-skel{height:300px;border-radius:18px;background:linear-gradient(90deg,#efefed,#f7f7f5,#efefed);background-size:200% 100%;animation:anSk 1.4s infinite;}
 @keyframes anSk{to{background-position:-200% 0;}}
 .an-cta{margin-top:48px;padding:32px 34px;border-radius:20px;background:var(--black);color:var(--white);display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
@@ -175,12 +176,8 @@ async function load(){
   // лёгкий список с CDN сайта (api/materials.js) – без полного HTML статей
   const r=await fetch('/api/materials');
   if(!r.ok) throw new Error('materials '+r.status);
-  const rows=(await r.json()).filter(m=>TAX.rubrics[m.rubric]);
-  // из языковых версий одного материала – на языке страницы, иначе оригинал (как в resources.html)
-  const pick={}, score=x=>x.lang===PAGE_LANG?0:(x.translation_of?2:1);
-  for(const m of rows){ const g=m.translation_of||m.id; if(!pick[g]||score(m)<score(pick[g])) pick[g]=m; }
-  return rows.filter(m=>pick[m.translation_of||m.id]===m)
-    .sort((a,b)=>(a.lang===PAGE_LANG?0:1)-(b.lang===PAGE_LANG?0:1));
+  // только материалы на языке страницы (как в resources.html): без перевода обзор здесь не показывается
+  return (await r.json()).filter(m=>TAX.rubrics[m.rubric]&&m.lang===PAGE_LANG);
 }
 
 function card(m){
@@ -217,11 +214,15 @@ function filters(){
   indWrap.hidden=!inds.length;
 }
 
+// пока переводов обзоров нет – ссылка на русскую версию раздела
+const RU_LINK={en:'Read the reviews in Russian →', uz:'Sharhlarni rus tilida o‘qish →'};
+
 function render(){
   // отраслевой фильтр: материал «для всех отраслей» (general или без отрасли) виден при любом выборе
   const list=ALL.filter(m=>(!rubric||m.rubric===rubric)
     &&(!industry||!(m.industries||[]).length||(m.industries||[]).includes(industry)||(m.industries||[]).includes('general')));
-  if(!ALL.length){ grid.innerHTML='<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_none)+'</div>'; shownEl.textContent=''; return; }
+  if(!ALL.length){ grid.innerHTML='<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_none)
+    +(RU_LINK[PAGE_LANG]?' <a href="analytics.html">'+esc(RU_LINK[PAGE_LANG])+'</a>':'')+'</div>'; shownEl.textContent=''; return; }
   grid.innerHTML=list.length?list.map(card).join(''):'<div class="an-empty" style="grid-column:1/-1">'+esc(T.empty_filter)+'</div>';
   shownEl.innerHTML=T.shown.replace('{n}',list.length).replace('{m}',ALL.length);
   const q=new URLSearchParams(); if(rubric)q.set('rubric',rubric); if(industry)q.set('industry',industry);
