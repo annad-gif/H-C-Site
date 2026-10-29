@@ -15,7 +15,11 @@ from build_analytics import ROOT, shell
 
 FILES = {"ru": "analytics-salaries.html", "en": "analytics-salaries-en.html", "uz": "analytics-salaries-uz.html"}
 HUB = {"ru": "analytics.html", "en": "analytics-en.html", "uz": "analytics-uz.html"}
-ARTICLE = "/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e"  # обзор осени 2026, есть только на русском
+ARTICLE = {  # обзор IT-зарплат осени 2026 на языке страницы (site_materials ed99d01e и переводы)
+    "ru": "/articles/zarplaty-v-it-v-uzbekistane-osen-2026-ed99d01e",
+    "en": "/articles/it-salaries-in-uzbekistan-autumn-2026-311121e8",
+    "uz": "/articles/ozbekistonda-it-maoshlari-kuz-2026-3da6a61e",
+}
 
 SPHERES = {  # ключ – sphere в public_salary_stats(); итог сферы без повторов – группа «<sphere>_core»
     "it": ("IT", "IT", "IT"),
@@ -120,7 +124,7 @@ T = {
         lead_p="We will factor in the industry, tech stack, work format and seniority and suggest the range to put in your offer.",
         f_name="Name", f_company="Company", f_pos="Role to benchmark", f_pos_ph="E.g. Head of sales, FMCG, Tashkent",
         f_phone="Phone or Telegram", f_email="Email", f_send="Get a benchmark",
-        art="Full review (in Russian): “IT salaries in Uzbekistan: autumn 2026” →",
+        art="Full review: “IT salaries in Uzbekistan: autumn 2026” →",
         note=("<b>Methodology.</b> Candidates’ expectations come from CVs available to the agency as an employer on job "
               "sites in Uzbekistan: {cv} with a stated salary updated within the last 90 days ({total} CVs). The "
               "calculation uses a sample of the most recent CVs for each role group and experience level, weighted "
@@ -157,7 +161,7 @@ T = {
         lead_p="Soha, texnologiyalar, ish formati va lavozim darajasini hisobga olib, offerga qanday oraliq qo‘yishni maslahat beramiz.",
         f_name="Ism", f_company="Kompaniya", f_pos="Hisoblash kerak bo‘lgan lavozim", f_pos_ph="Masalan: savdo bo‘limi boshlig‘i, FMCG, Toshkent",
         f_phone="Telefon yoki Telegram", f_email="Email", f_send="Hisob-kitob olish",
-        art="Batafsil sharh (rus tilida): «O‘zbekistonda IT maoshlari: kuz 2026» →",
+        art="Batafsil sharh: «O‘zbekistonda IT maoshlari: kuz 2026» →",
         note=("<b>Metodologiya.</b> Nomzodlar kutilmalari – agentlikka ish beruvchi sifatida O‘zbekiston job-saytlarida "
               "mavjud rezyumelardan: so‘nggi 90 kunda yangilangan, maosh ko‘rsatilgan {cv} ({total} ta). Hisob-kitob "
               "– har bir yo‘nalish va tajriba kesimida eng yangi rezyumelardan iborat tanlanma bo‘yicha, kesim "
@@ -424,7 +428,7 @@ def build(lang):
     i = LI[lang]
     head, nav, tail, menu_js = shell(lang, FILES, t["title"], t["desc"])
     head = head.replace("</head>", "<style>" + CSS + "</style>\n</head>")
-    main = MAIN.format(hub=HUB[lang], article=ARTICLE, **t)
+    main = MAIN.format(hub=HUB[lang], article=ARTICLE[lang], **t)
     t_js = {k: t[k] for k in ("few", "r_title", "k_iqr", "k_top", "k_usd", "k_n", "from_", "leg_iqr", "leg_top", "leg_med",
                               "ladder", "ladder_na", "vac_h", "vac_p", "vac_none", "error", "note", "note_it", "cv", "crm",
                               "uzs", "locale", "c_uzs", "c_usd")}
