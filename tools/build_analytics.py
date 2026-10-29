@@ -31,7 +31,8 @@ T = {
         tg="Подписаться в Telegram", read="Читать",
         cta_h="Нужны данные по вашей отрасли или позиции?",
         cta_p="Подготовим срез зарплат и сроков найма под вашу задачу и поможем закрыть вакансию.",
-        cta_a="Обсудить найм →", cta_url="recruitment.html#contact", locale="ru-RU", og="ru_RU"),
+        cta_a="Обсудить найм →", cta_url="recruitment.html#contact", tool_k="Инструмент · обновляется дважды в месяц", tool_h="Калькулятор зарплат в IT", tool_p="Медиана, вилка и верхние 10% ожиданий кандидатов по 10 направлениям и опыту.", tool_a="Открыть →", tool_url="analytics-salaries.html",
+        locale="ru-RU", og="ru_RU"),
     "en": dict(
         title="Uzbekistan Labour Market Insights – Human and Capital",
         desc="Human and Capital insights: salary reviews, labour market pulse, hiring practice and case studies based on our recruitment data in Uzbekistan.",
@@ -44,7 +45,8 @@ T = {
         tg="Follow on Telegram", read="Read",
         cta_h="Need data for your industry or role?",
         cta_p="We will prepare salary and time-to-hire benchmarks for your task and help you fill the role.",
-        cta_a="Discuss hiring →", cta_url="hr-services-uzbekistan.html#contact", locale="en-GB", og="en_US"),
+        cta_a="Discuss hiring →", cta_url="hr-services-uzbekistan.html#contact", tool_k="Tool · updated twice a month", tool_h="IT salary calculator", tool_p="Median, range and top 10% of candidates’ expectations across 10 role groups and experience levels.", tool_a="Open →", tool_url="analytics-salaries-en.html",
+        locale="en-GB", og="en_US"),
     "uz": dict(
         title="O‘zbekiston mehnat bozori tahlili – Human and Capital",
         desc="Human and Capital tahlili: maosh sharhlari, mehnat bozori pulsi, yollash amaliyoti va O‘zbekistondagi loyihalarimiz ma’lumotlari asosidagi keyslar.",
@@ -57,7 +59,8 @@ T = {
         tg="Telegramda obuna bo‘lish", read="O‘qish",
         cta_h="Sohangiz yoki lavozimingiz bo‘yicha ma’lumot kerakmi?",
         cta_p="Vazifangiz uchun maoshlar va yollash muddatlari kesimini tayyorlaymiz va vakansiyani yopishga yordam beramiz.",
-        cta_a="Muhokama qilish →", cta_url="recruitment-uz.html#contact", locale="uz-Latn-UZ", og="uz_UZ"),
+        cta_a="Muhokama qilish →", cta_url="recruitment-uz.html#contact", tool_k="Vosita · oyiga ikki marta yangilanadi", tool_h="IT maoshlari kalkulyatori", tool_p="10 ta yo‘nalish va tajriba bo‘yicha nomzodlar kutilmalarining medianasi, oralig‘i va eng yuqori 10%.", tool_a="Ochish →", tool_url="analytics-salaries-uz.html",
+        locale="uz-Latn-UZ", og="uz_UZ"),
 }
 
 CSS = """
@@ -79,6 +82,12 @@ CSS = """
 .an-feat-body p{color:var(--grey-300);font-size:15px;line-height:1.55;}
 .an-feat-body b{color:var(--mustard-light);font-weight:600;margin-top:4px;}
 .an-feat:hover .an-feat-body b{color:var(--white);}
+.an-tool{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"k k k" "h p b";gap:6px 24px;align-items:center;margin-top:16px;padding:20px 26px;border-radius:16px;border:1px solid var(--mustard);background:rgba(198,154,46,.08);color:var(--white);text-decoration:none;transition:background .2s;}
+.an-tool:hover{background:rgba(198,154,46,.16);}
+.an-tool .an-feat-k{grid-area:k;}
+.an-tool-h{grid-area:h;font-family:var(--ff-display);font-weight:600;font-size:19px;}
+.an-tool-p{grid-area:p;color:var(--grey-300);font-size:14.5px;line-height:1.5;}
+.an-tool b{grid-area:b;color:var(--mustard-light);font-weight:600;white-space:nowrap;}
 #an-list{background:var(--grey-50);padding:40px 0 90px;}
 .an-filters{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;margin-bottom:26px;}
 .an-chips{display:flex;flex-wrap:wrap;gap:8px;}
@@ -113,6 +122,7 @@ CSS = """
 @media (max-width:640px){
   .an-hero{padding:110px 0 40px;} .an-grid{grid-template-columns:1fr;}
   .an-feat-body{padding:22px 20px;} .an-cta{padding:26px 22px;}
+  .an-tool{grid-template-columns:1fr;grid-template-areas:"k" "h" "p" "b";padding:18px 20px;}
   .an-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin:0 -18px;padding-left:18px;padding-right:18px;scrollbar-width:none;}
   .an-chips::-webkit-scrollbar{display:none;}
   .an-ind,.an-ind select{width:100%;}
@@ -127,6 +137,7 @@ MAIN = """
     <p class="lead">{lead}</p>
     <a class="an-tg" id="anTg" href="#" target="_blank" rel="noopener" hidden>{tg}</a>
     <a class="an-feat" id="anFeat" href="#" hidden></a>
+    <a class="an-tool" href="{tool_url}"><span class="an-feat-k">{tool_k}</span><span class="an-tool-h">{tool_h}</span><span class="an-tool-p">{tool_p}</span><b>{tool_a}</b></a>
   </div>
 </section>
 
@@ -242,9 +253,10 @@ indSel.addEventListener('change',()=>{ industry=indSel.value; render(); });
 """
 
 
-def build(lang):
+def shell(lang, files, title, desc):
+    """Оболочка страницы из resources*.html: head (title/description/canonical/hreflang – под files), меню с активным
+    пунктом «Аналитика», подвал с кнопкой «Связаться» и скрипт меню. Используется и в tools/build_salaries.py."""
     src = open(os.path.join(ROOT, SRC[lang]), encoding="utf-8").read()
-    t = T[lang]
 
     def grab(pattern):
         m = re.search(pattern, src, re.S)
@@ -254,24 +266,23 @@ def build(lang):
 
     head = grab(r"<!DOCTYPE html>.*?</head>")
     for l, f in SRC.items():
-        head = head.replace(SITE + "/" + f, SITE + "/" + FILES[l])
+        head = head.replace(SITE + "/" + f, SITE + "/" + files[l])
     def attr(h, rx, val):
         new, n = re.subn(rx, lambda m: m.group(1) + val.replace("&", "&amp;").replace('"', "&quot;") + m.group(2), h)
         if not n:
             raise SystemExit("не найдено в head " + SRC[lang] + ": " + rx)
         return new
-    head = re.sub(r"<title>.*?</title>", "<title>" + t["title"] + "</title>", head, count=1, flags=re.S)
-    head = attr(head, r'(<meta name="description" content=")[^"]*(")', t["desc"])
-    head = attr(head, r'(<meta property="og:title" content=")[^"]*(")', t["title"])
-    head = attr(head, r'(<meta property="og:description" content=")[^"]*(")', t["desc"])
-    head = attr(head, r'(<meta name="twitter:title" content=")[^"]*(")', t["title"])
-    head = attr(head, r'(<meta name="twitter:description" content=")[^"]*(")', t["desc"])
-    head = head.replace("</head>", "<style>" + CSS + "</style>\n</head>")
+    head = re.sub(r"<title>.*?</title>", "<title>" + title + "</title>", head, count=1, flags=re.S)
+    head = attr(head, r'(<meta name="description" content=")[^"]*(")', desc)
+    head = attr(head, r'(<meta property="og:title" content=")[^"]*(")', title)
+    head = attr(head, r'(<meta property="og:description" content=")[^"]*(")', desc)
+    head = attr(head, r'(<meta name="twitter:title" content=")[^"]*(")', title)
+    head = attr(head, r'(<meta name="twitter:description" content=")[^"]*(")', desc)
 
     nav = grab(r'<nav id="nav">.*?</nav>')
     nav = nav.replace(' class="active"', "")
     for l, f in SRC.items():
-        nav = nav.replace('<a href="' + f + '" data-lang=', '<a href="' + FILES[l] + '" data-lang=')
+        nav = nav.replace('<a href="' + f + '" data-lang=', '<a href="' + files[l] + '" data-lang=')
     nav, n = re.subn(r'<a href="(analytics(?:-en|-uz)?\.html)">', r'<a href="\1" class="active">', nav, count=1)
     if not n:
         raise SystemExit("в меню " + SRC[lang] + " нет пункта «Аналитика» – сначала добавьте его")
@@ -281,6 +292,13 @@ def build(lang):
     menu_js = menu_js.replace(
         "window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY>Math.max(window.innerHeight*0.7,80)); });",
         "const onScroll=()=>nav.classList.toggle('scrolled', window.scrollY>40); onScroll(); window.addEventListener('scroll',onScroll);")
+    return head, nav, tail, menu_js
+
+
+def build(lang):
+    t = T[lang]
+    head, nav, tail, menu_js = shell(lang, FILES, t["title"], t["desc"])
+    head = head.replace("</head>", "<style>" + CSS + "</style>\n</head>")
 
     t_js = {k: t[k] for k in ("feat", "feat_a", "all", "all_ind", "shown", "empty_none", "empty_filter", "locale")}
     tax_js = {"rubrics": TAX["rubrics"], "industries": TAX["industries"], "telegram": TAX.get("telegram", ""),
@@ -295,4 +313,5 @@ def build(lang):
     return FILES[lang]
 
 
-print("ok: " + ", ".join(build(l) for l in FILES))
+if __name__ == "__main__":
+    print("ok: " + ", ".join(build(l) for l in FILES))

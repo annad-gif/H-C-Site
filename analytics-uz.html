@@ -950,6 +950,12 @@
 .an-feat-body p{color:var(--grey-300);font-size:15px;line-height:1.55;}
 .an-feat-body b{color:var(--mustard-light);font-weight:600;margin-top:4px;}
 .an-feat:hover .an-feat-body b{color:var(--white);}
+.an-tool{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"k k k" "h p b";gap:6px 24px;align-items:center;margin-top:16px;padding:20px 26px;border-radius:16px;border:1px solid var(--mustard);background:rgba(198,154,46,.08);color:var(--white);text-decoration:none;transition:background .2s;}
+.an-tool:hover{background:rgba(198,154,46,.16);}
+.an-tool .an-feat-k{grid-area:k;}
+.an-tool-h{grid-area:h;font-family:var(--ff-display);font-weight:600;font-size:19px;}
+.an-tool-p{grid-area:p;color:var(--grey-300);font-size:14.5px;line-height:1.5;}
+.an-tool b{grid-area:b;color:var(--mustard-light);font-weight:600;white-space:nowrap;}
 #an-list{background:var(--grey-50);padding:40px 0 90px;}
 .an-filters{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;margin-bottom:26px;}
 .an-chips{display:flex;flex-wrap:wrap;gap:8px;}
@@ -984,6 +990,7 @@
 @media (max-width:640px){
   .an-hero{padding:110px 0 40px;} .an-grid{grid-template-columns:1fr;}
   .an-feat-body{padding:22px 20px;} .an-cta{padding:26px 22px;}
+  .an-tool{grid-template-columns:1fr;grid-template-areas:"k" "h" "p" "b";padding:18px 20px;}
   .an-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin:0 -18px;padding-left:18px;padding-right:18px;scrollbar-width:none;}
   .an-chips::-webkit-scrollbar{display:none;}
   .an-ind,.an-ind select{width:100%;}
@@ -1031,6 +1038,7 @@
     <p class="lead">Maoshlar, mutaxassislarga talab va yollash muddatlari – Human and Capital loyihalari va ochiq statistika asosida. Har bir materialda metodologiya va tanlov hajmi ko‘rsatiladi.</p>
     <a class="an-tg" id="anTg" href="#" target="_blank" rel="noopener" hidden>Telegramda obuna bo‘lish</a>
     <a class="an-feat" id="anFeat" href="#" hidden></a>
+    <a class="an-tool" href="analytics-salaries-uz.html"><span class="an-feat-k">Vosita · oyiga ikki marta yangilanadi</span><span class="an-tool-h">IT maoshlari kalkulyatori</span><span class="an-tool-p">10 ta yo‘nalish va tajriba bo‘yicha nomzodlar kutilmalarining medianasi, oralig‘i va eng yuqori 10%.</span><b>Ochish →</b></a>
   </div>
 </section>
 

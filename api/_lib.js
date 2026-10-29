@@ -51,7 +51,7 @@ async function loadVacancies() {
 // --- статические страницы сайта для sitemap ---
 const PAGES = [
   ["index", "1.0"], ["recruitment", "0.9"], ["outstaffing", "0.9"], ["consulting", "0.9"], ["executive-search", "0.8"],
-  ["vacancies", "0.8"], ["analytics", "0.8"], ["resources", "0.7"], ["talent-pool", "0.6"],
+  ["vacancies", "0.8"], ["analytics", "0.8"], ["analytics-salaries", "0.8"], ["resources", "0.7"], ["talent-pool", "0.6"],
 ];
 function pageUrl(name) { return name === "index.html" ? SITE + "/" : SITE + "/" + name; }
 

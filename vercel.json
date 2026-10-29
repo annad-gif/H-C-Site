@@ -136,6 +136,21 @@
       "permanent": true
     },
     {
+      "source": "/analytics/salaries",
+      "destination": "/analytics-salaries.html",
+      "permanent": true
+    },
+    {
+      "source": "/analytics/salaries/en",
+      "destination": "/analytics-salaries-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/analytics/salaries/uz",
+      "destination": "/analytics-salaries-uz.html",
+      "permanent": true
+    },
+    {
       "source": "/insights",
       "destination": "/analytics-en.html",
       "permanent": true
