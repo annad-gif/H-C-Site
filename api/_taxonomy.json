@@ -1,9 +1,8 @@
 {
-  "_comment": "Справочники раздела «Аналитика» (site_materials.rubric / industries / author_key). Читают api/article.js и tools/build_analytics.py; копия для браузера — в admin.html (TAXONOMY), менять синхронно. ТЗ: docs/analytics/spec-analytics-section.md §1.",
+  "_comment": "Справочники раздела «Аналитика» (site_materials.rubric / industries / author_key). В «Аналитике» – только материалы с данными; практические статьи (как нанять и т. п.) живут в «Полезных материалах» без рубрики (решение 29.10.2026). Читают api/article.js и tools/build_analytics.py; копия для браузера — в admin.html (TAXONOMY), менять синхронно. ТЗ: docs/analytics/spec-analytics-section.md §1.",
   "rubrics": {
     "salary":     { "ru": "Зарплатный обзор", "en": "Salary review",   "uz": "Maosh sharhi" },
     "pulse":      { "ru": "Пульс рынка",      "en": "Market pulse",    "uz": "Bozor pulsi" },
-    "practice":   { "ru": "Практика найма",   "en": "Hiring practice", "uz": "Yollash amaliyoti" },
     "case":       { "ru": "Кейсы",            "en": "Case studies",    "uz": "Keyslar" },
     "regulation": { "ru": "HR-регулирование", "en": "HR regulation",   "uz": "HR qonunchiligi" },
     "annual":     { "ru": "Годовой отчёт",    "en": "Annual report",   "uz": "Yillik hisobot" }
