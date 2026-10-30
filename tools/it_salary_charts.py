@@ -8,6 +8,7 @@
 """
 import os, sys
 D = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else os.getcwd()
+# chart() используется и в tools/sales_salary_charts.py
 
 # p10, p25, p50, p75, p90 в сумах
 EXP = [("0", (3575718, 4767624, 5959530, 8000000, 10727155)),
@@ -93,7 +94,8 @@ svg{{position:absolute;left:36px;top:0;overflow:visible}}
     return html, h
 
 
-for lang, t in T.items():
+if __name__ == "__main__":
+  for lang, t in T.items():
     for kind in ("exp", "role"):
         rows = [(t[kind][k], v) for k, v in (EXP if kind == "exp" else ROLES)]
         label_w = 230 if kind == "exp" else 400

@@ -276,6 +276,36 @@ COVERS = {
  <div class="item"><div class="ico">{ic('people')}</div><div><b>$5 000 dan</b><span>senior dasturchilarning yuqori 10%</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Tahlil</div>""",
+"sales_2026_autumn": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Зарплаты в <span class="acc">продажах</span> в Узбекистане</h1>
+<p class="sub">Осень 2026: сколько просят по ролям и опыту – от оператора колл-центра до руководителя продаж</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>8 млн сум</b><span>медиана ожиданий менеджера по продажам</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×2,9</b><span>рост руководителя от «без опыта» до 6+ лет</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>от $4 800</b><span>верхние 10% руководителей продаж</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Аналитика</div>""",
+"sales_2026_autumn_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Sales</span> salaries in Uzbekistan</h1>
+<p class="sub">Autumn 2026: what sales staff ask by role and experience – from call centre operator to sales head</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>UZS 8M</b><span>median expectation of a sales manager</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×2.9</b><span>growth of a sales head from no experience to 6+ years</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>$4,800+</b><span>top 10% of sales heads</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Insights</div>""",
+"sales_2026_autumn_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda <span class="acc">savdo</span> maoshlari</h1>
+<p class="sub">Kuz 2026: rol va tajriba bo‘yicha qancha so‘rashadi – call-markaz operatoridan savdo rahbarigacha</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>8 mln so‘m</b><span>savdo menejeri kutilmalari medianasi</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>×2,9</b><span>rahbarning tajribasizdan 6+ yilgacha o‘sishi</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>$4 800 dan</b><span>savdo rahbarlarining yuqori 10%</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Tahlil</div>""",
 }
 
 for name, body in COVERS.items():
