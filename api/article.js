@@ -141,6 +141,32 @@ function ctaHTML(m, L) {
   return '<aside class="ar-cta"><div><h2>' + esc(h) + "</h2><p>" + esc(p) + "</p></div>"
     + '<a href="' + esc(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(a) + "</a></aside>";
 }
+// Аналитика: предложение подбора внутри текста (после второго раздела), чтобы читатель увидел его рядом с цифрами.
+// Отрасль it – отдельный текст про IT-специалистов. Клик – цель cta_hire (Метрика и GA4 через hcGoal).
+const HIRE = {
+  ru: { it: ["Нужен IT-специалист?", "Подберём разработчиков, QA, аналитиков, DevOps и IT-руководителей – с проверкой навыков и с учётом зарплат на рынке.", "Подобрать специалиста →"],
+        any: ["Нужны сотрудники?", "Подберём специалистов и руководителей под вашу задачу – с учётом зарплат на рынке.", "Обсудить подбор →"],
+        url: "/recruitment.html#contact" },
+  en: { it: ["Need an IT specialist?", "We hire developers, QA engineers, analysts, DevOps and IT leads in Uzbekistan – with skill checks and up-to-date salary benchmarks.", "Find a specialist →"],
+        any: ["Need to hire?", "We find specialists and managers for your roles – with up-to-date salary benchmarks.", "Discuss hiring →"],
+        url: "/recruitment-en.html#contact" },
+  uz: { it: ["IT mutaxassis kerakmi?", "Dasturchilar, QA, tahlilchilar, DevOps va IT rahbarlarni tanlaymiz – ko‘nikmalarni tekshirib, bozordagi maoshlarni hisobga olgan holda.", "Mutaxassis tanlash →"],
+        any: ["Xodim kerakmi?", "Vazifangizga mos mutaxassis va rahbarlarni topamiz – bozordagi maoshlarni hisobga olgan holda.", "Xodim tanlash →"],
+        url: "/recruitment-uz.html#contact" },
+};
+function hireHTML(m, lang) {
+  const H = HIRE[lang] || HIRE.ru;
+  const [h, p, a] = (Array.isArray(m.industries) && m.industries.includes("it")) ? H.it : H.any;
+  return '<div class="ar-hire"><div><b>' + esc(h) + "</b><span>" + esc(p) + "</span></div>"
+    + '<a href="' + H.url + '" onclick="window.hcGoal&&hcGoal(\'cta_hire\',{from:\'article\',lang:\'' + lang + '\'})">' + esc(a) + "</a></div>";
+}
+function withHire(bodyHtml, m, lang) {
+  if (!rubricOf(m)) return bodyHtml;
+  const block = hireHTML(m, lang);
+  let n = 0;
+  const out = bodyHtml.replace(/<h2>/g, t => (++n === 3 ? block + t : t));
+  return n >= 3 ? out : out + block;
+}
 function tgHTML(m, L) {
   if (!rubricOf(m) || !TG_URL || m.cta === "subscribe") return "";
   return '<p class="ar-tg"><span>' + esc(L.tg[0]) + '</span><a href="' + esc(TG_URL) + '" target="_blank" rel="noopener">' + esc(L.tg[1]) + "</a></p>";
@@ -352,7 +378,7 @@ function articlePage(all, m) {
     + '<main class="ar-main"><div class="container"><article>'
     + keyFiguresHTML(m)
     + mediaHTML(m)
-    + '<div class="ar-text">' + bodyHtml + "</div>"
+    + '<div class="ar-text">' + withHire(bodyHtml, m, lang) + "</div>"
     + methodHTML(m, L)
     + tgHTML(m, L)
     + "</article>"

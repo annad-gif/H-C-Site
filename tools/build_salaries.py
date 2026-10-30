@@ -83,6 +83,9 @@ T = {
         exec_h="Executive search",
         exec_p="По проектам Human and Capital: руководители IT-направлений и C-level с опытом 6+ лет – $4 000–10 000 на руки.",
         loading="Загружаем расчёт…", error="Не удалось загрузить данные. Обновите страницу чуть позже.",
+        hire_h="Ищете специалиста с такой зарплатой?",
+        hire_p="Подберём кандидата под вашу вилку: проверим навыки и зарплатные ожидания до собеседования. Одна бесплатная замена в оговорённый срок.",
+        hire_a="Подобрать специалиста →", hire_url="/recruitment.html#contact",
         lead_h="Нужна вилка под конкретную позицию?",
         lead_p="Учтём отрасль, стек, формат работы и уровень позиции и подскажем, какую вилку закладывать в оффер.",
         f_name="Имя", f_company="Компания", f_pos="Позиция, которую нужно рассчитать", f_pos_ph="Например: руководитель отдела продаж, FMCG, Ташкент",
@@ -120,6 +123,9 @@ T = {
         exec_h="Executive search",
         exec_p="Human and Capital projects: heads of IT and C-level executives with 6+ years of experience – $4,000–10,000 net.",
         loading="Loading…", error="Could not load the data. Please refresh the page a bit later.",
+        hire_h="Looking for a specialist in this range?",
+        hire_p="We will find a candidate within your budget, checking skills and salary expectations before the interview. One free replacement within the agreed period.",
+        hire_a="Find a specialist →", hire_url="/recruitment-en.html#contact",
         lead_h="Need a range for a specific role?",
         lead_p="We will factor in the industry, tech stack, work format and seniority and suggest the range to put in your offer.",
         f_name="Name", f_company="Company", f_pos="Role to benchmark", f_pos_ph="E.g. Head of sales, FMCG, Tashkent",
@@ -157,6 +163,9 @@ T = {
         exec_h="Executive search",
         exec_p="Human and Capital loyihalari bo‘yicha: 6+ yil tajribali IT yo‘nalishi rahbarlari va C-level – qo‘lga $4 000–10 000.",
         loading="Yuklanmoqda…", error="Ma’lumotlarni yuklab bo‘lmadi. Sahifani birozdan keyin yangilang.",
+        hire_h="Shu maoshdagi mutaxassis kerakmi?",
+        hire_p="Byudjetingizga mos nomzodni topamiz: suhbatgacha ko‘nikma va maosh kutishlarini tekshiramiz. Kelishilgan muddatda bir marta bepul almashtirish.",
+        hire_a="Mutaxassis tanlash →", hire_url="/recruitment-uz.html#contact",
         lead_h="Aniq lavozim uchun oraliq kerakmi?",
         lead_p="Soha, texnologiyalar, ish formati va lavozim darajasini hisobga olib, offerga qanday oraliq qo‘yishni maslahat beramiz.",
         f_name="Ism", f_company="Kompaniya", f_pos="Hisoblash kerak bo‘lgan lavozim", f_pos_ph="Masalan: savdo bo‘limi boshlig‘i, FMCG, Toshkent",
@@ -244,6 +253,12 @@ CSS = """
 .sl-form .hc-consent a{color:var(--mustard-light)!important;}
 .sl-form button[type=submit]{grid-column:1/-1;justify-self:start;padding:14px 24px;border-radius:12px;border:0;background:var(--mustard);color:var(--black);font:inherit;font-weight:600;cursor:pointer;}
 .sl-form button[type=submit]:hover{background:var(--mustard-light);}
+.sl-hire{margin-top:16px;display:flex;gap:16px 22px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:20px 22px;border-radius:16px;background:rgba(198,154,46,.10);border:1px solid rgba(198,154,46,.35);}
+.sl-hire div{flex:1 1 300px;min-width:0;}
+.sl-hire h3{font-family:var(--ff-display);font-weight:600;font-size:17px;line-height:1.3;color:var(--black);margin-bottom:6px;}
+.sl-hire p{font-size:14.5px;line-height:1.55;color:var(--grey-700);}
+.sl-hire a{display:inline-flex;align-items:center;padding:12px 20px;border-radius:12px;background:var(--black);color:var(--white);font-weight:600;font-size:14.5px;text-decoration:none;white-space:nowrap;}
+.sl-hire a:hover{background:var(--mustard);color:var(--black);}
 .sl-art{display:inline-block;margin-top:26px;color:var(--black);font-weight:600;text-decoration:none;border-bottom:2px solid var(--mustard);}
 .sl-art:hover{color:var(--mustard-dim);}
 .sl-art[hidden],.sl-field[hidden]{display:none;}
@@ -279,6 +294,8 @@ MAIN = """
         <div class="sl-card" id="slRes" aria-live="polite"><div class="sl-skel"></div></div>
         <div class="sl-box" id="slVac" hidden></div>
         <div class="sl-box exec" id="slExec" hidden><h3>{exec_h}</h3>{exec_p}</div>
+        <div class="sl-hire"><div><h3>{hire_h}</h3><p>{hire_p}</p></div>
+          <a href="{hire_url}" onclick="window.hcGoal&&hcGoal('cta_hire',{{from:'calculator'}})">{hire_a}</a></div>
       </div>
     </div>
 
