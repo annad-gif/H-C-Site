@@ -1314,7 +1314,7 @@ function matUploadImage(file, maxW){
             if(!blob) throw new Error('blob failed');
             var uid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now());
             var path='materials/'+uid+'.jpg';
-            var up=await sb.storage.from('site-media').upload(path, blob, { contentType:'image/jpeg', upsert:false });
+            var up=await sb.storage.from('site-media').upload(path, blob, { contentType:'image/jpeg', upsert:false, cacheControl:'31536000' });
             if(up.error) throw up.error;
             var url=sb.storage.from('site-media').getPublicUrl(path).data.publicUrl;
             resolve(url);

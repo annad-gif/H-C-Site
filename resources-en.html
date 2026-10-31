@@ -1179,8 +1179,21 @@ function articleSlug(m){
 }
 function articleUrl(m){ return '/articles/'+articleSlug(m); }
 
+// Уменьшенная обложка для карточек: Supabase отдаёт ресайз (в WebP, если браузер его понимает),
+// для своих обложек есть копии в /img/articles/thumbs/. Нет копии – onerror вернёт оригинал.
+function thumbSrc(u){
+  var m=/^(https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1)\/object\/public\/([^?#]+)$/i.exec(u);
+  if(m) return m[1]+'/render/image/public/'+m[2]+'?width=800&quality=70';
+  m=/^(?:https:\/\/humancapital\.uz)?\/img\/articles\/([^\/?#]+\.jpe?g)$/i.exec(u);
+  return m ? '/img/articles/thumbs/'+m[1] : u;
+}
+function thumbImg(u,alt,extra){
+  var t=thumbSrc(u);
+  return '<img src="'+esc(t)+'"'+(t!==u?' data-full="'+esc(u)+'" onerror="this.onerror=null;this.src=this.dataset.full"':'')
+    +' alt="'+esc(alt)+'" decoding="async"'+(extra||'')+'/>';
+}
 function thumbHTML(m){
-  if(m.image){ return '<img src="'+esc(m.image)+'" alt="'+esc(m.title)+'"/>'; }
+  if(m.image){ return thumbImg(m.image,m.title,' loading="lazy"'); }
   const grad = PALETTES[m.cat]||PALETTES.article;
   return '<div class="rs-thumb-ph" style="background:'+grad+'">'+CAT_IC[m.cat]+'</div>';
 }

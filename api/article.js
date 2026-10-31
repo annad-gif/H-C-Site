@@ -246,6 +246,13 @@ function mediaHTML(m) {
   return '<div class="ar-cover"><img src="' + esc(u) + '" alt="' + esc(m.title) + '" fetchpriority="high"/></div>';
 }
 function imageOf(m) { return m.media_type !== "video" && safeUrl(m.media_url) ? m.media_url : null; }
+// уменьшенная обложка для карточек «Читайте также» – как thumbSrc в resources.html
+function thumbOf(u) {
+  let m = /^(https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1)\/object\/public\/([^?#]+)$/i.exec(u);
+  if (m) return m[1] + "/render/image/public/" + m[2] + "?width=800&quality=70";
+  m = /^(?:https:\/\/humancapital\.uz)?\/img\/articles\/([^\/?#]+\.jpe?g)$/i.exec(u);
+  return m ? "/img/articles/thumbs/" + m[1] : u;
+}
 
 function relatedHTML(all, m) {
   const L = L10N[langOf(m)];
@@ -262,7 +269,8 @@ function relatedHTML(all, m) {
     + pick.map(r => {
       const img = imageOf(r);
       return '<a class="ar-rel" href="' + esc(articlePath(r)) + '"><div class="ar-rel-img">'
-        + (img ? '<img src="' + esc(img) + '" alt="' + esc(r.title) + '" loading="lazy"/>' : "")
+        + (img ? '<img src="' + esc(thumbOf(img)) + '"' + (thumbOf(img) !== img ? ' data-full="' + esc(img) + '" onerror="this.onerror=null;this.src=this.dataset.full"' : "")
+          + ' alt="' + esc(r.title) + '" loading="lazy" decoding="async"/>' : "")
         + '</div><div class="ar-rel-body"><h3>' + esc(r.title) + "</h3><p>" + esc(r.description || "") + "</p></div></a>";
     }).join("")
     + '</div><a class="ar-all" href="' + (rub ? L.anUrl : L.resUrl) + '">' + esc(rub ? L.anAll : L.all) + '</a></div></section>';

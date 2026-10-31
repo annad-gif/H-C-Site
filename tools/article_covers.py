@@ -7,6 +7,8 @@
       --allow-file-access-from-files --window-size=1600,900 --virtual-time-budget=6000 \
       --screenshot=<имя>.png file://<папка>/<имя>.html
     sips -s format jpeg -s formatOptions 86 <имя>.png --out img/articles/<slug статьи>.jpg
+и уменьшенную копию для карточек (без неё карточки грузят полную обложку):
+    sips -s format jpeg -s formatOptions 70 --resampleWidth 800 img/articles/<slug>.jpg --out img/articles/thumbs/<slug>.jpg
 В статье (site_materials) – media_type='image', media_url='https://humancapital.uz/img/articles/<slug>.jpg'.
 """
 import os, sys

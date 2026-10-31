@@ -1109,6 +1109,19 @@ function articleUrl(m){
 const UZ_MONTHS=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
 function fmtDate(iso){ if(PAGE_LANG==='uz'){ const d=new Date(new Date(iso).getTime()+5*3600000); if(!isNaN(d)) return d.getUTCDate()+'-'+UZ_MONTHS[d.getUTCMonth()]+', '+d.getUTCFullYear(); }
   try{ return new Intl.DateTimeFormat(T.locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Tashkent'}).format(new Date(iso)).replace(/\s*г\.$/,''); }catch(e){ return String(iso||'').slice(0,10); } }
+// Уменьшенная обложка для карточек: Supabase отдаёт ресайз (в WebP, если браузер его понимает),
+// для своих обложек есть копии в /img/articles/thumbs/. Нет копии – onerror вернёт оригинал.
+function thumbSrc(u){
+  var m=/^(https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1)\/object\/public\/([^?#]+)$/i.exec(u);
+  if(m) return m[1]+'/render/image/public/'+m[2]+'?width=800&quality=70';
+  m=/^(?:https:\/\/humancapital\.uz)?\/img\/articles\/([^\/?#]+\.jpe?g)$/i.exec(u);
+  return m ? '/img/articles/thumbs/'+m[1] : u;
+}
+function thumbImg(u,alt,extra){
+  var t=thumbSrc(u);
+  return '<img src="'+esc(t)+'"'+(t!==u?' data-full="'+esc(u)+'" onerror="this.onerror=null;this.src=this.dataset.full"':'')
+    +' alt="'+esc(alt)+'" decoding="async"'+(extra||'')+'/>';
+}
 function imgOf(m){ return (m.media_type==='image'||m.media_type==='photo') && /^(https?:\/\/|\/)/.test(m.media_url||'') ? m.media_url : ''; }
 function authorName(m){ return String(m.author_key||'').split(',').map(k=>TAX.authors[k.trim()]).filter(Boolean).map(a=>lbl(a.name)).join(', '); }
 
@@ -1128,7 +1141,7 @@ async function load(){
 function card(m){
   const img=imgOf(m), au=authorName(m);
   return '<a class="an-card" href="'+esc(articleUrl(m))+'">'
-    +'<div class="an-thumb">'+(img?'<img src="'+esc(img)+'" alt="'+esc(m.title)+'" loading="lazy"/>':'')
+    +'<div class="an-thumb">'+(img?thumbImg(img,m.title,' loading="lazy"'):'')
     +'<span class="an-badge">'+esc(lbl(TAX.rubrics[m.rubric]))+'</span></div>'
     +'<div class="an-body"><span class="an-meta">'+esc(fmtDate(m.created_at))+(au?' · '+esc(au):'')
     +(m.lang&&m.lang!==PAGE_LANG?' · '+esc(m.lang.toUpperCase()):'')+'</span>'
@@ -1140,7 +1153,7 @@ function featured(){
   if(!m){ feat.hidden=true; return; }
   const img=imgOf(m);
   feat.href=articleUrl(m);
-  feat.innerHTML='<div class="an-feat-img">'+(img?'<img src="'+esc(img)+'" alt="'+esc(m.title)+'"/>':'')+'</div>'
+  feat.innerHTML='<div class="an-feat-img">'+(img?thumbImg(img,m.title,' fetchpriority="high"'):'')+'</div>'
     +'<div class="an-feat-body"><span class="an-feat-k">'+esc(T.feat)+' · '+esc(lbl(TAX.rubrics[m.rubric]))+'</span>'
     +'<h2>'+esc(m.title)+'</h2>'+(m.description?'<p>'+esc(m.description)+'</p>':'')+'<b>'+esc(T.feat_a)+'</b></div>';
   feat.hidden=false;
