@@ -118,7 +118,22 @@
     },
     {
       "source": "/talent-pool",
-      "destination": "/talent-pool.html",
+      "destination": "/vacancies.html",
+      "permanent": true
+    },
+    {
+      "source": "/talent-pool.html",
+      "destination": "/vacancies.html",
+      "permanent": true
+    },
+    {
+      "source": "/talent-pool-en.html",
+      "destination": "/vacancies-en.html",
+      "permanent": true
+    },
+    {
+      "source": "/talent-pool-uz.html",
+      "destination": "/vacancies-uz.html",
       "permanent": true
     },
     {
