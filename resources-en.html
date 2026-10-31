@@ -801,7 +801,7 @@
   .rs-hero h1{font-family:var(--ff-display);font-weight:700;color:var(--white);font-size:clamp(34px,5vw,58px);line-height:1.05;margin:0 0 16px;}
   .rs-hero .lead{color:var(--grey-300);font-size:17px;max-width:520px;line-height:1.6;}
   .rs-hero-visual{position:relative;}
-  .rs-hero-lottie{width:100%;max-width:440px;margin-left:auto;}
+  .rs-hero-lottie{width:100%;max-width:440px;margin-left:auto;aspect-ratio:1/1;}
   @media(max-width:880px){.rs-hero-inner{grid-template-columns:1fr;}.rs-hero-visual{display:none;}}
 
   .rs-filters{position:relative;z-index:2;margin-top:30px;display:flex;flex-direction:column;gap:15px;}
@@ -837,6 +837,9 @@
   @media(max-width:980px){.rs-grid{grid-template-columns:repeat(3,1fr);}}
   @media(max-width:720px){.rs-grid{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:480px){.rs-grid{grid-template-columns:1fr;}}
+  /* место под карточку, пока грузится список: обложка 16/11 + текст */
+  .rs-skel::before{content:'';display:block;aspect-ratio:16/11;}
+  .rs-skel{padding-bottom:200px;}
 
   .rs-card{position:relative;background:var(--white);border:1px solid var(--grey-100);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
     transition:transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .4s ease;}
@@ -990,7 +993,7 @@
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
             <input type="text" id="rsSearch" placeholder="Search by keywords: topic, title…"/>
           </div>
-          <div class="rs-chips" id="rsChips"></div>
+          <div class="rs-chips" id="rsChips"><button class="rs-chip active" data-aud="">All</button><button class="rs-chip" data-aud="employers">For employers</button><button class="rs-chip" data-aud="recruiters">For recruiters &amp; HR</button></div>
         </div>
       </div>
       <div class="rs-hero-visual"><div id="recLottie" class="rs-hero-lottie"></div></div>
@@ -1001,11 +1004,11 @@
 <section id="rs-list">
   <div class="container">
     <div class="rs-meta-row">
-      <p class="rs-shown" id="rsShown"></p>
+      <p class="rs-shown" id="rsShown">&nbsp;</p>
       <button class="rs-add" id="rsAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Publish material</button>
     </div>
-    <div class="rs-grid" id="rsGrid"></div>
-    <div class="tp-empty" id="rsEmpty">No materials match your query.</div>
+    <div class="rs-grid" id="rsGrid"><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div><div class="tp-skel rs-skel"></div></div>
+    <div class="tp-empty" id="rsEmpty" style="display:none">No materials match your query.</div>
   </div>
 </section>
 
@@ -1322,7 +1325,8 @@ searchEl.addEventListener('input',e=>{ query=e.target.value; render(); });
 
 // view-only: материалы публикуются через админку (admin.html)
 
-(async function init(){ grid.innerHTML=Array(10).fill('<div class="tp-skel" style="height:300px"></div>').join('');
+// чипсы, «показано» и заготовки карточек уже стоят в разметке – до загрузки списка ничего не сдвигается
+(async function init(){
   ALL=await loadMaterials(); activeAud=new URLSearchParams(location.search).get('for')||''; buildChips(); render(); })();
 
 try{ const d=document.getElementById('recLottieData'), el=document.getElementById('recLottie');
