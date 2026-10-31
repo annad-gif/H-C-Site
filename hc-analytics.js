@@ -39,10 +39,17 @@
     ym(YM_ID, "init", { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
   }
 
+  // Счётчики грузятся после события load: на мобильном интернете ~250 КБ их скриптов
+  // иначе конкурируют со шрифтами и первой отрисовкой. Вызовы gtag/ym до этого
+  // копятся в очередях dataLayer и ym.a и не теряются.
   function load(src) {
-    var s = document.createElement("script");
-    s.async = true; s.src = src;
-    document.head.appendChild(s);
+    function add() {
+      var s = document.createElement("script");
+      s.async = true; s.src = src;
+      document.head.appendChild(s);
+    }
+    if (document.readyState === "complete") add();
+    else window.addEventListener("load", add);
   }
 
   // --- UTM-метки визита (ТЗ раздела «Аналитика», §4.2, §7) ---
