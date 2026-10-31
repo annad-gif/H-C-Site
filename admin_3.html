@@ -947,7 +947,6 @@
       <button data-sec="overview" class="active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Обзор</button>
       <button data-sec="employees" data-perm="employees"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Сотрудники</button>
       <button data-sec="vacancies"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Вакансии</button>
-      <button data-sec="candidates"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><circle cx="10" cy="13" r="2"/><path d="M8 18a2 2 0 014 0"/></svg>Соискатели</button>
       <button data-sec="materials"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Материалы</button>
       <button data-sec="customers"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg>Заказчики</button>
       <button data-sec="requests" data-perm="requests"><svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3 7v5a1 1 0 01-1 1H3.5a1 1 0 01-1-1v-5z"/></svg>Заявки</button>
@@ -997,22 +996,21 @@ function numOnly(s){ const n=String(s||'').replace(/[^0-9]/g,''); return n?parse
 const ROLES = { super_admin:'Главный администратор', admin:'Администратор' };
 // Матрица прав. true = разрешено.
 const PERMS = {
-  super_admin:{ employees:true, roles:true, vacancies:true, candidates:true, materials:true, customers:true, seo:true, analytics:true, requests:true },
-  admin:      { employees:false, roles:false, vacancies:true, candidates:true, materials:true, customers:true, seo:false, analytics:true, requests:true },
+  super_admin:{ employees:true, roles:true, vacancies:true, materials:true, customers:true, seo:true, analytics:true, requests:true },
+  admin:      { employees:false, roles:false, vacancies:true, materials:true, customers:true, seo:false, analytics:true, requests:true },
 };
 function can(perm){ return !!(current && PERMS[current.role] && PERMS[current.role][perm]); }
 
 let EMP = [{"id": "E-001", "name": "Анна Дж.", "email": "anna@human-capital.org", "role": "super_admin", "status": "active", "added": "01.01.2026"}, {"id": "E-002", "name": "Дилшод Р.", "email": "dilshod@human-capital.org", "role": "admin", "status": "active", "added": "12.02.2026"}, {"id": "E-003", "name": "Мадина К.", "email": "madina@human-capital.org", "role": "admin", "status": "invited", "added": "10.06.2026"}];
 let CUST = [{"id": "C-101", "company": "Texnopro LLC", "contact": "Бекзод А.", "email": "hr@texnopro.uz", "phone": "+998 90 111 22 33", "status": "active", "since": "03.2026"}, {"id": "C-102", "company": "Silk Finance", "contact": "Нигора С.", "email": "people@silkfin.uz", "phone": "+998 91 222 33 44", "status": "active", "since": "04.2026"}, {"id": "C-103", "company": "BPO United", "contact": "Тимур В.", "email": "recruit@bpou.uz", "phone": "+998 93 333 44 55", "status": "paused", "since": "05.2026"}];
 let VAC = [{"id": "VAC-501", "field": "IT", "title": "Senior Backend-разработчик (Python)", "company": "Финтех-компания, разрабатывающая платёжные сервисы для рынка СНГ.", "city": "Ташкент", "salary": "2 500–3 500 $", "type": "Полная занятость · Гибрид", "disabled": false, "responsibilities": ["Проектирование и разработка backend-сервисов на Python/Django.", "Оптимизация производительности и масштабирование под нагрузку.", "Код-ревью и менторинг junior-разработчиков."], "requirements": ["От 5 лет коммерческого опыта на Python.", "Опыт с PostgreSQL, Docker, REST API.", "Английский от B2."], "offer": ["Конкурентная зарплата в $ и пересмотр раз в год.", "Гибридный формат и гибкий график.", "Оплата обучения и сертификаций."]}, {"id": "VAC-502", "field": "BPO", "title": "Оператор контакт-центра (со знанием английского)", "company": "Международный BPO-провайдер, обслуживающий клиентов из Европы и США.", "city": "Самарканд", "salary": "700–1 000 $", "type": "Полная занятость · Офис", "disabled": false, "responsibilities": ["Обработка входящих обращений клиентов на английском.", "Ведение карточек в CRM, фиксация результатов.", "Соблюдение стандартов качества и SLA."], "requirements": ["Английский от B1 (разговорный).", "Грамотная речь, стрессоустойчивость.", "Готовность к сменному графику."], "offer": ["Обучение за счёт компании.", "Бонусы за качество и выполнение плана.", "Карьерный рост до супервайзера."]}, {"id": "VAC-503", "field": "Маркетинг", "title": "Performance-маркетолог", "company": "E-commerce проект с собственным брендом и розничной сетью.", "city": "Ташкент", "salary": "1 200–1 800 $", "type": "Полная занятость · Гибрид", "disabled": false, "responsibilities": ["Запуск и оптимизация рекламы в Google и Meta.", "Аналитика воронок и улучшение ROMI.", "A/B-тесты лендингов и креативов."], "requirements": ["От 3 лет в performance-маркетинге.", "Опыт управления бюджетами от 20 000 $/мес.", "Уверенная аналитика (GA4, дашборды)."], "offer": ["Бюджет на тесты и инструменты.", "Бонусы от результата.", "Команда сильных специалистов."]}, {"id": "VAC-504", "field": "Финансы", "title": "Финансовый менеджер", "company": "Производственный холдинг с международными контрактами.", "city": "Ташкент", "salary": "1 600–2 200 $", "type": "Полная занятость · Офис", "disabled": true, "responsibilities": ["Управленческий учёт и финансовая отчётность.", "Бюджетирование и контроль исполнения.", "Подготовка финмоделей для руководства."], "requirements": ["От 5 лет в финансах/аудите.", "Знание IFRS, уверенный Excel/1С.", "Английский от B2."], "offer": ["Белая зарплата и годовой бонус.", "Медицинская страховка.", "Развитие до финансового директора."]}];
-let CAND = [{"id": "HC-1042", "field": "IT — Backend-разработка", "date": "12.06.2026", "city": "Ташкент", "experience": "6 лет: финтех, e-commerce, SaaS", "results": "Снизил время отклика API на 40%, вывел 3 продукта в прод", "salary": "от 2 500 $", "languages": "Русский (родной), English (B2)", "skills": ["Python", "Django", "PostgreSQL", "Docker"], "description": "Senior backend-инженер с опытом высоконагруженных сервисов и менторства команды.", "disabled": false}, {"id": "HC-1057", "field": "BPO — Контакт-центр", "date": "11.06.2026", "city": "Самарканд", "experience": "4 года: поддержка клиентов, продажи", "results": "CSAT 96%, перевыполнение плана продаж на 18%", "salary": "от 700 $", "languages": "Русский (родной), English (B1)", "skills": ["Customer Support", "CRM", "Продажи"], "description": "Специалист контакт-центра с сильными коммуникативными навыками.", "disabled": false}, {"id": "HC-1063", "field": "Маркетинг", "date": "10.06.2026", "city": "Ташкент", "experience": "5 лет: digital, performance-маркетинг", "results": "ROMI 320%, рост лидов в 2,4 раза за год", "salary": "от 1 400 $", "languages": "Русский (родной), English (C1)", "skills": ["Performance", "Google Ads", "Аналитика"], "description": "Performance-маркетолог с опытом управления бюджетами и построения воронок.", "disabled": true}];
 let MAT = [{"id": "M-01", "cat": "Статья", "title": "Как составить вакансию, на которую откликаются", "desc": "7 принципов, которые повышают конверсию объявления.", "body": "Хорошее объявление о вакансии — это продукт. Оно отвечает на три вопроса кандидата: что я буду делать, что я получу и почему именно эта компания.", "disabled": false}, {"id": "M-02", "cat": "Новость", "title": "Рынок IT-найма в Узбекистане", "desc": "Спрос на разработчиков вырос, сроки закрытия вакансий сократились.", "body": "За первое полугодие 2026 года спрос на IT-специалистов в Узбекистане заметно вырос, а доля удалённых офферов продолжает расти.", "disabled": false}, {"id": "M-03", "cat": "Видео", "title": "Онбординг в Human and Capital", "desc": "За 4 минуты показываем путь нового сотрудника.", "body": "В этом видео мы показываем, как устроен процесс адаптации новых сотрудников: ключевые этапы, роль наставника и первая неделя.", "disabled": true}];
 let SEO = [{"id": "home", "page": "Главная", "url": "index.html", "title": "Human and Capital — кадровое агентство в Узбекистане", "desc": "Подбор персонала, рекрутмент, консалтинг и аутстаффинг в Ташкенте. Закрываем вакансии быстро и с гарантией.", "keywords": "кадровое агентство ташкент, подбор персонала узбекистан, рекрутмент", "indexed": true}, {"id": "rec", "page": "Рекрутмент", "url": "recruitment.html", "title": "Рекрутмент — Human and Capital", "desc": "Профессиональный подбор персонала под ключ: от заявки до выхода кандидата. Executive search и массовый подбор.", "keywords": "рекрутмент, executive search, поиск сотрудников", "indexed": true}, {"id": "cons", "page": "Консалтинг", "url": "consulting.html", "title": "Консалтинг — Human and Capital", "desc": "HR-консалтинг под ключ: кадровый аудит, обучение, адаптация, анализ рынка труда и прескрининг.", "keywords": "hr консалтинг, кадровый аудит, анализ рынка труда", "indexed": true}, {"id": "vac", "page": "Наши вакансии", "url": "vacancies.html", "title": "Наши вакансии — Human and Capital", "desc": "Актуальные вакансии в IT, BPO, финансах и маркетинге. Откликнитесь и отправьте резюме онлайн.", "keywords": "вакансии ташкент, работа узбекистан, it вакансии", "indexed": true}, {"id": "res", "page": "Полезные материалы", "url": "resources.html", "title": "Полезные материалы — Human and Capital", "desc": "Статьи, новости и видео о подборе персонала, HR и рынке труда в Узбекистане.", "keywords": "hr блог, статьи о подборе, рынок труда", "indexed": false}];
 let SEO_CHECKS = [{"k": "Заголовки (title) заданы для всех страниц", "ok": true}, {"k": "Мета-описания заполнены", "ok": true}, {"k": "Карта сайта sitemap.xml отправлена в Google", "ok": true}, {"k": "robots.txt разрешает индексацию", "ok": true}, {"k": "HTTPS-сертификат активен", "ok": true}, {"k": "Сайт адаптирован под мобильные", "ok": true}, {"k": "Микроразметка Schema.org (Organization)", "ok": false}, {"k": "Alt-теги у всех изображений", "ok": false}, {"k": "Подключён Google Search Console", "ok": true}, {"k": "Скорость загрузки (Core Web Vitals) — зелёная зона", "ok": false}];
 let LEADS = [];
 let APPS = [];
 let SITE_LEADS = {new_count:0,total_count:0};
-const ANALYTICS = {"views": 18420, "visitors": 7240, "leads_month": 36, "apps_month": 128, "conversion": "2.4%", "series": [{"d": "Пн", "v": 2100}, {"d": "Вт", "v": 2450}, {"d": "Ср", "v": 2780}, {"d": "Чт", "v": 2600}, {"d": "Пт", "v": 3120}, {"d": "Сб", "v": 1980}, {"d": "Вс", "v": 1390}], "top_pages": [{"page": "Главная", "views": 6120, "avg": "01:42"}, {"page": "Наши вакансии", "views": 4380, "avg": "02:15"}, {"page": "Банк резюме", "views": 3210, "avg": "02:48"}, {"page": "Рекрутмент", "views": 2140, "avg": "01:20"}, {"page": "Полезные материалы", "views": 1570, "avg": "01:05"}], "sources": [{"s": "Google (органика)", "p": 48}, {"s": "Прямые заходы", "p": 24}, {"s": "Соцсети", "p": 17}, {"s": "Реклама", "p": 11}]};
+const ANALYTICS = {"views": 18420, "visitors": 7240, "leads_month": 36, "apps_month": 128, "conversion": "2.4%", "series": [{"d": "Пн", "v": 2100}, {"d": "Вт", "v": 2450}, {"d": "Ср", "v": 2780}, {"d": "Чт", "v": 2600}, {"d": "Пт", "v": 3120}, {"d": "Сб", "v": 1980}, {"d": "Вс", "v": 1390}], "top_pages": [{"page": "Главная", "views": 6120, "avg": "01:42"}, {"page": "Наши вакансии", "views": 4380, "avg": "02:15"}, {"page": "Рекрутмент", "views": 2140, "avg": "01:20"}, {"page": "Полезные материалы", "views": 1570, "avg": "01:05"}], "sources": [{"s": "Google (органика)", "p": 48}, {"s": "Прямые заходы", "p": 24}, {"s": "Соцсети", "p": 17}, {"s": "Реклама", "p": 11}]};
 let current = null, uid = 500;
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
@@ -1071,18 +1069,16 @@ checkSession();
 /* ---------- загрузка реальных данных ---------- */
 async function loadAllData(){
   try{
-    const [mat, seo, adm, vac, cand] = await Promise.all([
+    const [mat, seo, adm, vac] = await Promise.all([
       sb.from('site_materials').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),
       sb.from('seo_pages').select('*').order('id',{ascending:true}),
       sb.from('site_admins').select('*').order('created_at',{ascending:true}),
-      sb.from('vacancies').select('id,title,description,location,type,budget,requirements,offer,status,show_on_site').order('created_at',{ascending:false}),
-      sb.from('candidates').select('id,position,salary,public_field,public_city,public_experience,public_results,public_summary,public_languages,public_skills,is_public,created_at').order('created_at',{ascending:false})
+      sb.from('vacancies').select('id,title,description,location,type,budget,requirements,offer,status,show_on_site').order('created_at',{ascending:false})
     ]);
     if(mat.data) MAT=mat.data.map(m=>({ id:m.id, cat:CAT_RU[m.cat]||'Статья', title:m.title||'', desc:m.description||'', body:m.body||'', media_url:m.media_url||'', media_type:m.media_type||'', disabled:!m.published }));
     if(seo.data) SEO=seo.data.map(x=>({ id:x.id, page:x.page||'', url:x.url||'', title:x.title||'', desc:x.description||'', keywords:x.keywords||'', indexed:!!x.indexed }));
     if(adm.data) EMP=adm.data.map(a=>({ id:a.id, name:a.name||a.email, email:a.email, role:a.role, status:a.status, added:fmtDate(a.created_at) }));
     if(vac.data) VAC=vac.data.map(v=>({ id:v.id, field:(v.status||'—'), title:v.title||'', company:v.description||'', city:v.location||'', salary:v.budget?(Number(v.budget).toLocaleString('ru-RU')+' $'):'', type:v.type||'', disabled:!v.show_on_site, responsibilities:[], requirements:String(v.requirements||'').split('\n').filter(Boolean), offer:String(v.offer||'').split('\n').filter(Boolean) }));
-    if(cand.data) CAND=cand.data.map(c=>({ id:c.id, field:c.public_field||c.position||'—', city:c.public_city||'', date:fmtDate(c.created_at), experience:c.public_experience||'', results:c.public_results||'', salary:c.salary?('от '+Number(c.salary).toLocaleString('ru-RU')+' $'):'', languages:c.public_languages||'', skills:c.public_skills||[], description:c.public_summary||'', disabled:!c.is_public }));
     try{ const ap=await sb.rpc('site_applications');
          APPS=(ap.data||[]).map(a=>({ id:a.id, date:fmtDate(a.created_at), name:a.name||'—', vacancy:a.vacancy_title||a.position||'—', phone:a.phone||'', email:a.email||'', cv:a.resume_name||'', cv_url:a.resume_url||'' }));
     }catch(e2){ console.error('site_applications',e2); }
@@ -1106,7 +1102,7 @@ const main=document.getElementById('admMain');
 document.getElementById('admNav').addEventListener('click',e=>{ const b=e.target.closest('button[data-sec]'); if(b) go(b.dataset.sec); });
 function go(sec){
   document.querySelectorAll('#admNav button').forEach(b=>b.classList.toggle('active',b.dataset.sec===sec));
-  ({overview:renderOverview,employees:renderEmployees,vacancies:renderVacancies,candidates:renderCandidates,materials:renderMaterials,customers:renderCustomers,requests:renderRequests,analytics:renderAnalytics,seo:renderSeo}[sec]||renderOverview)();
+  ({overview:renderOverview,employees:renderEmployees,vacancies:renderVacancies,materials:renderMaterials,customers:renderCustomers,requests:renderRequests,analytics:renderAnalytics,seo:renderSeo}[sec]||renderOverview)();
 }
 
 function head(title,subtitle,btnHtml){ return '<div class="adm-head"><div><h2>'+title+'</h2>'+(subtitle?'<p>'+subtitle+'</p>':'')+'</div>'+(btnHtml||'')+'</div>'; }
@@ -1121,7 +1117,6 @@ function renderOverview(){
     book:'<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
     bld:'<svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/></svg>'};
   let tiles = stat(I.brief, VAC.filter(v=>!v.disabled).length+'/'+VAC.length, 'Активных вакансий')
-    + stat(I.doc, CAND.filter(c=>!c.disabled).length+'/'+CAND.length, 'Активных соискателей')
     + stat(I.book, MAT.filter(m=>!m.disabled).length+'/'+MAT.length, 'Опубликовано материалов')
     + stat(I.bld, CUST.filter(c=>c.status==='active').length, 'Активных заказчиков');
   if(can('employees')) tiles += stat(I.user, EMP.filter(e=>e.status==='active').length, 'Сотрудников в системе');
@@ -1236,50 +1231,6 @@ function vacModal(v){
     if(id){ const x=VAC.find(o=>o.id===id); Object.assign(x,data); pushCRM('vacancy.update',x); toast('Вакансия сохранена.'); }
     else { const x=Object.assign({id:'VAC-'+(++uid),disabled:false},data); VAC.unshift(x); pushCRM('vacancy.create',x); toast('Вакансия создана.'); }
     closeModal(); renderVacancies();
-  });
-}
-
-/* ---------- candidates / resume bank (full edit) ---------- */
-function renderCandidates(){
-  const c_=can('candidates');
-  const rows=CAND.map(c=>'<tr>'
-    +'<td><b>'+esc(c.field)+'</b><div class="adm-sub">'+esc(c.id)+' · '+esc(c.salary||'')+'</div></td>'
-    +'<td>'+esc(c.city)+'</td>'
-    +'<td class="adm-sub">'+esc(c.experience||'')+'</td>'
-    +'<td>'+swCell('candidates',c,'В базе','Скрыт',c_)+'</td>'
-    +'<td>'+editActions('candidates',c.id,c_)+'</td></tr>').join('');
-  main.innerHTML = head('Соискатели','Создавайте и редактируйте карточки резюме в банке резюме, скрывайте и показывайте их на сайте.',
-      c_?'<button class="adm-btn" data-add="candidates"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Добавить соискателя</button>':'')
-    + '<div class="adm-card"><div class="adm-table-wrap"><table class="adm-table"><thead><tr><th>Сфера / ID</th><th>Город</th><th>Опыт</th><th>В базе</th><th>Действия</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
-}
-function candModal(c){
-  const isEdit=!!c;
-  document.getElementById('admModalBody').innerHTML =
-    '<h3>'+(isEdit?'Редактирование резюме':'Новый соискатель')+'</h3><p class="msub">Поля карточки в банке резюме.</p>'
-    +'<form id="candForm" data-id="'+(isEdit?c.id:'')+'">'
-    + fg('Сфера деятельности', inp('cField', isEdit?c.field:'', 'IT — Backend-разработка'))
-    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'
-    + fg('Город', inp('cCity', isEdit?c.city:'', 'Ташкент'))
-    + fg('Дата публикации', inp('cDate', isEdit?c.date:'', 'дд.мм.гггг'))
-    + '</div>'
-    + fg('Опыт в сферах деятельности', inp('cExp', isEdit?c.experience:'', 'Напр.: 6 лет: финтех, e-commerce'))
-    + fg('Результаты работы', ta('cRes', isEdit?c.results:'', 'Ключевые достижения', 60))
-    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'
-    + fg('Ожидания по зарплате', inp('cSalary', isEdit?c.salary:'', 'от 1 500 $'))
-    + fg('Владение языками', inp('cLang', isEdit?c.languages:'', 'Русский, English (B2)'))
-    + '</div>'
-    + fg('Основные навыки (через запятую)', inp('cSkills', isEdit?(c.skills||[]).join(', '):'', 'Python, SQL, Docker'))
-    + fg('Краткое описание', ta('cDesc', isEdit?c.description:'', 'Небольшое описание кандидата', 70))
-    + '<button type="submit" class="adm-cta">'+(isEdit?'Сохранить':'Добавить соискателя')+'</button></form>';
-  openModal();
-  document.getElementById('candForm').addEventListener('submit',ev=>{ ev.preventDefault();
-    const id=ev.target.dataset.id;
-    const data={ field:val('cField'), city:val('cCity'), date:val('cDate')||new Date().toLocaleDateString('ru-RU'),
-      experience:val('cExp'), results:val('cRes'), salary:val('cSalary'), languages:val('cLang'),
-      skills:val('cSkills').split(',').map(x=>x.trim()).filter(Boolean), description:val('cDesc') };
-    if(id){ const x=CAND.find(o=>o.id===id); Object.assign(x,data); pushCRM('candidate.update',x); toast('Резюме сохранено.'); }
-    else { const x=Object.assign({id:'HC-'+(++uid),disabled:false},data); CAND.unshift(x); pushCRM('candidate.create',x); toast('Соискатель добавлен.'); }
-    closeModal(); renderCandidates();
   });
 }
 
@@ -1565,19 +1516,18 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-close]')){ closeModal(); return; }
   let b;
   if((b=e.target.closest('[data-tg]'))){ if(b.disabled) return; const [kind,id]=b.dataset.tg.split(':');
-    const list={vacancies:VAC,candidates:CAND,materials:MAT}[kind]; const it=list.find(x=>x.id===id);
+    const list={vacancies:VAC,materials:MAT}[kind]; const it=list.find(x=>x.id===id);
     if(it){ it.disabled=!it.disabled; pushCRM(kind+'.toggle',it); go(kind); toast(it.disabled?'Отключено на сайте.':'Снова видно на сайте.'); } return; }
   if((b=e.target.closest('[data-add]'))){ const kind=b.dataset.add;
     if(!can(kind)) return;
-    ({vacancies:vacModal,candidates:candModal,materials:matModal}[kind])(null); return; }
+    ({vacancies:vacModal,materials:matModal}[kind])(null); return; }
   if((b=e.target.closest('[data-edit]'))){ const [kind,id]=b.dataset.edit.split(':');
     if(!can(kind)) return;
-    const list={vacancies:VAC,candidates:CAND,materials:MAT}[kind]; const it=list.find(x=>x.id===id);
-    ({vacancies:vacModal,candidates:candModal,materials:matModal}[kind])(it); return; }
+    const list={vacancies:VAC,materials:MAT}[kind]; const it=list.find(x=>x.id===id);
+    ({vacancies:vacModal,materials:matModal}[kind])(it); return; }
   if((b=e.target.closest('[data-del]'))){ const [kind,id]=b.dataset.del.split(':');
     if(!can(kind)) return;
     if(kind==='vacancies') VAC=VAC.filter(o=>o.id!==id);
-    if(kind==='candidates') CAND=CAND.filter(o=>o.id!==id);
     if(kind==='materials') MAT=MAT.filter(o=>o.id!==id);
     pushCRM(kind+'.delete',{id}); go(kind); toast('Удалено.'); return; }
   if((b=e.target.closest('[data-reqtab]'))){ reqTab=b.dataset.reqtab; renderRequests(); return; }
@@ -1638,13 +1588,6 @@ async function pushCRM(action,item){
     } else if(action==='vacancies.delete'){
       const r=await sb.from('vacancies').update({ show_on_site:false }).eq('id',item.id); if(r.error) throw r.error;
       toast('Вакансия скрыта на сайте. Полное удаление — в ATS.'); await loadAllData(); go('vacancies');
-    } else if(action==='candidates.toggle'){
-      const r=await sb.from('candidates').update({ is_public:!item.disabled }).eq('id',item.id); if(r.error) throw r.error;
-    } else if(action==='candidate.update'){
-      const r=await sb.from('candidates').update({ public_field:item.field, public_city:item.city, public_experience:item.experience, public_results:item.results, public_summary:item.description, public_languages:item.languages, public_skills:item.skills||[] }).eq('id',item.id); if(r.error) throw r.error;
-    } else if(action==='candidate.create' || action==='candidates.delete'){
-      toast('Карточки кандидатов создаются и удаляются в ATS (персональные данные).');
-      await loadAllData(); go('candidates'); return;
     }
     // customer.*, leads.*, apps.*, seo.tool, seo.check — демонстрационные разделы (для них нет таблиц), не сохраняются
   }catch(e){ console.error('save',action,e); toast('Ошибка сохранения: '+(e.message||e)); await loadAllData(); }
