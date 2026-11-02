@@ -2,6 +2,8 @@
 
 Повторный запуск безопасен: блоки между маркерами OS-SEO заменяются, а не дублируются.
 Запуск из корня сайта: python3 tools/build_outstaffing_seo.py
+Пишет outstaffing.html, outstaffing-en.html, outstaffing-uz.html: правит мету/H1 и заменяет блоки между маркерами
+OS-SEO. Содержимое блоков правьте здесь; остальную страницу – в самом HTML. Проверка: после запуска git diff пустой.
 """
 import json, re
 
@@ -367,7 +369,9 @@ def main():
             s, n = re.subn(r'(<meta ' + attr + r' content=")[^"]*(")', lambda m: m.group(1) + esc(d["title"]) + m.group(2), s, count=1); assert n, attr
         s, n = re.subn(r'(<section class="rec-hero" id="home">.*?<h1>)[^<]*(</h1>)', lambda m: m.group(1) + d["h1"] + m.group(2), s, count=1, flags=re.S); assert n
 
-        s = s.replace("</style>", CSS + "\n</style>", 1)
+        # в <head> два <style>: первый – @font-face, стили блоков дописываем в конец основного (с :root)
+        k = s.index("</style>", s.index(":root{"))
+        s = s[:k] + CSS + "\n" + s[k:]
         s = s.replace("</head>", jsonld(d) + "</head>", 1)
         assert s.count('<section id="contact">') == 1
         s = s.replace('<section id="contact">', sections(d) + '<section id="contact">', 1)

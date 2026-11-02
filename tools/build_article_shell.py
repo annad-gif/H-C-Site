@@ -11,6 +11,10 @@
 
 Запускать после правок меню/подвала/стилей в resources*.html:
     python3 tools/build_article_shell.py
+
+Пишет article.css, api/_shell.html, api/_shell-en.html, api/_shell-uz.html – только если все три языка разобрались
+без ошибок. Стили статьи правьте в tools/article-extra.css, общие стили и меню – в resources*.html, а не в article.css
+и не в api/_shell*.html. Проверка: после запуска git diff пустой.
 """
 import os
 import re
@@ -35,14 +39,9 @@ def build(lang, src_name, out_name):
             raise SystemExit("не найдено в " + src_name + ": " + pattern)
         return m.group(0)
 
-    if lang == "ru":
-        style = re.search(r"<style>(.*?)</style>", src, re.S).group(1)
-        extra = open(os.path.join(ROOT, "tools", "article-extra.css"), encoding="utf-8").read()
-        open(os.path.join(ROOT, "article.css"), "w", encoding="utf-8").write(
-            "/* Сгенерировано tools/build_article_shell.py из resources.html – не править вручную */\n"
-            + style.strip() + "\n\n" + extra)
-
-    fonts = grab(r'<link rel="preconnect" href="https://fonts.googleapis.com"/>.*?rel="stylesheet"/>')
+    # в resources*.html два <style>: первый – @font-face (шрифты с /fonts) и мелочи для телефона, второй – стили страницы
+    fonts = grab(r"<style>\n/\* Inter и Unbounded[^\n]*\*/\n(?:@font-face\{[^\n]*\}\n)+") + "</style>"
+    style = grab(r"<style>\s*:root\{.*?</style>")[len("<style>"):-len("</style>")]
     nav = absolutize(grab(r'<nav id="nav">.*?</nav>'))
     nav = nav.replace(' class="active"', "")
     # подсвечиваем «Полезные материалы» в меню (пункты переключателя языка имеют data-lang и не попадают)
@@ -83,8 +82,17 @@ def build(lang, src_name, out_name):
 </body>
 </html>
 """
-    open(os.path.join(ROOT, "api", out_name), "w", encoding="utf-8").write(shell)
-    return out_name
+    return style, shell
 
 
-print("ok: article.css, " + ", ".join("api/" + build(*x) for x in LANGS))
+# сначала собираем всё в памяти и пишем, только если все три языка разобрались без ошибок
+out = {}
+for lang, src_name, out_name in LANGS:
+    style, out["api/" + out_name] = build(lang, src_name, out_name)
+    if lang == "ru":
+        extra = open(os.path.join(ROOT, "tools", "article-extra.css"), encoding="utf-8").read()
+        out["article.css"] = ("/* Сгенерировано tools/build_article_shell.py из resources.html – не править вручную */\n"
+                              + style.strip() + "\n\n" + extra)
+for name, text in out.items():
+    open(os.path.join(ROOT, name), "w", encoding="utf-8").write(text)
+print("ok: " + ", ".join(out))

@@ -1,4 +1,8 @@
-"""Собирает hr-services-uzbekistan.html из оболочки consulting-en.html (стили, меню, форма, подвал)."""
+"""Собирает hr-services-uzbekistan.html из оболочки consulting-en.html (стили, меню, форма, подвал).
+
+Пишет hr-services-uzbekistan.html целиком. Контент и стили страницы правьте здесь, общие (меню, подвал, стили) –
+в consulting-en.html, а не в готовом HTML. Запуск: python3 tools/build_hr_services.py . ; после запуска git diff пустой.
+"""
 import json, re, sys
 
 ROOT = sys.argv[1]
@@ -11,8 +15,9 @@ DESC = ("HR services in Uzbekistan for local and international companies: recrui
         "outstaffing with legal employment and payroll, HR consulting and HR audit. Tashkent-based team, 500+ positions filled.")
 
 # ---------- head ----------
-style_start, style_end = src.index("<style>"), src.index("</style>") + len("</style>")
-fonts = re.search(r'<link rel="preconnect" href="https://fonts.googleapis.com"/>.*?rel="stylesheet"/>', src, re.S).group(0)
+# в оболочке два <style>: первый – @font-face (шрифты с /fonts) и мелочи для телефона, второй – стили страницы (с :root)
+fonts = re.search(r"<style>\n/\* Inter и Unbounded.*?</style>", src, re.S).group(0)
+style = re.search(r"<style>\s*:root\{.*?</style>", src, re.S).group(0)
 
 faq = [
     ("What HR services do you provide in Uzbekistan?",
@@ -200,7 +205,7 @@ head = f"""<!DOCTYPE html>
 {json.dumps(ld, ensure_ascii=False, indent=2)}
 </script>
 {fonts}
-{src[style_start:style_end]}
+{style}
 {extra_css}
 </head>
 """
@@ -438,7 +443,7 @@ main = f"""
 
 # ---------- contact / footer / fab / toast ----------
 tail_start = src.index('<section id="contact">')
-tail_end = src.index('<script src="https://cdn.jsdelivr.net/npm/lottie-web')
+tail_end = src.index('<script src="/hc-lottie.js"></script>')  # скрипт Lottie оболочки на посадочной не нужен
 tail = src[tail_start:tail_end]
 old_select = re.search(r'<select id="service">.*?</select>', tail, re.S).group(0)
 tail = tail.replace(old_select, """<select id="service">

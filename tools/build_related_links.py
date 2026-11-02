@@ -2,6 +2,8 @@
 
 Повторный запуск безопасен: блок между маркерами RL-SEO заменяется, а не дублируется.
 Запуск из корня сайта: python3 tools/build_related_links.py
+Пишет consulting.html, consulting-en.html, consulting-uz.html: заменяет только блок между маркерами RL-SEO –
+его правьте здесь. Проверка: после запуска git diff пустой.
 """
 MARK_B, MARK_E = "<!-- RL-SEO:BEGIN -->", "<!-- RL-SEO:END -->"
 A = "/articles/"

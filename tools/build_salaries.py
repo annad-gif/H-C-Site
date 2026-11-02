@@ -7,6 +7,9 @@
 
 Запускать после правок меню/подвала в resources*.html или текстов ниже:
     python3 tools/build_salaries.py
+
+Пишет analytics-salaries.html, analytics-salaries-en.html, analytics-salaries-uz.html целиком. Правки страницы – в шаблонах
+здесь, общие (меню, подвал, стили оболочки) – в resources*.html, а не в готовом HTML. Проверка: после запуска git diff пустой.
 """
 import json
 import os

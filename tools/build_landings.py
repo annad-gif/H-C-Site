@@ -3,6 +3,8 @@
 Оболочка (стили, меню, форма, подвал, скрипты) берётся из consulting*.html нужного языка,
 контент – из PAGES ниже. Цены услуг не указываем (см. «стоимость рассчитывается индивидуально»).
 Запуск из корня сайта: python3 tools/build_landings.py
+Пишет файлы из PAGES целиком (executive-search*, employer-of-record*, hr-services.html, hr-services-uz.html).
+Контент и стили посадочных правьте здесь и в tools/landings_ru_uz.py, а не в готовом HTML. Проверка: после запуска git diff пустой.
 """
 import json, re
 
@@ -438,8 +440,9 @@ def build(d):
     url = f"{SITE}/{d['file']}"
 
     # ---------- head ----------
-    style = src[src.index("<style>"):src.index("</style>") + len("</style>")]
-    fonts = re.search(r'<link rel="preconnect" href="https://fonts.googleapis.com"/>.*?rel="stylesheet"/>', src, re.S).group(0)
+    # в оболочке два <style>: первый – @font-face (шрифты с /fonts) и мелочи для телефона, второй – стили страницы (с :root)
+    fonts = re.search(r"<style>\n/\* Inter и Unbounded.*?</style>", src, re.S).group(0)
+    style = re.search(r"<style>\s*:root\{.*?</style>", src, re.S).group(0)
     crumbs = [d["home"], d["parent"], (strip_tags(d["h1"]), url)]
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "Service", "@id": url + "#service", "name": d["service"], "serviceType": d["service"],
@@ -676,7 +679,8 @@ def build(d):
 """
 
     # ---------- contact / footer / scripts из оболочки ----------
-    tail = src[src.index('<section id="contact">'):src.index('<script src="https://cdn.jsdelivr.net/npm/lottie-web')]
+    # скрипт Lottie оболочки на посадочной не нужен
+    tail = src[src.index('<section id="contact">'):src.index('<script src="/hc-lottie.js"></script>')]
     sel = re.search(r'<select id="service">.*?</select>', tail, re.S).group(0)
     first = re.search(r"<option value=\"\">.*?</option>", sel).group(0)
     tail = tail.replace(sel, '<select id="service">\n          ' + first + "\n" +
