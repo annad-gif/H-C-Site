@@ -185,7 +185,8 @@ function tgHTML(m, L) {
 }
 
 // --- очистка HTML тела статьи (его пишут в админке) ---
-const ALLOWED = new Set(["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "b", "strong", "i", "em", "u", "a", "img", "figure", "figcaption"]);
+const ALLOWED = new Set(["p", "br", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "b", "strong", "i", "em", "u", "a", "img", "figure", "figcaption",
+  "table", "thead", "tbody", "tr", "th", "td"]); // таблицы – без атрибутов, стили в tools/article-extra.css
 function attr(attrs, name) {
   const m = new RegExp("\\s" + name + "\\s*=\\s*(\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", "i").exec(attrs);
   return m ? (m[2] ?? m[3] ?? m[4] ?? "") : null;

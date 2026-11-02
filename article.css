@@ -924,6 +924,12 @@
 .ar-text li > p{margin:0;}
 .ar-text strong,.ar-text b{color:var(--black);}
 .ar-text a{color:var(--mustard-dim);text-decoration:underline;}
+/* таблицы в тексте статьи: на узком экране – горизонтальная прокрутка */
+.ar-text table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:15px;line-height:1.45;margin:0 0 1.4em;}
+.ar-text th,.ar-text td{padding:9px 14px;border-bottom:1px solid var(--grey-100);text-align:left;vertical-align:top;}
+.ar-text th{font-weight:600;color:var(--black);background:var(--grey-50);}
+.ar-text td:not(:first-child),.ar-text th:not(:first-child){text-align:right;}
+.ar-text tr:last-child td{border-bottom:none;}
 .ar-text img{max-width:100%;height:auto;border-radius:12px;display:block;margin:1.4em 0;}
 .ar-text figure{margin:1.8em 0;}
 .ar-text figure img{margin:0;border:1px solid var(--grey-100);}

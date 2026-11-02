@@ -308,6 +308,36 @@ COVERS = {
  <div class="item"><div class="ico">{ic('people')}</div><div><b>$4 800 dan</b><span>savdo rahbarlarining yuqori 10%</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Tahlil</div>""",
+"bpo_2026": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Сколько стоит <span class="acc">оператор поддержки</span></h1>
+<p class="sub">Узбекистан, 2026: английский, русский и цена команды для BPO и контакт-центров</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $415</b><span>медиана оператора с английским B2+ на руки</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>≈ $450</b><span>стоимость для работодателя – резидента IT Park</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>105 800</b><span>резюме с английским B2+ за год</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Аналитика</div>""",
+"bpo_2026_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Hiring in Uzbekistan: <span class="acc">support agents</span></h1>
+<p class="sub">2026: English, Russian and the real cost of a contact-centre team</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $415</b><span>median net ask of an agent with English B2+</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>≈ $450</b><span>monthly cost for an IT Park resident employer</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>105,800</b><span>CVs with English B2+ in the last year</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Insights</div>""",
+"bpo_2026_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Qo‘llab-quvvatlash <span class="acc">operatori</span> narxi</h1>
+<p class="sub">O‘zbekiston, 2026: ingliz, rus tillari va BPO hamda call-markaz jamoasi narxi</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $415</b><span>ingliz B2+ bilgan operator medianasi, qo‘lga</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>≈ $450</b><span>IT Park rezidenti ish beruvchi uchun narx</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>105 800</b><span>bir yilda ingliz B2+ rezyumelari</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Tahlil</div>""",
 }
 
 for name, body in COVERS.items():

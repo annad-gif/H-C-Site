@@ -62,13 +62,13 @@ T = {
 W, PAD_R, MAX = 1320, 48, 60  # ширина, правое поле, ось до 60 млн
 
 
-def chart(t, title, sub, legend, rows, label_w, row_h):
+def chart(t, title, sub, legend, rows, label_w, row_h, max_m=MAX):
     top = 150
     x0, x1 = label_w, W - 72 - PAD_R // 2
-    sx = lambda v: x0 + (v / 1e6) / MAX * (x1 - x0)
+    sx = lambda v: x0 + (v / 1e6) / max_m * (x1 - x0)
     h = top + row_h * len(rows) + 100
     svg = []
-    for g in range(0, MAX + 1, 10):
+    for g in range(0, max_m + 1, 10 if max_m > 30 else 5):
         x = sx(g * 1e6)
         svg.append(f'<line x1="{x:.1f}" y1="{top - 10}" x2="{x:.1f}" y2="{top + row_h * len(rows)}" stroke="#e6e6e3" stroke-width="2"/>')
         svg.append(f'<text x="{x:.1f}" y="{top + row_h * len(rows) + 32}" text-anchor="middle" class="tick">{g}</text>')
@@ -78,7 +78,7 @@ def chart(t, title, sub, legend, rows, label_w, row_h):
         svg.append(f'<rect x="{sx(p25):.1f}" y="{y - 16:.1f}" width="{sx(p75) - sx(p25):.1f}" height="32" rx="4" fill="#dcdbd5"/>')
         svg.append(f'<line x1="{sx(p10):.1f}" y1="{y:.1f}" x2="{sx(p90):.1f}" y2="{y:.1f}" stroke="#c4c3b8" stroke-width="3.5"/>')
         svg.append(f'<circle cx="{sx(p50):.1f}" cy="{y:.1f}" r="11" fill="#2b74d8"/>')
-        v = f"{p50 / 1e6:.1f}".replace(".", t["dec"])
+        v = f"{p50 / 1e6 + 1e-9:.1f}".replace(".", t["dec"])  # 8,45 → 8,5, как в тексте
         svg.append(f'<text x="{sx(p50):.1f}" y="{y - 24:.1f}" text-anchor="middle" class="val">{v}</text>')
     svg.append(f'<text x="{x1}" y="{top + row_h * len(rows) + 72}" text-anchor="end" class="tick">{t["axis"]}</text>')
     html = f"""<!doctype html><html><head><meta charset="utf-8">
