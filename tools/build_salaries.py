@@ -66,8 +66,8 @@ LI = {"ru": 0, "en": 1, "uz": 2}
 T = {
     "ru": dict(
         title="Зарплаты в Узбекистане: калькулятор для IT, продаж и финансов – Human and Capital",
-        desc="Сколько просят специалисты IT, продаж и финансов в Узбекистане: медиана, вилка и верхние 10% зарплатных ожиданий по направлению и опыту. Обновляется 1-го и 15-го числа.",
-        back="Аналитика", eyebrow="Инструмент · обновляется 1-го и 15-го числа",
+        desc="Сколько просят специалисты IT, продаж и финансов в Узбекистане: медиана, вилка и верхние 10% зарплатных ожиданий по направлению и опыту. Обновляется перед выходом новых обзоров.",
+        back="Аналитика", eyebrow="Инструмент · данные по резюме и вакансиям",
         h1="Сколько просят специалисты в Узбекистане: IT, продажи, финансы",
         lead="Выберите сферу, направление и опыт – покажем медиану, рабочую вилку и верхние 10% зарплатных ожиданий кандидатов, а где хватает данных – вилки в открытых вакансиях.",
         l_sph="Сфера", l_grp="Направление", l_exp="Опыт", l_cur="Показывать в", c_uzs="Сумах", c_usd="Долларах",
@@ -98,7 +98,7 @@ T = {
               "дату расчёта "
               "({rate} сум за $1). Показаны медиана и квантили, а не средние; срезы, где в выборке меньше 30 резюме, скрыты. "
               "Вилки в вакансиях – медианы нижней и верхней границ в открытых вакансиях с указанной зарплатой на {vdate}; "
-              "суммы «до вычета налога» пересчитаны в «на руки» (−12%). Расчёт от {date}, обновляется 1-го и 15-го числа."),
+              "суммы «до вычета налога» пересчитаны в «на руки» (−12%). Расчёт от {date}."),
         cv={"it": "IT-резюме", "sales": "резюме в продажах и клиентском сервисе", "fin": "резюме в финансах и бухгалтерии"},
         note_it=(" Для сравнения: средняя начисленная зарплата в программировании по данным Нацкомстата за январь–сентябрь "
                  "2026 года – 22,3 млн сум до вычета налога."),
@@ -106,8 +106,8 @@ T = {
         uzs="{v} млн сум", locale="ru-RU"),
     "en": dict(
         title="Salaries in Uzbekistan: Calculator for IT, Sales and Finance – Human and Capital",
-        desc="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated on the 1st and 15th of each month.",
-        back="Insights", eyebrow="Tool · updated on the 1st and 15th",
+        desc="How much IT, sales and finance specialists in Uzbekistan ask for: median, range and top 10% of salary expectations by role and experience. Updated ahead of each new review.",
+        back="Insights", eyebrow="Tool · based on CVs and vacancies",
         h1="What specialists in Uzbekistan ask for: IT, sales, finance",
         lead="Pick a field, role group and experience to see the median, the typical range and the top 10% of candidates’ salary expectations – and, where there is enough data, the ranges in open vacancies.",
         l_sph="Field", l_grp="Role group", l_exp="Experience", l_cur="Show in", c_uzs="UZS", c_usd="USD",
@@ -138,7 +138,7 @@ T = {
               "rate on the calculation date "
               "(UZS {rate} per $1). We show the median and quantiles, not averages; slices with fewer than 30 CVs in the sample are hidden. "
               "Vacancy ranges are medians of the lower and upper bounds in open vacancies with a stated salary as of {vdate}; "
-              "gross amounts are converted to net (−12%). Calculated on {date}, updated on the 1st and 15th of each month."),
+              "gross amounts are converted to net (−12%). Calculated on {date}."),
         cv={"it": "IT CVs", "sales": "sales and customer service CVs", "fin": "finance and accounting CVs"},
         note_it=(" For reference: the average accrued salary in programming according to the Statistics Agency for "
                  "January–September 2026 is UZS 22.3m before tax."),
@@ -146,8 +146,8 @@ T = {
         uzs="UZS {v}m", locale="en-GB"),
     "uz": dict(
         title="O‘zbekistonda maoshlar: IT, savdo va moliya uchun kalkulyator – Human and Capital",
-        desc="O‘zbekistonda IT, savdo va moliya mutaxassislari qancha maosh so‘raydi: yo‘nalish va tajriba bo‘yicha mediana, oraliq va eng yuqori 10%. Har oyning 1 va 15-sanasida yangilanadi.",
-        back="Tahlil", eyebrow="Vosita · har oyning 1 va 15-sanasida yangilanadi",
+        desc="O‘zbekistonda IT, savdo va moliya mutaxassislari qancha maosh so‘raydi: yo‘nalish va tajriba bo‘yicha mediana, oraliq va eng yuqori 10%. Yangi sharhlar oldidan yangilanadi.",
+        back="Tahlil", eyebrow="Vosita · rezyume va vakansiyalar asosida",
         h1="O‘zbekistonda mutaxassislar qancha so‘raydi: IT, savdo, moliya",
         lead="Soha, yo‘nalish va tajribani tanlang – nomzodlar maosh kutilmalarining medianasi, ishchi oralig‘i va eng yuqori 10% ko‘rsatiladi, ma’lumot yetarli bo‘lsa – ochiq vakansiyalardagi oraliqlar ham.",
         l_sph="Soha", l_grp="Yo‘nalish", l_exp="Tajriba", l_cur="Valyuta", c_uzs="So‘m", c_usd="Dollar",
@@ -179,7 +179,7 @@ T = {
               "qayta hisoblangan ($1 uchun {rate} so‘m). O‘rtacha emas, mediana va kvantillar ko‘rsatilgan; tanlanmasida 30 tadan "
               "kam rezyume bo‘lgan kesimlar yashirilgan. Vakansiyalardagi oraliqlar – {vdate} holatiga maosh ko‘rsatilgan ochiq "
               "vakansiyalardagi quyi va yuqori chegaralar medianasi; soliq chegirilgunga qadar summalar qo‘lga hisoblangan "
-              "(−12%). Hisob-kitob sanasi – {date}, har oyning 1 va 15-sanasida yangilanadi."),
+              "(−12%). Hisob-kitob sanasi – {date}."),
         cv={"it": "IT rezyumelar", "sales": "savdo va mijozlarga xizmat ko‘rsatish rezyumelari",
             "fin": "moliya va buxgalteriya rezyumelari"},
         note_it=(" Taqqoslash uchun: Statistika agentligi ma’lumotlariga ko‘ra, 2026-yil yanvar–sentabrda dasturlashda "
