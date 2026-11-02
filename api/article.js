@@ -163,9 +163,21 @@ function hireHTML(m, lang) {
 function withHire(bodyHtml, m, lang) {
   if (!rubricOf(m)) return bodyHtml;
   const block = hireHTML(m, lang);
+  // сразу после первого графика (<figure> или абзаца с картинкой), без них – перед вторым <h2>
+  const fig = bodyHtml.indexOf("<figure>"), img = bodyHtml.indexOf("<img ");
+  let at = -1;
+  if (fig >= 0 && (img < 0 || fig < img)) {
+    const end = bodyHtml.indexOf("</figure>", fig);
+    at = end < 0 ? -1 : end + "</figure>".length;
+  } else if (img >= 0) {
+    const inP = bodyHtml.lastIndexOf("<p>", img) > bodyHtml.lastIndexOf("</p>", img);
+    const end = inP ? bodyHtml.indexOf("</p>", img) : -1;
+    at = end >= 0 ? end + "</p>".length : bodyHtml.indexOf(">", img) + 1;
+  }
+  if (at > 0) return bodyHtml.slice(0, at) + block + bodyHtml.slice(at);
   let n = 0;
-  const out = bodyHtml.replace(/<h2>/g, t => (++n === 3 ? block + t : t));
-  return n >= 3 ? out : out + block;
+  const out = bodyHtml.replace(/<h2>/g, t => (++n === 2 ? block + t : t));
+  return n >= 2 ? out : out + block;
 }
 function tgHTML(m, L) {
   if (!rubricOf(m) || !TG_URL || m.cta === "subscribe") return "";

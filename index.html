@@ -357,6 +357,16 @@
   .svc-link{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--black);text-decoration:none;}
   .svc-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .25s;}
   .svc-card:hover .svc-link svg{transform:translateX(3px);}
+  .svc-intl{margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:24px 32px;flex-wrap:wrap;
+    background:var(--grey-50);border:1px solid var(--grey-100);border-radius:16px;padding:30px 32px;}
+  .svc-intl-copy{flex:1 1 340px;}
+  .svc-intl-copy .svc-tag{margin-bottom:10px;}
+  .svc-intl-copy p{font-size:15px;color:var(--grey-700);line-height:1.65;}
+  .svc-intl-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .svc-intl-actions .btn{padding:13px 22px;font-size:14.5px;}
+  .btn-outline{border-color:var(--black);color:var(--black);}
+  .btn-outline:hover{background:var(--black);color:var(--white);}
+  @media (max-width:640px){.svc-intl{padding:24px 20px;}.svc-intl-actions,.svc-intl-actions .btn{width:100%;justify-content:center;}}
 
   /* ===== ABOUT COMPANY ===== */
   #about-company{background:var(--white);}
@@ -862,6 +872,16 @@
         <h3 style="color:var(--white)">Рассчитывается индивидуально</h3>
         <p style="color:var(--grey-300)">Зависит от уровня позиции, сроков и сложности поиска. Стартапам и социальным проектам – скидки.</p>
         <a href="#contact" class="svc-link" style="color:var(--mustard)">Узнать стоимость <svg viewBox="0 0 24 24" stroke="var(--mustard)"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+    <div class="svc-intl reveal">
+      <div class="svc-intl-copy">
+        <p class="svc-tag">ДЛЯ МЕЖДУНАРОДНЫХ КОМПАНИЙ</p>
+        <p>Нанимаете в Узбекистане из-за рубежа? Подбор, аутстаффинг и оформление сотрудников через Employer of Record – подробно на английском.</p>
+      </div>
+      <div class="svc-intl-actions">
+        <a href="hr-services-uzbekistan.html" class="btn btn-dark" lang="en" hreflang="en">HR services in Uzbekistan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="employer-of-record-uzbekistan.html" class="btn btn-outline" lang="en" hreflang="en">Employer of Record in Uzbekistan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
   </div>
