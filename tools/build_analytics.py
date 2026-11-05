@@ -284,6 +284,10 @@ def shell(lang, files, title, desc):
     head = grab(r"<!DOCTYPE html>.*?</head>")
     for l, f in SRC.items():
         head = head.replace(SITE + "/" + f, SITE + "/" + files[l])
+    # x-default у «Полезных материалов» русский, у аналитики – английский: её читают и зарубежные клиенты
+    head, n = re.subn(r'(hreflang="x-default" href=")[^"]*(")', lambda m: m.group(1) + SITE + "/" + files["en"] + m.group(2), head)
+    if n != 1:
+        raise SystemExit("в head " + SRC[lang] + " нет x-default")
     def attr(h, rx, val):
         new, n = re.subn(rx, lambda m: m.group(1) + val.replace("&", "&amp;").replace('"', "&quot;") + m.group(2), h)
         if not n:

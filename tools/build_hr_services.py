@@ -183,7 +183,7 @@ head = f"""<!DOCTYPE html>
 <link rel="alternate" hreflang="ru" href="https://humancapital.uz/hr-services.html"/>
 <link rel="alternate" hreflang="en" href="{URL}"/>
 <link rel="alternate" hreflang="uz" href="https://humancapital.uz/hr-services-uz.html"/>
-<link rel="alternate" hreflang="x-default" href="https://humancapital.uz/hr-services.html"/>
+<link rel="alternate" hreflang="x-default" href="{URL}"/>
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Human and Capital"/>

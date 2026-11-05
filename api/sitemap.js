@@ -3,7 +3,7 @@
 
 const { SITE, articlePath, loadMaterials, vacancyPath, loadVacancies, PAGES, pageUrl, esc } = require("./_lib");
 
-const LASTMOD_PAGES = "2026-10-23"; // обновлять при заметных правках страниц
+const LASTMOD_PAGES = "2026-11-05"; // обновлять при заметных правках страниц
 
 // [RU, EN, UZ] – английские адреса исторические, их не меняем
 const TRIOS = [
@@ -11,6 +11,11 @@ const TRIOS = [
   [["employer-of-record.html", "employer-of-record-uzbekistan.html", "employer-of-record-uz.html"], "0.9"],
   [["privacy.html", "privacy-en.html", "privacy-uz.html"], "0.2"],
 ];
+
+// x-default – английская версия (её видят иностранцы с языком браузера не ru/en/uz), кроме страниц для соискателей
+// и читателей, где по умолчанию остаётся русская; так же размечены сами страницы
+const RU_DEFAULT = new Set(["vacancies.html", "resources.html", "privacy.html"]);
+function xDefault(names) { return pageUrl(RU_DEFAULT.has(names[0]) ? names[0] : names[1]); }
 
 module.exports = async function handler(req, res) {
   const out = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -21,7 +26,7 @@ module.exports = async function handler(req, res) {
       out.push("  <url>", "    <loc>" + pageUrl(n) + "</loc>", "    <lastmod>" + LASTMOD_PAGES + "</lastmod>");
       ["ru", "en", "uz"].forEach((hl, i) =>
         out.push('    <xhtml:link rel="alternate" hreflang="' + hl + '" href="' + pageUrl(names[i]) + '"/>'));
-      out.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + pageUrl(names[0]) + '"/>',
+      out.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + xDefault(names) + '"/>',
         "    <priority>" + prio + "</priority>", "  </url>");
     }
   }
@@ -52,7 +57,7 @@ module.exports = async function handler(req, res) {
       out.push("  <url>", "    <loc>" + pageUrl(n) + "</loc>", "    <lastmod>" + LASTMOD_PAGES + "</lastmod>");
       ["ru", "en", "uz"].forEach((hl, i) =>
         out.push('    <xhtml:link rel="alternate" hreflang="' + hl + '" href="' + pageUrl(names[i]) + '"/>'));
-      out.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + pageUrl(names[0]) + '"/>',
+      out.push('    <xhtml:link rel="alternate" hreflang="x-default" href="' + xDefault(names) + '"/>',
         "    <priority>" + prio + "</priority>", "  </url>");
     }
   }

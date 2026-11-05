@@ -459,7 +459,8 @@ def build(d):
     alt = ""
     if d["alt"]:
         alt = "\n".join(f'<link rel="alternate" hreflang="{hl}" href="{SITE}/{f}"/>' for hl, f in d["alt"].items())
-        alt += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}/{d["alt"]["ru"]}"/>'
+        # x-default – английская версия: её видят иностранцы с языком браузера не ru/en/uz
+        alt += f'\n<link rel="alternate" hreflang="x-default" href="{SITE}/{d["alt"]["en"]}"/>'
     head = f"""<!DOCTYPE html>
 <html lang="{d['lang']}">
 <head>
