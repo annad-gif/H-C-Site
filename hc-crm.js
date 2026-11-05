@@ -132,7 +132,7 @@
       var r = await c.staffly.rpc("submit_lead", {
         p_name: name, p_email: email || null, p_phone: phone || null,
         p_message: msg || null, p_service: null,
-        p_source: "Сайт: " + location.pathname, p_locale: locale(), p_consent: true
+        p_source: "Сайт: " + location.pathname + utmSuffix(), p_locale: locale(), p_consent: true
       });
       if (r.error) throw r.error;
       form.reset(); goal("generate_lead", { form: "contact" }); toast(L.ok); return { ok: true };
