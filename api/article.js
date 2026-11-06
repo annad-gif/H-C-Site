@@ -346,7 +346,7 @@ function articlePage(all, m) {
         ...(industries.length ? { keywords: industries.map(k => TAX.industries[k][lang]).join(", ") } : {}),
         author: authorLD(m, lang),
         publisher: { "@type": "Organization", "@id": SITE + "/#organization", name: "Human and Capital",
-          logo: { "@type": "ImageObject", url: SITE + "/logo.png" } },
+          logo: { "@type": "ImageObject", url: SITE + "/logo-square.png", width: 512, height: 512 } },
       },
       {
         "@type": "BreadcrumbList",

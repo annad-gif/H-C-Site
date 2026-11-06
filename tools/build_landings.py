@@ -449,7 +449,7 @@ def build(d):
          "description": d["desc"], "url": url, "areaServed": {"@type": "Country", "name": "Uzbekistan"},
          "provider": {"@id": SITE + "/#organization"}},
         {"@type": ["Organization", "EmploymentAgency"], "@id": SITE + "/#organization", "name": "Human and Capital",
-         "url": SITE + "/", "logo": SITE + "/logo.png", "telephone": "+998903251336", "email": "akmal.s@human-capital.org",
+         "url": SITE + "/", "logo": SITE + "/logo-square.png", "telephone": "+998903251336", "email": "akmal.s@human-capital.org",
          "address": {"@type": "PostalAddress", "streetAddress": "Farg‘ona yo‘li, 94", "addressLocality": "Tashkent", "addressCountry": "UZ"}},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]},

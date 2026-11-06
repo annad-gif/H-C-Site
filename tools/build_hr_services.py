@@ -73,7 +73,7 @@ ld = {
             "@id": "https://humancapital.uz/#organization",
             "name": "Human and Capital",
             "url": "https://humancapital.uz/",
-            "logo": "https://humancapital.uz/logo.png",
+            "logo": "https://humancapital.uz/logo-square.png",
             "telephone": "+998903251336",
             "email": "akmal.s@human-capital.org",
             "address": {"@type": "PostalAddress", "streetAddress": "Farg‘ona yo‘li, 94", "addressLocality": "Tashkent", "addressCountry": "UZ"},

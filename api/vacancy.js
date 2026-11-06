@@ -75,7 +75,7 @@ function vacancyPage(all, v) {
       + (textHtml || "<p>" + esc(v.title) + " – " + esc(facts.join(", ")) + ".</p>"),
     datePosted: String(v.created_at || "").slice(0, 10),
     employmentType: employmentType(v.type),
-    hiringOrganization: { "@type": "Organization", name: "Human and Capital", sameAs: SITE + "/", logo: SITE + "/logo.png" },
+    hiringOrganization: { "@type": "Organization", name: "Human and Capital", sameAs: SITE + "/", logo: SITE + "/logo-square.png" },
     identifier: { "@type": "PropertyValue", name: "Human and Capital", value: String(v.id) },
     directApply: true,
     url,
