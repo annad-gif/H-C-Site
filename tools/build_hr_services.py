@@ -334,6 +334,7 @@ main = f"""
           <li>Multilingual teams for BPO, contact centres and support</li>
           <li>IT Park residency benefits</li>
           <li><span><a href="employer-of-record-uzbekistan.html">Employer of Record</a> for foreign companies</span></li>
+          <li><span><a href="employer-of-record-uzbekistan.html#lp-payroll">Payroll services</a> for companies with a local entity</span></li>
         </ul>
         <a href="outstaffing-en.html" class="hrs-more">Outstaffing details {ARROW}</a>
       </article>

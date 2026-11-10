@@ -258,14 +258,14 @@ PAGES.append(dict(
         ("03 / COMPLIANCE &amp; HR", "We keep it compliant", "HR administration and reporting so you never deal with local bureaucracy.",
          ["Labour law compliance", "HR documentation and records", "Monthly reporting", "Attendance and performance monitoring", "NDA and data confidentiality"]),
     ]),
-    payroll=("Payroll in Uzbekistan", "Payroll services in Uzbekistan", "Monthly payroll for your team in Uzbekistan – calculated, paid and reported by one local partner.", [
+    payroll=("Payroll in Uzbekistan", "Payroll services in Uzbekistan", "Monthly payroll for your team in Uzbekistan – as part of Employer of Record or as a separate service for companies with their own local entity.", [
         "Payroll in Uzbekistan has its own rules: salaries are paid in sum, the employer withholds personal income tax, pays social tax and files reports to the tax authorities on a fixed schedule. A mistake means penalties and unhappy employees.",
         "As your Employer of Record we run the full payroll cycle: you approve the amounts, we calculate, pay and report. You receive one simple monthly invoice instead of dealing with local accounting.",
-        "Payroll is included in our Employer of Record and <a href=\"/outstaffing-en.html\">outstaffing</a> services. If you already have a local entity and need payroll only, tell us about your task and we will discuss the format.",
+        "<strong>Payroll as a separate service.</strong> If you already have a legal entity in Uzbekistan, we can take over payroll only: your staff stay employed by your company, and every month we calculate salaries and taxes, prepare the payments and file the reports. Payroll is also included in our Employer of Record and <a href=\"/outstaffing-en.html\">outstaffing</a> services.",
     ], "Every month we", [
         "Calculate gross and net salaries, bonuses and allowances",
         "Withhold personal income tax and pay social tax",
-        "Pay salaries to employees’ bank cards on time",
+        "Pay salaries on time – from our account under EOR, or prepare the payments from yours",
         "Issue payslips to every employee",
         "File tax and statistical reports",
         "Track leave, sick leave and overtime",
@@ -307,7 +307,7 @@ PAGES.append(dict(
     ]),
     reviews=("Client reviews", "What clients say", "index-en.html"),
     faq=("FAQ", "Employer of Record in Uzbekistan: FAQ", [
-        ("Do you provide payroll services in Uzbekistan?", "Yes. Payroll is part of our Employer of Record and outstaffing services: every month we calculate salaries, withhold and pay taxes, pay employees and file reports. If you already have a local entity and only need payroll, contact us and we will discuss the format."),
+        ("Do you provide payroll services in Uzbekistan?", "Yes. Payroll is available as a separate service for companies with their own legal entity in Uzbekistan, and it is also included in our Employer of Record and outstaffing services. Every month we calculate salaries, withhold and pay taxes, handle salary payments and file reports."),
         ("What does payroll in Uzbekistan include?", "Calculation of gross and net salaries, bonuses and allowances, withholding of personal income tax and payment of social tax, salary payments to employees, payslips, tax and statistical reporting, leave and sick leave tracking and the final settlement on termination."),
         ("Do I need a legal entity in Uzbekistan to hire employees?", "No. With an Employer of Record we are the legal employer. Your employees get official contracts under Uzbek labour law, and you manage their work without registering a company in Uzbekistan."),
         ("Is using an EOR legal in Uzbekistan?", "Yes. The employees are officially employed by our company in Uzbekistan, with payroll, taxes and reporting handled in line with local law."),
@@ -323,7 +323,7 @@ PAGES.append(dict(
         ("/outstaffing-en.html", "Outstaffing in Uzbekistan", "Legal employment, payroll and reporting"),
         ("/executive-search-en.html", "Executive search in Uzbekistan", "Direct search for C-level and senior managers"),
     ]),
-    options=["Employer of Record", "Outstaffing", "Recruitment", "Executive search", "Mass recruitment", "HR consulting"],
+    options=["Employer of Record", "Payroll", "Outstaffing", "Recruitment", "Executive search", "Mass recruitment", "HR consulting"],
 ))
 
 # RU/UZ-версии Employer of Record и HR-услуг (EN-версия HR-услуг – tools/build_hr_services.py)

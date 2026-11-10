@@ -31,14 +31,14 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
             ("03 / КОМПЛАЕНС И HR", "Следим за соблюдением закона", "Кадровое администрирование и отчётность – без местной бюрократии для вас.",
              ["Соблюдение трудового законодательства", "Кадровые документы и учёт", "Ежемесячная отчётность", "Контроль посещаемости и качества работы", "NDA и конфиденциальность данных"]),
         ]),
-        payroll=("Payroll в Узбекистане", "Расчёт зарплаты для вашей команды", "Ежемесячный payroll для сотрудников в Узбекистане: начисляем, выплачиваем и сдаём отчётность – один местный партнёр.", [
+        payroll=("Payroll в Узбекистане", "Расчёт зарплаты для вашей команды", "Ежемесячный payroll для сотрудников в Узбекистане – в составе Employer of Record или отдельной услугой для компаний со своим юрлицом.", [
             "У расчёта зарплаты в Узбекистане свои правила: зарплата выплачивается в сумах, работодатель удерживает НДФЛ, платит социальный налог и сдаёт отчётность в налоговую по графику. Ошибка – это штрафы и недовольные сотрудники.",
             "Как Employer of Record мы ведём весь цикл: вы утверждаете суммы, мы начисляем, выплачиваем и отчитываемся. Вы получаете один понятный счёт в месяц вместо работы с местной бухгалтерией.",
-            "Расчёт зарплаты входит в наши услуги Employer of Record и <a href=\"/outstaffing.html\">аутстаффинга</a>. Если у вас уже есть юрлицо в Узбекистане и нужен только payroll – опишите задачу, обсудим формат.",
+            "<strong>Payroll отдельной услугой.</strong> Если у вас уже есть юрлицо в Узбекистане, мы возьмём на себя только расчёт зарплаты: сотрудники остаются в штате вашей компании, а мы каждый месяц начисляем зарплату и налоги, готовим выплаты и сдаём отчётность. Расчёт зарплаты также входит в наши услуги Employer of Record и <a href=\"/outstaffing.html\">аутстаффинга</a>.",
         ], "Каждый месяц мы", [
             "Начисляем зарплату, премии и надбавки – «грязными» и «на руки»",
             "Удерживаем НДФЛ и платим социальный налог",
-            "Вовремя выплачиваем зарплату на банковские карты сотрудников",
+            "Вовремя выплачиваем зарплату – с нашего счёта при EOR или готовим выплаты с вашего",
             "Выдаём расчётные листы каждому сотруднику",
             "Сдаём налоговую и статистическую отчётность",
             "Ведём учёт отпусков, больничных и переработок",
@@ -80,7 +80,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
         ]),
         reviews=("Отзывы клиентов", "Что говорят о нас", "index.html"),
         faq=("Вопросы и ответы", "Employer of Record в Узбекистане: частые вопросы", [
-            ("Вы ведёте расчёт зарплаты (payroll) в Узбекистане?", "Да. Расчёт зарплаты входит в наши услуги Employer of Record и аутстаффинга: каждый месяц мы начисляем зарплату, удерживаем и платим налоги, выплачиваем деньги сотрудникам и сдаём отчётность. Если у вас уже есть юрлицо и нужен только payroll – напишите нам, обсудим формат."),
+            ("Вы ведёте расчёт зарплаты (payroll) в Узбекистане?", "Да. Payroll – отдельная услуга для компаний со своим юрлицом в Узбекистане, а ещё он входит в наши услуги Employer of Record и аутстаффинга. Каждый месяц мы начисляем зарплату, удерживаем и платим налоги, проводим выплаты и сдаём отчётность."),
             ("Что входит в payroll в Узбекистане?", "Начисление зарплаты, премий и надбавок «грязными» и «на руки», удержание НДФЛ и уплата социального налога, выплата зарплаты сотрудникам, расчётные листы, налоговая и статистическая отчётность, учёт отпусков и больничных и окончательный расчёт при увольнении."),
             ("Нужно ли юрлицо в Узбекистане, чтобы нанимать сотрудников?", "Нет. При модели Employer of Record официальный работодатель – мы. Ваши сотрудники получают трудовые договоры по законодательству Узбекистана, а вы управляете их работой без регистрации компании в Узбекистане."),
             ("Законна ли модель EOR в Узбекистане?", "Да. Сотрудники официально оформлены в нашей компании в Узбекистане, зарплата, налоги и отчётность ведутся по местному законодательству."),
@@ -96,7 +96,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
             ("/executive-search.html", "Executive search в Ташкенте", "Прямой поиск топ-менеджеров и руководителей"),
             ("/recruitment.html", "Подбор персонала в Ташкенте", "Специалисты, IT и массовый подбор"),
         ]),
-        options=["Employer of Record", "Аутстаффинг", "Подбор персонала", "Executive search", "Массовый подбор", "HR-консалтинг"],
+        options=["Employer of Record", "Расчёт зарплаты (payroll)", "Аутстаффинг", "Подбор персонала", "Executive search", "Массовый подбор", "HR-консалтинг"],
     ))
 
     # ------------------------------------------------------------ Employer of Record UZ
@@ -126,14 +126,14 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
             ("03 / KOMPLAYENS VA HR", "Qonunga rioyani nazorat qilamiz", "Kadrlar ma’muriyati va hisobotlar – siz uchun mahalliy byurokratiyasiz.",
              ["Mehnat qonunchiligiga rioya qilish", "Kadrlar hujjatlari va hisobi", "Oylik hisobotlar", "Davomat va ish sifatini nazorat qilish", "NDA va ma’lumotlar maxfiyligi"]),
         ]),
-        payroll=("O‘zbekistonda payroll", "Jamoangiz uchun ish haqi hisobi", "O‘zbekistondagi xodimlaringiz uchun oylik payroll: hisoblaymiz, to‘laymiz va hisobot topshiramiz – bitta mahalliy hamkor.", [
+        payroll=("O‘zbekistonda payroll", "Jamoangiz uchun ish haqi hisobi", "O‘zbekistondagi xodimlaringiz uchun oylik payroll – Employer of Record tarkibida yoki o‘z yuridik shaxsi bor kompaniyalar uchun alohida xizmat sifatida.", [
             "O‘zbekistonda ish haqi hisobining o‘z qoidalari bor: ish haqi so‘mda to‘lanadi, ish beruvchi jismoniy shaxslardan olinadigan daromad solig‘ini ushlab qoladi, ijtimoiy soliqni to‘laydi va soliq organlariga belgilangan jadval bo‘yicha hisobot topshiradi. Xato – jarimalar va norozi xodimlar degani.",
             "Employer of Record sifatida biz butun siklni olib boramiz: siz summalarni tasdiqlaysiz, biz hisoblaymiz, to‘laymiz va hisobot beramiz. Mahalliy buxgalteriya bilan ishlash o‘rniga oyiga bitta tushunarli hisob olasiz.",
-            "Ish haqi hisobi Employer of Record va <a href=\"/outstaffing-uz.html\">autstaffing</a> xizmatlarimizga kiradi. Agar O‘zbekistonda yuridik shaxsingiz bo‘lsa va faqat payroll kerak bo‘lsa – vazifani yozing, formatni muhokama qilamiz.",
+            "<strong>Payroll alohida xizmat sifatida.</strong> Agar O‘zbekistonda yuridik shaxsingiz bo‘lsa, faqat ish haqi hisobini o‘z zimmamizga olamiz: xodimlar kompaniyangiz shtatida qoladi, biz esa har oy ish haqi va soliqlarni hisoblaymiz, to‘lovlarni tayyorlaymiz va hisobot topshiramiz. Ish haqi hisobi Employer of Record va <a href=\"/outstaffing-uz.html\">autstaffing</a> xizmatlarimizga ham kiradi.",
         ], "Har oy biz", [
             "Ish haqi, mukofot va ustamalarni hisoblaymiz – soliqqacha va qo‘lga",
             "Daromad solig‘ini ushlab qolamiz va ijtimoiy soliqni to‘laymiz",
-            "Ish haqini xodimlarning bank kartalariga o‘z vaqtida to‘laymiz",
+            "Ish haqini o‘z vaqtida to‘laymiz – EORda bizning hisobimizdan yoki sizning hisobingizdan to‘lovlarni tayyorlaymiz",
             "Har bir xodimga hisob varaqasini beramiz",
             "Soliq va statistika hisobotlarini topshiramiz",
             "Ta’til, kasallik va qo‘shimcha ish vaqtini hisobga olamiz",
@@ -175,7 +175,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
         ]),
         reviews=("Mijozlar fikri", "Biz haqimizda nima deyishadi", "index-uz.html"),
         faq=("Savol-javob", "O‘zbekistonda Employer of Record: ko‘p beriladigan savollar", [
-            ("O‘zbekistonda ish haqi hisobini (payroll) yuritasizmi?", "Ha. Ish haqi hisobi Employer of Record va autstaffing xizmatlarimizga kiradi: har oy ish haqini hisoblaymiz, soliqlarni ushlab qolamiz va to‘laymiz, xodimlarga pul o‘tkazamiz va hisobot topshiramiz. Agar yuridik shaxsingiz bo‘lsa va faqat payroll kerak bo‘lsa – bizga yozing, formatni muhokama qilamiz."),
+            ("O‘zbekistonda ish haqi hisobini (payroll) yuritasizmi?", "Ha. Payroll – O‘zbekistonda o‘z yuridik shaxsi bor kompaniyalar uchun alohida xizmat, shuningdek u Employer of Record va autstaffing xizmatlarimizga kiradi. Har oy ish haqini hisoblaymiz, soliqlarni ushlab qolamiz va to‘laymiz, to‘lovlarni amalga oshiramiz va hisobot topshiramiz."),
             ("O‘zbekistonda payroll nimalarni o‘z ichiga oladi?", "Ish haqi, mukofot va ustamalarni soliqqacha va qo‘lga hisoblash, daromad solig‘ini ushlab qolish va ijtimoiy soliqni to‘lash, xodimlarga ish haqi to‘lash, hisob varaqalari, soliq va statistika hisobotlari, ta’til va kasallik hisobi hamda ishdan bo‘shatishdagi yakuniy hisob-kitob."),
             ("Xodim yollash uchun O‘zbekistonda yuridik shaxs kerakmi?", "Yo‘q. Employer of Record modelida rasmiy ish beruvchi – biz. Xodimlaringiz O‘zbekiston qonunchiligi bo‘yicha mehnat shartnomalarini oladi, siz esa O‘zbekistonda kompaniya ro‘yxatdan o‘tkazmasdan ularning ishini boshqarasiz."),
             ("O‘zbekistonda EOR modeli qonuniymi?", "Ha. Xodimlar O‘zbekistondagi kompaniyamizda rasmiy ishlaydi, ish haqi, soliqlar va hisobotlar mahalliy qonunchilik bo‘yicha yuritiladi."),
@@ -191,7 +191,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
             ("/executive-search-uz.html", "Toshkentda executive search", "Top-menejerlar va rahbarlarni to‘g‘ridan-to‘g‘ri qidirish"),
             ("/recruitment-uz.html", "Toshkentda xodimlarni tanlash", "Mutaxassislar, IT va ommaviy tanlov"),
         ]),
-        options=["Employer of Record", "Autstaffing", "Xodimlarni tanlash", "Executive search", "Ommaviy tanlov", "HR-konsalting"],
+        options=["Employer of Record", "Ish haqi hisobi (payroll)", "Autstaffing", "Xodimlarni tanlash", "Executive search", "Ommaviy tanlov", "HR-konsalting"],
     ))
 
     # ------------------------------------------------------------ HR-услуги RU
@@ -219,7 +219,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
              ["Подбор специалистов уровня middle и senior", "<a href=\"/executive-search.html\">Executive search</a> – прямой поиск руководителей", "IT-рекрутинг", "Массовый подбор для ритейла, BPO и производства", "Подбор из нашей базы кандидатов"],
              ("/recruitment.html", "Подробнее о подборе")),
             ("02 / АУТСТАФФИНГ", "Аутстаффинг и оформление", "Берём на себя оформление, зарплату и сопровождение ваших сотрудников в Узбекистане – без своего кадрового отдела.",
-             ["Оформление и расчёт зарплаты", "Соблюдение трудового законодательства и отчётность", "Поиск, оценка и контроль работы персонала", "Команды со знанием языков для BPO, контакт-центров и поддержки", "Льготы резидента IT Park", "<a href=\"/employer-of-record.html\">Employer of Record</a> для иностранных компаний"],
+             ["Оформление и расчёт зарплаты", "Соблюдение трудового законодательства и отчётность", "Поиск, оценка и контроль работы персонала", "Команды со знанием языков для BPO, контакт-центров и поддержки", "Льготы резидента IT Park", "<a href=\"/employer-of-record.html\">Employer of Record</a> для иностранных компаний", "<a href=\"/employer-of-record.html#lp-payroll\">Расчёт зарплаты (payroll)</a> для компаний со своим юрлицом"],
              ("/outstaffing.html", "Подробнее об аутстаффинге")),
             ("03 / HR-КОНСАЛТИНГ", "HR-консалтинг и HR-аудит", "Решения под ключ, которые наводят порядок в HR-процессах – от документов и структуры до оценки, адаптации и мотивации.",
              ["HR-аудит, штатное расписание и типовые документы", "Системы обучения, оценки и аттестации", "Разработка системы адаптации", "Мотивация и корпоративная культура", "Анализ рынка труда и прескрининг"],
@@ -295,7 +295,7 @@ def pages(SITE, A, EOR_ALT, HRS_ALT):
              ["Middle va senior darajadagi mutaxassislarni tanlash", "<a href=\"/executive-search-uz.html\">Executive search</a> – rahbarlarni to‘g‘ridan-to‘g‘ri qidirish", "IT-rekrutment", "Chakana savdo, BPO va ishlab chiqarish uchun ommaviy tanlov", "Nomzodlar bazamizdan tanlash"],
              ("/recruitment-uz.html", "Tanlash haqida batafsil")),
             ("02 / AUTSTAFFING", "Autstaffing va rasmiylashtirish", "O‘zbekistondagi xodimlaringizni rasmiylashtirish, ish haqi va kuzatib borishni o‘z zimmamizga olamiz – o‘z kadrlar bo‘limingizsiz.",
-             ["Rasmiylashtirish va ish haqi hisobi", "Mehnat qonunchiligiga rioya va hisobotlar", "Xodimlarni qidirish, baholash va nazorat qilish", "BPO, kontakt-markaz va qo‘llab-quvvatlash uchun til biladigan jamoalar", "IT Park rezidenti imtiyozlari", "Xorijiy kompaniyalar uchun <a href=\"/employer-of-record-uz.html\">Employer of Record</a>"],
+             ["Rasmiylashtirish va ish haqi hisobi", "Mehnat qonunchiligiga rioya va hisobotlar", "Xodimlarni qidirish, baholash va nazorat qilish", "BPO, kontakt-markaz va qo‘llab-quvvatlash uchun til biladigan jamoalar", "IT Park rezidenti imtiyozlari", "Xorijiy kompaniyalar uchun <a href=\"/employer-of-record-uz.html\">Employer of Record</a>", "O‘z yuridik shaxsi bor kompaniyalar uchun <a href=\"/employer-of-record-uz.html#lp-payroll\">ish haqi hisobi (payroll)</a>"],
              ("/outstaffing-uz.html", "Autstaffing haqida batafsil")),
             ("03 / HR-KONSALTING", "HR-konsalting va HR-audit", "HR jarayonlarini tartibga soladigan tayyor yechimlar – hujjatlar va tuzilmadan baholash, moslashuv va motivatsiyagacha.",
              ["HR-audit, shtat jadvali va namunaviy hujjatlar", "O‘qitish, baholash va attestatsiya tizimlari", "Moslashuv tizimini ishlab chiqish", "Motivatsiya va korporativ madaniyat", "Mehnat bozori tahlili va preskrining"],
