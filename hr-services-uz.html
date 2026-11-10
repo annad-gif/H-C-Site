@@ -1003,7 +1003,9 @@
     display:flex;align-items:baseline;gap:18px;backdrop-filter:blur(6px);}
   .hrs-stat b{font-family:var(--ff-display);font-weight:700;font-size:clamp(34px,4vw,48px);color:var(--mustard);line-height:1;min-width:120px;}
   .hrs-stat span{font-size:15px;color:var(--grey-300);line-height:1.4;}
-  #lp-intro,#lp-who,#lp-why,#lp-faq{background:var(--white);}
+  #lp-intro,#lp-who,#lp-why,#lp-faq,#lp-payroll{background:var(--white);}
+  .lp-pay-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:start;}
+  @media (max-width:1080px){.lp-pay-grid{grid-template-columns:1fr;gap:28px;}}
   #lp-services,#lp-reviews,#lp-read,#lp-compare{background:var(--grey-50);}
   .hrs-prose{max-width:760px;}
   .hrs-prose p{font-size:17px;color:var(--grey-700);line-height:1.8;margin-top:18px;}

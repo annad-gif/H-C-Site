@@ -6,7 +6,7 @@
 Пишет файлы из PAGES целиком (executive-search*, employer-of-record*, hr-services.html, hr-services-uz.html).
 Контент и стили посадочных правьте здесь и в tools/landings_ru_uz.py, а не в готовом HTML. Проверка: после запуска git diff пустой.
 """
-import json, re
+import html, json, re
 
 SITE = "https://humancapital.uz"
 A = "/articles/"
@@ -235,12 +235,12 @@ PAGES.append(dict(
 PAGES.append(dict(
     file="employer-of-record-uzbekistan.html", shell="consulting-en.html", lang="en", locale="en_US", alt=EOR_ALT,
     home=("Home", SITE + "/index-en.html"), parent=("HR services in Uzbekistan", SITE + "/hr-services-uzbekistan.html"),
-    title="Employer of Record in Uzbekistan – EOR, Payroll & Recruitment | Human and Capital",
+    title="Employer of Record & Payroll Services in Uzbekistan – EOR | Human and Capital",
     short="Employer of Record in Uzbekistan – Human and Capital",
-    desc="Employer of Record (EOR) in Uzbekistan for foreign companies: hire employees without a local entity. Recruitment, legal employment, payroll, taxes and labour law compliance with one Tashkent-based partner.",
-    service="Employer of Record (EOR) in Uzbekistan",
+    desc="Employer of Record (EOR) and payroll services in Uzbekistan for foreign companies: hire employees without a local entity. Recruitment, legal employment, monthly payroll, taxes and labour law compliance with one Tashkent-based partner.",
+    service="Employer of Record (EOR) and payroll services in Uzbekistan",
     eyebrow="Employer of Record · Uzbekistan",
-    h1='Employer of Record in <span class="accent">Uzbekistan</span>',
+    h1='Employer of Record &amp; Payroll in <span class="accent">Uzbekistan</span>',
     lead="Hire employees in Uzbekistan without opening a local entity. We find the people, employ them under Uzbek labour law, run payroll and taxes – you manage their work.",
     cta=("Discuss your team", "How EOR works", "#lp-process"),
     stats=[("0", "local entities you need to open"), ("2–4", "weeks to a working employee for most roles"), ("1", "contract and one monthly invoice")],
@@ -257,6 +257,19 @@ PAGES.append(dict(
          ["Uzbek employment contracts", "Payroll processing and payslips", "Income tax and social tax filing", "Leave and absence tracking", "Probation and termination management"]),
         ("03 / COMPLIANCE &amp; HR", "We keep it compliant", "HR administration and reporting so you never deal with local bureaucracy.",
          ["Labour law compliance", "HR documentation and records", "Monthly reporting", "Attendance and performance monitoring", "NDA and data confidentiality"]),
+    ]),
+    payroll=("Payroll in Uzbekistan", "Payroll services in Uzbekistan", "Monthly payroll for your team in Uzbekistan – calculated, paid and reported by one local partner.", [
+        "Payroll in Uzbekistan has its own rules: salaries are paid in sum, the employer withholds personal income tax, pays social tax and files reports to the tax authorities on a fixed schedule. A mistake means penalties and unhappy employees.",
+        "As your Employer of Record we run the full payroll cycle: you approve the amounts, we calculate, pay and report. You receive one simple monthly invoice instead of dealing with local accounting.",
+        "Payroll is included in our Employer of Record and <a href=\"/outstaffing-en.html\">outstaffing</a> services. If you already have a local entity and need payroll only, tell us about your task and we will discuss the format.",
+    ], "Every month we", [
+        "Calculate gross and net salaries, bonuses and allowances",
+        "Withhold personal income tax and pay social tax",
+        "Pay salaries to employees’ bank cards on time",
+        "Issue payslips to every employee",
+        "File tax and statistical reports",
+        "Track leave, sick leave and overtime",
+        "Calculate the final settlement on termination",
     ]),
     compare=("EOR vs other options", "Ways to hire in Uzbekistan", ["", "Employer of Record", "Your own entity", "Contractors"], [
         ("Time to start", "A few weeks", "Several months", "Fast"),
@@ -294,6 +307,8 @@ PAGES.append(dict(
     ]),
     reviews=("Client reviews", "What clients say", "index-en.html"),
     faq=("FAQ", "Employer of Record in Uzbekistan: FAQ", [
+        ("Do you provide payroll services in Uzbekistan?", "Yes. Payroll is part of our Employer of Record and outstaffing services: every month we calculate salaries, withhold and pay taxes, pay employees and file reports. If you already have a local entity and only need payroll, contact us and we will discuss the format."),
+        ("What does payroll in Uzbekistan include?", "Calculation of gross and net salaries, bonuses and allowances, withholding of personal income tax and payment of social tax, salary payments to employees, payslips, tax and statistical reporting, leave and sick leave tracking and the final settlement on termination."),
         ("Do I need a legal entity in Uzbekistan to hire employees?", "No. With an Employer of Record we are the legal employer. Your employees get official contracts under Uzbek labour law, and you manage their work without registering a company in Uzbekistan."),
         ("Is using an EOR legal in Uzbekistan?", "Yes. The employees are officially employed by our company in Uzbekistan, with payroll, taxes and reporting handled in line with local law."),
         ("How fast can I hire through an EOR?", "For most roles a new employee can start within 2–4 weeks, including recruitment. Rare or senior roles may take longer; we agree on the timeline before the search starts."),
@@ -325,7 +340,9 @@ CSS = """
     display:flex;align-items:baseline;gap:18px;backdrop-filter:blur(6px);}
   .hrs-stat b{font-family:var(--ff-display);font-weight:700;font-size:clamp(34px,4vw,48px);color:var(--mustard);line-height:1;min-width:120px;}
   .hrs-stat span{font-size:15px;color:var(--grey-300);line-height:1.4;}
-  #lp-intro,#lp-who,#lp-why,#lp-faq{background:var(--white);}
+  #lp-intro,#lp-who,#lp-why,#lp-faq,#lp-payroll{background:var(--white);}
+  .lp-pay-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:start;}
+  @media (max-width:1080px){.lp-pay-grid{grid-template-columns:1fr;gap:28px;}}
   #lp-services,#lp-reviews,#lp-read,#lp-compare{background:var(--grey-50);}
   .hrs-prose{max-width:760px;}
   .hrs-prose p{font-size:17px;color:var(--grey-700);line-height:1.8;margin-top:18px;}
@@ -443,7 +460,7 @@ def build(d):
     # в оболочке два <style>: первый – @font-face (шрифты с /fonts) и мелочи для телефона, второй – стили страницы (с :root)
     fonts = re.search(r"<style>\n/\* Inter и Unbounded.*?</style>", src, re.S).group(0)
     style = re.search(r"<style>\s*:root\{.*?</style>", src, re.S).group(0)
-    crumbs = [d["home"], d["parent"], (strip_tags(d["h1"]), url)]
+    crumbs = [d["home"], d["parent"], (html.unescape(strip_tags(d["h1"])), url)]
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "Service", "@id": url + "#service", "name": d["service"], "serviceType": d["service"],
          "description": d["desc"], "url": url, "areaServed": {"@type": "Country", "name": "Uzbekistan"},
@@ -523,6 +540,28 @@ def build(d):
       </article>"""
     svc_cards = "\n".join(card(*c) for c in s_["svc"][3])
 
+    payroll = ""
+    if d.get("payroll"):
+        pe, pt, pl, paras, ph, items = d["payroll"]
+        payroll = f"""
+<!-- PAYROLL -->
+<section id="lp-payroll">
+  <div class="container">
+{sec_head(pe, pt, pl)}
+    <div class="lp-pay-grid">
+      <div class="hrs-prose reveal">
+{chr(10).join(f'        <p>{x}</p>' for x in paras)}
+      </div>
+      <div class="reveal">
+        <h3 class="hrs-h3">{ph}</h3>
+        <ul class="hrs-check">
+{chr(10).join(f'          <li>{x}</li>' for x in items)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+"""
     compare = ""
     if d.get("compare"):
         ce, ct, heads, rows = d["compare"]
@@ -606,7 +645,7 @@ def build(d):
     </div>
   </div>
 </section>
-{compare}
+{payroll}{compare}
 <!-- WHO -->
 <section id="lp-who">
   <div class="container">
