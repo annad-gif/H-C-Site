@@ -214,6 +214,9 @@
     },
     "api/vacancy.js": {
       "includeFiles": "api/_shell.html"
+    },
+    "api/hub.js": {
+      "includeFiles": "*.html"
     }
   },
   "headers": [
