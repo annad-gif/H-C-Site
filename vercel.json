@@ -194,6 +194,18 @@
     {
       "source": "/sitemap.xml",
       "destination": "/api/sitemap"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/api/llms?lang=ru"
+    },
+    {
+      "source": "/llms-en.txt",
+      "destination": "/api/llms?lang=en"
+    },
+    {
+      "source": "/llms-uz.txt",
+      "destination": "/api/llms?lang=uz"
     }
   ],
   "functions": {
