@@ -338,6 +338,36 @@ COVERS = {
  <div class="item"><div class="ico">{ic('people')}</div><div><b>105 800</b><span>bir yilda ingliz B2+ rezyumelari</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Tahlil</div>""",
+"finance_2026_autumn": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Зарплаты в <span class="acc">финансах</span> в Узбекистане</h1>
+<p class="sub">Осень 2026: сколько просят по ролям и опыту – от бухгалтера до финансового директора</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>8 млн сум</b><span>медиана ожиданий бухгалтера</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $3 000</b><span>финансовый директор с опытом 6+ лет</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>×3,4</b><span>рост аудитора и аналитика от «без опыта» до 6+ лет</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Аналитика</div>""",
+"finance_2026_autumn_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1><span class="acc">Finance</span> salaries in Uzbekistan</h1>
+<p class="sub">Autumn 2026: what finance staff ask by role and experience – from accountant to finance director</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>UZS 8M</b><span>median expectation of an accountant</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $3,000</b><span>finance director with 6+ years</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>×3.4</b><span>growth of auditors and analysts from no experience to 6+ years</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Insights</div>""",
+"finance_2026_autumn_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda <span class="acc">moliya</span> maoshlari</h1>
+<p class="sub">Kuz 2026: rol va tajriba bo‘yicha qancha so‘rashadi – buxgalterdan moliya direktorigacha</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>8 mln so‘m</b><span>buxgalter kutilmalari medianasi</span></div></div>
+ <div class="item"><div class="ico">{ic('user')}</div><div><b>≈ $3 000</b><span>6+ yillik tajribali moliya direktori</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>×3,4</b><span>auditor va tahlilchining tajribasizdan 6+ yilgacha o‘sishi</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Tahlil</div>""",
 }
 
 for name, body in COVERS.items():
