@@ -138,8 +138,10 @@ function ctaHTML(m, L) {
     [h, p, a] = L.cta[kind];
     if (kind === "subscribe") { url = TG_URL; ext = true; }
   }
+  // Клик – цель cta_hire (from: article_end), чтобы видеть в Метрике, приводят ли статьи к заявкам
+  const goal = ext ? "" : ' onclick="window.hcGoal&&hcGoal(\'cta_hire\',{from:\'article_end\',lang:\'' + langOf(m) + '\'})"';
   return '<aside class="ar-cta"><div><h2>' + esc(h) + "</h2><p>" + esc(p) + "</p></div>"
-    + '<a href="' + esc(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(a) + "</a></aside>";
+    + '<a href="' + esc(url) + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + goal + ">" + esc(a) + "</a></aside>";
 }
 // Аналитика: предложение подбора внутри текста (после второго раздела), чтобы читатель увидел его рядом с цифрами.
 // Отрасль it – отдельный текст про IT-специалистов. Клик – цель cta_hire (Метрика и GA4 через hcGoal).
@@ -161,7 +163,18 @@ function hireHTML(m, lang) {
     + '<a href="' + H.url + '" onclick="window.hcGoal&&hcGoal(\'cta_hire\',{from:\'article\',lang:\'' + lang + '\'})">' + esc(a) + "</a></div>";
 }
 function withHire(bodyHtml, m, lang) {
-  if (!rubricOf(m)) return bodyHtml;
+  if (!rubricOf(m)) {
+    // Обычная статья (Маслоу, Герцберг, CBI…): много показов в поиске, но нет заявок.
+    // Блок подбора – перед вторым <h2>, без него – после третьего абзаца; иначе не ставим (в конце уже есть CTA).
+    if (m.cat && m.cat !== "article") return bodyHtml;
+    const block = hireHTML(m, lang);
+    let n = 0;
+    const out = bodyHtml.replace(/<h2[\s>]/g, t => (++n === 2 ? block + t : t));
+    if (n >= 2) return out;
+    let p = 0, at = -1;
+    bodyHtml.replace(/<\/p>/g, (t, i) => { if (++p === 3) at = i + t.length; return t; });
+    return at > 0 && at < bodyHtml.length - 200 ? bodyHtml.slice(0, at) + block + bodyHtml.slice(at) : bodyHtml;
+  }
   const block = hireHTML(m, lang);
   // сразу после первого графика (<figure> или абзаца с картинкой), без них – перед вторым <h2>
   const fig = bodyHtml.indexOf("<figure>"), img = bodyHtml.indexOf("<img ");
@@ -240,6 +253,17 @@ function headline(m) {
   if (!d) return t;
   const joined = t.replace(/[.:!?]+$/, "") + ": " + (/^[А-ЯЁA-Z][а-яёa-z]/.test(d) ? d[0].toLowerCase() + d.slice(1) : d);
   return joined.length <= 110 ? joined : t;
+}
+// <title> для выдачи: Google обрезает заголовки длиннее ~60–65 символов, поэтому
+// бренд добавляем, только если влезает, а длинный «заголовок: подзаголовок» заменяем на заголовок.
+// seo_title (если задан в site_materials) приоритетнее и не обрезается.
+const TITLE_MAX = 65, BRAND = " – Human and Capital";
+function seoTitle(m, h) {
+  const own = String(m.seo_title || "").trim();
+  if (own) return (own + BRAND).length <= TITLE_MAX ? own + BRAND : own;
+  const t = String(m.title || "").trim();
+  for (const c of [h + BRAND, h, t + BRAND]) if (c.length <= TITLE_MAX) return c;
+  return t;
 }
 function ruDate(iso, locale) {
   try { return new Intl.DateTimeFormat(locale || "ru-RU", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Tashkent" }).format(new Date(iso)).replace(/\s*г\.$/, ""); }
@@ -363,7 +387,7 @@ function articlePage(all, m) {
     ? Object.entries(versions).map(([hl, v]) => '<link rel="alternate" hreflang="' + hl + '" href="' + esc(SITE + articlePath(v)) + '"/>')
       .concat('<link rel="alternate" hreflang="x-default" href="' + esc(SITE + articlePath(versions.ru || versions[langOf(m)])) + '"/>')
     : [];
-  const title = (String(m.seo_title || "").trim() || h) + " – Human and Capital";
+  const title = seoTitle(m, h);
   const head = [
     "<title>" + esc(title) + "</title>",
     '<meta name="description" content="' + esc(seoDesc) + '"/>',
