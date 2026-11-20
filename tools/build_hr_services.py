@@ -9,7 +9,8 @@ ROOT = sys.argv[1]
 src = open(f"{ROOT}/consulting-en.html", encoding="utf-8").read()
 
 URL = "https://humancapital.uz/hr-services-uzbekistan.html"
-TITLE = "HR Services in Uzbekistan – Recruitment, Outstaffing, HR Consulting | Human and Capital"
+# ≤60 символов: длинный title Google обрезал; бренд – в og:site_name
+TITLE = "HR Services in Uzbekistan: Recruitment, EOR &amp; HR Consulting"
 SHORT_TITLE = "HR Services in Uzbekistan – Human and Capital"
 DESC = ("HR services in Uzbekistan for local and international companies: recruitment and executive search, "
         "outstaffing with legal employment and payroll, HR consulting and HR audit. Tashkent-based team, 500+ positions filled.")
@@ -42,8 +43,12 @@ faq = [
     ("Which industries do you hire for?",
      "IT, finance, government, tourism and aviation, real estate and construction, HORECA, manufacturing, distribution, pharma and medicine, "
      "retail, BPO and contact centres, and many more."),
+    ("Are you a headhunting agency in Uzbekistan?",
+     "Yes. Our executive search team headhunts senior managers, C-level executives and rare specialists across Uzbekistan through direct approach, "
+     "including candidates who are not actively looking for a job. Every search is confidential and covered by an NDA."),
     ("Where are you located?",
-     "Our office is in Tashkent, Farg‘ona yo‘li 94. We hire specialists across Uzbekistan and work with clients remotely as well."),
+     "Our office is in Tashkent, Farg‘ona yo‘li 94. We provide HR services in Tashkent and hire specialists across all regions of Uzbekistan, "
+     "and we work with clients abroad remotely."),
 ]
 
 ld = {
@@ -64,6 +69,7 @@ ld = {
                 "itemListElement": [
                     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Recruitment and executive search", "url": "https://humancapital.uz/recruitment-en.html"}},
                     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Outstaffing", "url": "https://humancapital.uz/outstaffing-en.html"}},
+                    {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Employer of Record and payroll", "url": "https://humancapital.uz/employer-of-record-uzbekistan.html"}},
                     {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "HR consulting", "url": "https://humancapital.uz/consulting-en.html"}},
                 ],
             },
@@ -262,7 +268,7 @@ main = f"""
     <div class="rec-hero-text">
       <p class="hero-eyebrow"><span class="dot"></span>HR services · Uzbekistan</p>
       <h1>HR Services in <span class="accent">Uzbekistan</span></h1>
-      <p class="lead">Recruitment, outstaffing and HR consulting for local and international companies – one Tashkent-based partner for hiring, legal employment and HR processes.</p>
+      <p class="lead">Recruitment and headhunting, outstaffing, Employer of Record and payroll, HR consulting – one Tashkent-based partner for local and international companies.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn btn-mustard">Discuss your task
           {ARROW.replace('<svg ', '<svg fill="none" stroke="currentColor" stroke-width="2" ')}
@@ -283,7 +289,7 @@ main = f"""
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-{chr(10).join(f'    <span class="marquee-item">{x} <span class="sep">·</span></span>' for x in ["Recruitment", "Executive search", "IT recruitment", "Mass recruitment", "Outstaffing", "Payroll & legal employment", "HR consulting", "HR audit"] * 2)}
+{chr(10).join(f'    <span class="marquee-item">{x} <span class="sep">·</span></span>' for x in ["Recruitment", "Executive search", "Headhunting", "IT recruitment", "Mass recruitment", "Outstaffing", "Payroll & legal employment", "HR consulting", "HR audit"] * 2)}
   </div>
 </div>
 
@@ -316,7 +322,7 @@ main = f"""
         <p>End-to-end search and selection of specialists at every level – from entry roles to C-level executives and rare niche experts.</p>
         <ul>
           <li>Search &amp; selection of middle and senior specialists</li>
-          <li><span><a href="executive-search-en.html">Executive search</a> through direct approach</span></li>
+          <li><span><a href="executive-search-en.html">Executive search</a> and headhunting through direct approach</span></li>
           <li>IT recruitment</li>
           <li>Mass recruitment for retail, BPO and manufacturing</li>
           <li>Hiring from our candidate database</li>

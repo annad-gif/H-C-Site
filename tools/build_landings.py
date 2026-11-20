@@ -235,7 +235,8 @@ PAGES.append(dict(
 PAGES.append(dict(
     file="employer-of-record-uzbekistan.html", shell="consulting-en.html", lang="en", locale="en_US", alt=EOR_ALT,
     home=("Home", SITE + "/index-en.html"), parent=("HR services in Uzbekistan", SITE + "/hr-services-uzbekistan.html"),
-    title="Employer of Record & Payroll Services in Uzbekistan – EOR | Human and Capital",
+    # ≤60 символов: длинный title Google обрезал; бренд – в og:site_name
+    title="Employer of Record in Uzbekistan (EOR) &amp; Payroll Services",
     short="Employer of Record in Uzbekistan – Human and Capital",
     desc="Employer of Record (EOR) and payroll services in Uzbekistan for foreign companies: hire employees without a local entity. Recruitment, legal employment, monthly payroll, taxes and labour law compliance with one Tashkent-based partner.",
     service="Employer of Record (EOR) and payroll services in Uzbekistan",
@@ -287,6 +288,28 @@ PAGES.append(dict(
         "A company is testing the Uzbek market before opening its own office",
         "An existing contractor setup needs to become compliant employment",
     ], "Roles we employ", ["Customer support", "Contact centre operators", "Interpreters", "Developers", "QA engineers", "Data and business analysts", "Sales and account managers", "Back-office and finance", "HR and recruitment", "Multilingual specialists", "Project managers", "and many more"]),
+    # Под запросы «which/best employer of record … uzbekistan», «how to pay employees in uzbekistan» (GSC, 11.2026).
+    # Ставки и нормы – только подтверждённые несколькими источниками (20.11.2026); спорные цифры (МРОТ, IT Park) не пишем.
+    guide=("Hiring in Uzbekistan", "How to choose an Employer of Record in Uzbekistan",
+           "Questions worth asking any EOR provider, and the employment basics to know before you hire.", [
+        ("Questions to ask an EOR provider", [
+            "Is the provider itself the legal employer in Uzbekistan, or does it pass your employees to a local partner?",
+            "Can it find the candidates, or will you have to recruit on your own?",
+            "Who answers employees’ HR questions, and in which language?",
+            "How and when are salaries paid, and in which currency?",
+            "What happens on termination: notice, final settlement, documents?",
+            "Is there an NDA, and how is employee data protected?",
+        ]),
+        ("Employment basics in Uzbekistan", [
+            "Salaries are paid in Uzbek sum (UZS)",
+            "Personal income tax of 12% is withheld from the gross salary by the employer",
+            "Employer social tax of 12% is paid on top of the gross salary",
+            "A standard working week of up to 40 hours",
+            "At least 21 calendar days of paid annual leave",
+            "A probation period of up to 3 months",
+            "At least 2 months’ notice in case of redundancy",
+        ]),
+    ], "General overview as of November 2026, not legal or tax advice. Rates and rules depend on the employee and the employer’s regime (for example, IT Park residents have preferential rates). We confirm the details for your case before you hire."),
     process=("How EOR works", "From kick-off to a working employee", "A typical hire goes live in 2–4 weeks. Every step is agreed with you in advance.", [
         ("Scope and contract", "We define the role, agree on terms and timeline and sign one master agreement."),
         ("Candidate search", "Our recruiters source, screen and interview candidates from the local market."),
@@ -307,6 +330,9 @@ PAGES.append(dict(
     ]),
     reviews=("Client reviews", "What clients say", "index-en.html"),
     faq=("FAQ", "Employer of Record in Uzbekistan: FAQ", [
+        ("Which Employer of Record should I use to hire in Uzbekistan?", "Choose a provider that is itself the legal employer in Uzbekistan rather than a reseller of a local partner, that can recruit the people for you, pays salaries on time and supports employees in Russian or Uzbek. Human and Capital is a Tashkent-based team that recruits, employs and runs payroll under one contract. See the <a href=\"#lp-guide\">checklist of questions to ask an EOR provider</a>."),
+        ("How much does it cost to employ someone in Uzbekistan?", "The employer’s cost is the gross salary plus 12% employer social tax, plus the EOR service fee. The 12% personal income tax is withheld from the gross salary, so it is not an extra cost. Salaries vary a lot by role: see our <a href=\"/articles/it-salaries-in-uzbekistan-autumn-2026-311121e8\">IT salaries in Uzbekistan</a> review and <a href=\"/articles/hiring-in-uzbekistan-what-a-support-agent-costs-in-2026-375b57d2\">what a support agent costs</a>. We prepare a cost estimate for your roles within one business day."),
+        ("How do I pay employees in Uzbekistan from abroad?", "With an Employer of Record you do not pay employees directly. You pay one monthly invoice, and we pay the salaries in sum, withhold income tax, pay social tax and file the reports. If you already have your own entity in Uzbekistan, we can run payroll for it as a separate service."),
         ("Do you provide payroll services in Uzbekistan?", "Yes. Payroll is available as a separate service for companies with their own legal entity in Uzbekistan, and it is also included in our Employer of Record and outstaffing services. Every month we calculate salaries, withhold and pay taxes, handle salary payments and file reports."),
         ("What does payroll in Uzbekistan include?", "Calculation of gross and net salaries, bonuses and allowances, withholding of personal income tax and payment of social tax, salary payments to employees, payslips, tax and statistical reporting, leave and sick leave tracking and the final settlement on termination."),
         ("Do I need a legal entity in Uzbekistan to hire employees?", "No. With an Employer of Record we are the legal employer. Your employees get official contracts under Uzbek labour law, and you manage their work without registering a company in Uzbekistan."),
@@ -320,6 +346,7 @@ PAGES.append(dict(
     read=("Further reading", "Related pages", [
         ("/hr-services-uzbekistan.html", "HR services in Uzbekistan", "Recruitment, outstaffing and HR consulting in one place"),
         (A + "hiring-in-uzbekistan-d0f28979", "Hiring in Uzbekistan", "A practical guide for foreign companies"),
+        (A + "it-salaries-in-uzbekistan-autumn-2026-311121e8", "IT salaries in Uzbekistan", "Salary expectations for 10 IT roles, autumn 2026"),
         ("/outstaffing-en.html", "Outstaffing in Uzbekistan", "Legal employment, payroll and reporting"),
         ("/executive-search-en.html", "Executive search in Uzbekistan", "Direct search for C-level and senior managers"),
     ]),
@@ -343,7 +370,8 @@ CSS = """
   #lp-intro,#lp-who,#lp-why,#lp-faq,#lp-payroll{background:var(--white);}
   .lp-pay-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:48px;align-items:start;}
   @media (max-width:1080px){.lp-pay-grid{grid-template-columns:1fr;gap:28px;}}
-  #lp-services,#lp-reviews,#lp-read,#lp-compare{background:var(--grey-50);}
+  #lp-services,#lp-reviews,#lp-read,#lp-compare,#lp-guide{background:var(--grey-50);}
+  .lp-note{margin-top:32px;max-width:760px;font-size:14px;line-height:1.6;color:var(--grey-700);}
   .hrs-prose{max-width:760px;}
   .hrs-prose p{font-size:17px;color:var(--grey-700);line-height:1.8;margin-top:18px;}
   .hrs-prose p strong{color:var(--black);font-weight:600;}
@@ -584,6 +612,27 @@ def build(d):
 </section>
 """
 
+    guide = ""
+    if d.get("guide"):
+        ge, gt, gl, cols, note = d["guide"]
+        guide = f"""
+<!-- GUIDE -->
+<section id="lp-guide">
+  <div class="container">
+{sec_head(ge, gt, gl)}
+    <div class="lp-pay-grid">
+""" + "\n".join(f"""      <div class="reveal">
+        <h3 class="hrs-h3">{h}</h3>
+        <ul class="hrs-check">
+{chr(10).join(f'          <li>{x}</li>' for x in items)}
+        </ul>
+      </div>""" for h, items in cols) + f"""
+    </div>
+    <p class="lp-note reveal">{note}</p>
+  </div>
+</section>
+"""
+
     revs = reviews_from(d["reviews"][2])
     ie, it, ips = d["intro"]
     we, wt, wh1, wreq, wh2, wtags = d["who"]
@@ -666,7 +715,7 @@ def build(d):
     </div>
   </div>
 </section>
-
+{guide}
 <!-- PROCESS -->
 <section id="lp-process">
   <div class="container">
