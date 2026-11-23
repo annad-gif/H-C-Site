@@ -1,1 +1,4 @@
 node_modules/
+.claude/worktrees/
+.claude/settings.local.json
+.claude/skills/impeccable/scripts/bin/

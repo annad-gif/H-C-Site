@@ -4,3 +4,4 @@ tools/
 CLAUDE.md
 .graphifyignore
 graphify-out/
+.claude/
