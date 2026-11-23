@@ -1,0 +1,4 @@
+# локальное для машины: путь к интерпретатору, абсолютный корень, сессии хуков
+.graphify_python
+.graphify_root
+cache/hook_sessions/

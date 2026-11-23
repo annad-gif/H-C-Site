@@ -1,0 +1,356 @@
+{
+  "api/_lib.js": {
+    "mtime": 1793442773.131705,
+    "seen": 1795434764.361174,
+    "ast_hash": "c3a2e8e226587382607f29113d46d085",
+    "semantic_hash": "c3a2e8e226587382607f29113d46d085"
+  },
+  "api/_taxonomy.json": {
+    "mtime": 1793295926.4328105,
+    "seen": 1795434764.3611789,
+    "ast_hash": "14bca7470426c83c56f2166e64630973",
+    "semantic_hash": "14bca7470426c83c56f2166e64630973"
+  },
+  "api/article.js": {
+    "mtime": 1795168263.1820073,
+    "seen": 1795434764.361181,
+    "ast_hash": "6ab1c59d4077a03c945d3eeff426c7e0",
+    "semantic_hash": "6ab1c59d4077a03c945d3eeff426c7e0"
+  },
+  "api/hub.js": {
+    "mtime": 1794805776.0825448,
+    "seen": 1795434764.361182,
+    "ast_hash": "fbb1ea7c80feb56558cec7ee5bc11651",
+    "semantic_hash": "fbb1ea7c80feb56558cec7ee5bc11651"
+  },
+  "api/llms.js": {
+    "mtime": 1794804575.7287128,
+    "seen": 1795434764.361183,
+    "ast_hash": "badda3747e81f3f7c5acb5dcf1de5c83",
+    "semantic_hash": "badda3747e81f3f7c5acb5dcf1de5c83"
+  },
+  "api/materials.js": {
+    "mtime": 1793274453.9936028,
+    "seen": 1795434764.361183,
+    "ast_hash": "a2bbd22907cd4ac8d455e6440f715f45",
+    "semantic_hash": "a2bbd22907cd4ac8d455e6440f715f45"
+  },
+  "api/revalidate.js": {
+    "mtime": 1793274453.0818164,
+    "seen": 1795434764.361184,
+    "ast_hash": "81e8b593a03c982021e5d797b19cdd08",
+    "semantic_hash": "81e8b593a03c982021e5d797b19cdd08"
+  },
+  "api/salaries.js": {
+    "mtime": 1793618625.255375,
+    "seen": 1795434764.361185,
+    "ast_hash": "f7455a7a4c0acfb8d98ac7842cc00f4c",
+    "semantic_hash": "f7455a7a4c0acfb8d98ac7842cc00f4c"
+  },
+  "api/sitemap.js": {
+    "mtime": 1793871261.296905,
+    "seen": 1795434764.361186,
+    "ast_hash": "b998d30090174ed0f12e820eb4286bf3",
+    "semantic_hash": "b998d30090174ed0f12e820eb4286bf3"
+  },
+  "api/vacancy.js": {
+    "mtime": 1793957616.8522916,
+    "seen": 1795434764.361187,
+    "ast_hash": "d391b3d62fb595d60f4fa410b27c3c74",
+    "semantic_hash": "d391b3d62fb595d60f4fa410b27c3c74"
+  },
+  "hc-analytics.js": {
+    "mtime": 1793440520.2132769,
+    "seen": 1795434764.361187,
+    "ast_hash": "8c16a6f9fb3f2b770009f8200cffdd1c",
+    "semantic_hash": "8c16a6f9fb3f2b770009f8200cffdd1c"
+  },
+  "hc-crm.js": {
+    "mtime": 1793874241.4883413,
+    "seen": 1795434764.3611882,
+    "ast_hash": "2df55af63244c29a86abf6dddcdebb74",
+    "semantic_hash": "2df55af63244c29a86abf6dddcdebb74"
+  },
+  "hc-lottie.js": {
+    "mtime": 1793440755.0074537,
+    "seen": 1795434764.3611891,
+    "ast_hash": "4e6dedfbc6101259cb50c6021c6a1075",
+    "semantic_hash": "4e6dedfbc6101259cb50c6021c6a1075"
+  },
+  "middleware.js": {
+    "mtime": 1794805615.9443176,
+    "seen": 1795434764.3611898,
+    "ast_hash": "0da1ad4e1b24aad20ebc15facf48c29a",
+    "semantic_hash": "0da1ad4e1b24aad20ebc15facf48c29a"
+  },
+  "package.json": {
+    "mtime": 1793274453.9347658,
+    "seen": 1795434764.3611898,
+    "ast_hash": "3aab77e2f3d2be7f9459e3d42198a003",
+    "semantic_hash": "3aab77e2f3d2be7f9459e3d42198a003"
+  },
+  "tools/article_covers.py": {
+    "mtime": 1794997503.22578,
+    "seen": 1795434764.3611908,
+    "ast_hash": "b4abcfb234ad9c29ff266e5b7576fe90",
+    "semantic_hash": "b4abcfb234ad9c29ff266e5b7576fe90"
+  },
+  "tools/bpo_charts.py": {
+    "mtime": 1793619804.3340197,
+    "seen": 1795434764.361192,
+    "ast_hash": "20e94477bd72d31fef3dfb4859239aa7",
+    "semantic_hash": "20e94477bd72d31fef3dfb4859239aa7"
+  },
+  "tools/build_analytics.py": {
+    "mtime": 1793871248.5823042,
+    "seen": 1795434764.361193,
+    "ast_hash": "bf2c94c1f2e1464ea52ca7559f2d783a",
+    "semantic_hash": "bf2c94c1f2e1464ea52ca7559f2d783a"
+  },
+  "tools/build_article_shell.py": {
+    "mtime": 1793620827.6952884,
+    "seen": 1795434764.361194,
+    "ast_hash": "6ee660ed3b518f60233b34e0cc8e3c3b",
+    "semantic_hash": "6ee660ed3b518f60233b34e0cc8e3c3b"
+  },
+  "tools/build_hr_services.py": {
+    "mtime": 1795170476.8066697,
+    "seen": 1795434764.361194,
+    "ast_hash": "80876b80bff401e04d8771cca026544b",
+    "semantic_hash": "80876b80bff401e04d8771cca026544b"
+  },
+  "tools/build_landings.py": {
+    "mtime": 1795170452.931321,
+    "seen": 1795434764.361195,
+    "ast_hash": "aa1a4b540a66f4260437b1dc1226c7ae",
+    "semantic_hash": "aa1a4b540a66f4260437b1dc1226c7ae"
+  },
+  "tools/build_outstaffing_seo.py": {
+    "mtime": 1793620827.697385,
+    "seen": 1795434764.361196,
+    "ast_hash": "60c8d9845951fcc9bbadbe62ab292a3d",
+    "semantic_hash": "60c8d9845951fcc9bbadbe62ab292a3d"
+  },
+  "tools/build_recruitment_seo.py": {
+    "mtime": 1793620827.6979349,
+    "seen": 1795434764.361197,
+    "ast_hash": "758b187e0efe3644cafa34ce3b8f03b6",
+    "semantic_hash": "758b187e0efe3644cafa34ce3b8f03b6"
+  },
+  "tools/build_related_links.py": {
+    "mtime": 1793620827.698975,
+    "seen": 1795434764.3611982,
+    "ast_hash": "36907a95592c87105b3e40b6f57e5d23",
+    "semantic_hash": "36907a95592c87105b3e40b6f57e5d23"
+  },
+  "tools/build_report.py": {
+    "mtime": 1793597938.841362,
+    "seen": 1795434764.3611982,
+    "ast_hash": "55899b9dc4dc830d59a4f00e771af20b",
+    "semantic_hash": "55899b9dc4dc830d59a4f00e771af20b"
+  },
+  "tools/build_report_bpo.py": {
+    "mtime": 1793620827.7075245,
+    "seen": 1795434764.3611991,
+    "ast_hash": "3ef988a761834a655d6da987ed8ff2d4",
+    "semantic_hash": "3ef988a761834a655d6da987ed8ff2d4"
+  },
+  "tools/build_report_fin.py": {
+    "mtime": 1794998272.2881336,
+    "seen": 1795434764.3612,
+    "ast_hash": "3b6a69946ee981ae52a3547aadbe88c4",
+    "semantic_hash": "3b6a69946ee981ae52a3547aadbe88c4"
+  },
+  "tools/build_salaries.py": {
+    "mtime": 1793620827.6994267,
+    "seen": 1795434764.3612008,
+    "ast_hash": "546ef3cf509e9fccb1b27e4fdc769ccc",
+    "semantic_hash": "546ef3cf509e9fccb1b27e4fdc769ccc"
+  },
+  "tools/finance_salary_charts.py": {
+    "mtime": 1794997456.512995,
+    "seen": 1795434764.3612008,
+    "ast_hash": "251d6216d5ab9cfd28198d10ad448690",
+    "semantic_hash": "251d6216d5ab9cfd28198d10ad448690"
+  },
+  "tools/it_salary_charts.py": {
+    "mtime": 1793619804.3338263,
+    "seen": 1795434764.361202,
+    "ast_hash": "19d0c5f81347682e6ba84d7a410adfab",
+    "semantic_hash": "19d0c5f81347682e6ba84d7a410adfab"
+  },
+  "tools/landings_ru_uz.py": {
+    "mtime": 1794286790.1772573,
+    "seen": 1795434764.361203,
+    "ast_hash": "47884b47682ddb646d9c1a6d419c7e5b",
+    "semantic_hash": "47884b47682ddb646d9c1a6d419c7e5b"
+  },
+  "tools/reports/bpo-2026-11.json": {
+    "mtime": 1793620827.7079406,
+    "seen": 1795434764.361204,
+    "ast_hash": "bba3ed1b62751442538a32a1620b90b7",
+    "semantic_hash": "bba3ed1b62751442538a32a1620b90b7"
+  },
+  "tools/reports/fin-2026-11.json": {
+    "mtime": 1794998011.792065,
+    "seen": 1795434764.361204,
+    "ast_hash": "3fb622a6792ae3560c68ccb373f4c13b",
+    "semantic_hash": "3fb622a6792ae3560c68ccb373f4c13b"
+  },
+  "tools/reports/it-salaries-2026-autumn.json": {
+    "mtime": 1793292968.2954884,
+    "seen": 1795434764.361205,
+    "ast_hash": "f0ace922460077f4d792a51f8886974f",
+    "semantic_hash": "f0ace922460077f4d792a51f8886974f"
+  },
+  "tools/sales_salary_charts.py": {
+    "mtime": 1793341244.8771305,
+    "seen": 1795434764.361206,
+    "ast_hash": "b49f6cb620befa125136f27576b0e525",
+    "semantic_hash": "b49f6cb620befa125136f27576b0e525"
+  },
+  "vercel.json": {
+    "mtime": 1794805625.698373,
+    "seen": 1795434764.361207,
+    "ast_hash": "982910eef99a21cdffbd8f2e39a7281b",
+    "semantic_hash": "982910eef99a21cdffbd8f2e39a7281b"
+  },
+  "README.md": {
+    "mtime": 1791271782.8881354,
+    "seen": 1795434764.361207,
+    "ast_hash": "b392a66eb504731fde6951088845bc6f",
+    "semantic_hash": "b392a66eb504731fde6951088845bc6f"
+  },
+  "admin.html": {
+    "mtime": 1793443019.8925664,
+    "seen": 1795434764.361208,
+    "ast_hash": "e5a08596fc4ab0061a0b00d1274fb1a6",
+    "semantic_hash": "e5a08596fc4ab0061a0b00d1274fb1a6"
+  },
+  "analytics-salaries.html": {
+    "mtime": 1795434829.9297853,
+    "seen": 1795435220.7227058,
+    "ast_hash": "7855878fe2e898aac551b88d8a75766f",
+    "semantic_hash": "7855878fe2e898aac551b88d8a75766f"
+  },
+  "analytics.html": {
+    "mtime": 1795434829.931387,
+    "seen": 1795435220.722707,
+    "ast_hash": "a0d97e10123ab765ae5092e81f0d74f5",
+    "semantic_hash": "a0d97e10123ab765ae5092e81f0d74f5"
+  },
+  "api/_shell.html": {
+    "mtime": 1795434829.9325883,
+    "seen": 1795435220.722708,
+    "ast_hash": "9bdcf8b43dd867790315b11f5c6165cb",
+    "semantic_hash": "9bdcf8b43dd867790315b11f5c6165cb"
+  },
+  "consulting.html": {
+    "mtime": 1795434829.9344087,
+    "seen": 1795435220.722709,
+    "ast_hash": "d0d78102c98dd085d980225f795fd0ad",
+    "semantic_hash": "d0d78102c98dd085d980225f795fd0ad"
+  },
+  "docs/analytics/it-salaries-trial-2026-10-29.md": {
+    "mtime": 1793265989.7672384,
+    "seen": 1795434764.361212,
+    "ast_hash": "9ec257596e6877f73cb980724673b831",
+    "semantic_hash": "9ec257596e6877f73cb980724673b831"
+  },
+  "docs/analytics/spec-analytics-section.md": {
+    "mtime": 1793296280.638913,
+    "seen": 1795434764.361213,
+    "ast_hash": "6e162fe090077cbc285d53971bf3a776",
+    "semantic_hash": "6e162fe090077cbc285d53971bf3a776"
+  },
+  "docs/analytics/survey-candidates.md": {
+    "mtime": 1793265989.767759,
+    "seen": 1795434764.361214,
+    "ast_hash": "42c4111783ae975dae38c752bf2b9621",
+    "semantic_hash": "42c4111783ae975dae38c752bf2b9621"
+  },
+  "docs/analytics/survey-hr-directors.md": {
+    "mtime": 1793265989.7680001,
+    "seen": 1795434764.3612149,
+    "ast_hash": "1f5c51b293f288ddadb0b1463acaf71b",
+    "semantic_hash": "1f5c51b293f288ddadb0b1463acaf71b"
+  },
+  "employer-of-record-uzbekistan.html": {
+    "mtime": 1795434829.9354599,
+    "seen": 1795435220.7227101,
+    "ast_hash": "18eb7f344b553ba22554c34df69ed125",
+    "semantic_hash": "18eb7f344b553ba22554c34df69ed125"
+  },
+  "employer-of-record.html": {
+    "mtime": 1795434829.9359636,
+    "seen": 1795435220.722711,
+    "ast_hash": "06e9226d13cdcb519eae8ded3afe4a7c",
+    "semantic_hash": "06e9226d13cdcb519eae8ded3afe4a7c"
+  },
+  "executive-search.html": {
+    "mtime": 1795434829.9388216,
+    "seen": 1795435220.722712,
+    "ast_hash": "af595cfce5376c6fb8514c73f0ad0ca3",
+    "semantic_hash": "af595cfce5376c6fb8514c73f0ad0ca3"
+  },
+  "hr-services-uzbekistan.html": {
+    "mtime": 1795434829.9408488,
+    "seen": 1795435220.722713,
+    "ast_hash": "d6522a12f80cb45ec1999e4290194380",
+    "semantic_hash": "d6522a12f80cb45ec1999e4290194380"
+  },
+  "hr-services.html": {
+    "mtime": 1795434829.941408,
+    "seen": 1795435220.7227142,
+    "ast_hash": "e56805aac38f6c9e11a42617189011e4",
+    "semantic_hash": "e56805aac38f6c9e11a42617189011e4"
+  },
+  "index.html": {
+    "mtime": 1795434829.9431489,
+    "seen": 1795435220.722715,
+    "ast_hash": "8051cbca0073858d6cf16d7d1ee2c1dd",
+    "semantic_hash": "8051cbca0073858d6cf16d7d1ee2c1dd"
+  },
+  "outstaffing.html": {
+    "mtime": 1795434829.9448633,
+    "seen": 1795435220.722715,
+    "ast_hash": "6d3f6b237fc16e5838722a9222ac6609",
+    "semantic_hash": "6d3f6b237fc16e5838722a9222ac6609"
+  },
+  "privacy.html": {
+    "mtime": 1795168263.183578,
+    "seen": 1795434764.361221,
+    "ast_hash": "4da3a5918c94973cc9dcf0a87cd847bd",
+    "semantic_hash": "4da3a5918c94973cc9dcf0a87cd847bd"
+  },
+  "recruitment.html": {
+    "mtime": 1795434829.948472,
+    "seen": 1795435220.7227159,
+    "ast_hash": "568c8d50566a8655b7437a5a4ecc2744",
+    "semantic_hash": "568c8d50566a8655b7437a5a4ecc2744"
+  },
+  "resources.html": {
+    "mtime": 1795434829.950435,
+    "seen": 1795435220.722717,
+    "ast_hash": "43d37b21cf098c10c9ed71a7aed38f1d",
+    "semantic_hash": "43d37b21cf098c10c9ed71a7aed38f1d"
+  },
+  "robots.txt": {
+    "mtime": 1792133589.509802,
+    "seen": 1795434764.361223,
+    "ast_hash": "8d6d0e323bd459bb594ad1cc41a6e645",
+    "semantic_hash": "8d6d0e323bd459bb594ad1cc41a6e645"
+  },
+  "vacancies.html": {
+    "mtime": 1795434829.9516268,
+    "seen": 1795435220.722718,
+    "ast_hash": "ee21c1f702b0c58ac39c7b44120c069e",
+    "semantic_hash": "ee21c1f702b0c58ac39c7b44120c069e"
+  },
+  "CLAUDE.md": {
+    "mtime": 1795434526.9839497,
+    "seen": 1795435220.722705,
+    "ast_hash": "775e9af3d791217376851c56bf89e960",
+    "semantic_hash": "775e9af3d791217376851c56bf89e960"
+  }
+}
