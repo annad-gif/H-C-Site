@@ -1,0 +1,23 @@
+# graphify: что не попадает в граф сайта
+.claude/
+graphify-out/
+vendor/
+anim/
+img/
+fonts/
+node_modules/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.ico
+*.svg
+admin_3.html
+google*.html
+yandex_*.html
+38f11e7ecdb7edbd3290da28f65bf684.txt
+# переводы: структура совпадает с RU-версией, в граф идёт только RU
+*-en.html
+*-uz.html
+api/_shell-en.html
+api/_shell-uz.html

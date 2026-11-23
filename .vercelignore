@@ -1,3 +1,6 @@
 # Не публиковать на сайте: внутренние документы и скрипты сборки (страницы из tools/ ничего не загружают)
 docs/
 tools/
+CLAUDE.md
+.graphifyignore
+graphify-out/
