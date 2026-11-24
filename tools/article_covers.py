@@ -368,6 +368,36 @@ COVERS = {
  <div class="item"><div class="ico">{ic('people')}</div><div><b>×3,4</b><span>auditor va tahlilchining tajribasizdan 6+ yilgacha o‘sishi</span></div></div>
 </div>
 <div class="foot">humancapital.uz · Tahlil</div>""",
+"it_deficit_2026": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Дефицитные <span class="acc">IT-роли</span> в Узбекистане</h1>
+<p class="sub">Сколько резюме приходится на одну вакансию: кого искать дольше всего</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('search')}</div><div><b>8</b><span>резюме на одну вакансию DevOps</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>18</b><span>резюме на вакансию в среднем по IT</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>34%</b><span>IT-резюме – из регионов, вакансий там 6%</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Аналитика</div>""",
+"it_deficit_2026_en": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>Scarce <span class="acc">IT roles</span> in Uzbekistan</h1>
+<p class="sub">How many CVs there are per vacancy – and which roles take longest to fill</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('search')}</div><div><b>8</b><span>CVs per DevOps vacancy</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>18</b><span>CVs per vacancy, IT average</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>34%</b><span>of IT CVs come from the regions, 6% of vacancies</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Insights</div>""",
+"it_deficit_2026_uz": f"""
+<div><img class="logo" src="{LOGO}">
+<h1>O‘zbekistonda taqchil <span class="acc">IT rollar</span></h1>
+<p class="sub">Bitta vakansiyaga nechta rezyume to‘g‘ri keladi: kimni eng uzoq qidirish kerak</p></div>
+<div class="right">
+ <div class="item"><div class="ico">{ic('search')}</div><div><b>8</b><span>DevOps vakansiyasiga rezyume</span></div></div>
+ <div class="item"><div class="ico">{ic('chart')}</div><div><b>18</b><span>IT bo‘yicha o‘rtacha, vakansiyaga rezyume</span></div></div>
+ <div class="item"><div class="ico">{ic('people')}</div><div><b>34%</b><span>IT rezyumelar hududlardan, vakansiyalar – 6%</span></div></div>
+</div>
+<div class="foot">humancapital.uz · Tahlil</div>""",
 }
 
 for name, body in COVERS.items():
